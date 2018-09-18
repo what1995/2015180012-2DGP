@@ -87,7 +87,31 @@ def character_3rd_move():
         i += 1
         delay(0.1)
 def character_4th_move():
-    pass
+    x1, y1 = 477, 203
+    x2, y2 = 715, 136
+    dir = True
+    if ((x2 - x1) > 0):
+        dir = -1
+    elif ((x2 - x1) < 0):
+        dir = 1
+    i = 0
+    frame = 0
+    move_x = (x2 - x1) / 10
+    move_y = (y2 - y1) / 10
+    while i < 10:
+        clear_canvas()
+
+        grass.draw(400, 30)
+        if (dir == -1):
+            character.clip_draw(frame * 100, 100, 100, 100, x1, y1)
+        if (dir == 1):
+            character.clip_draw(frame * 100, 0, 100, 100, x1, y1)
+        update_canvas()
+        frame = (frame + 1) % 8
+        x1 = x1 + move_x
+        y1 = y1 + move_y
+        i += 1
+        delay(0.1)
 def character_5th_move():
     pass
 def character_6th_move():
