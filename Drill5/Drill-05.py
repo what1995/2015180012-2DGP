@@ -4,27 +4,26 @@ open_canvas()
 
 grass = load_image('grass.png')
 character = load_image('animation_sheet.png')
-def dir_chaek(x1, x2, dir):
-    if((x2-x1)>0):
-        dir = True
-    elif((x2-x1)<0):
-        dir = False
 
 def character_1st_move():
      x1, y1=203, 535
      x2, y2=132, 243
-     dir = True
-     dir_chaek(x1, x2, dir)
+     dir = 0
+     if ((x2 - x1) > 0):
+         dir = -1
+     elif ((x2 - x1) < 0):
+         dir = 1
      i=0
      frame=0
      move_x = (x2 - x1) / 10
      move_y = (y2 - y1) / 10
      while i < 10:
          clear_canvas()
+
          grass.draw(400, 30)
-         if (dir == False):
+         if (dir == -1):
              character.clip_draw(frame * 100, 100, 100, 100, x1, y1)
-         if (dir == True):
+         if (dir == 1):
              character.clip_draw(frame * 100, 0, 100, 100, x1, y1)
          update_canvas()
          frame = (frame + 1) % 8
@@ -36,7 +35,31 @@ def character_1st_move():
 
 
 def character_2nd_move():
-    pass
+    x1, y1 = 132, 243
+    x2, y2 = 535, 470
+    dir = True
+    if ((x2 - x1) > 0):
+        dir = -1
+    elif ((x2 - x1) < 0):
+        dir = 1
+    i = 0
+    frame = 0
+    move_x = (x2 - x1) / 10
+    move_y = (y2 - y1) / 10
+    while i < 10:
+        clear_canvas()
+
+        grass.draw(400, 30)
+        if (dir == -1):
+            character.clip_draw(frame * 100, 100, 100, 100, x1, y1)
+        if (dir == 1):
+            character.clip_draw(frame * 100, 0, 100, 100, x1, y1)
+        update_canvas()
+        frame = (frame + 1) % 8
+        x1 = x1 + move_x
+        y1 = y1 + move_y
+        i += 1
+        delay(0.1)
 def character_3rd_move():
     pass
 def character_4th_move():
