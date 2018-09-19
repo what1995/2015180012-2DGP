@@ -31,6 +31,7 @@ Mouse = load_image('hand_arrow.png')
 
 while M_x < KPU_WIDTH and running:
     clear_canvas()
+    hide_cursor()
     kpu_ground.draw(KPU_WIDTH//2, KPU_HEIGHT//2)
     Mouse.clip_draw(0, 0, 100, 100, M_x+35, M_y-35)
     update_canvas()
