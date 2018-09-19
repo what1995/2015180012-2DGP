@@ -15,14 +15,17 @@ frame = 0
 def handle_events():
     global running
     global M_x, M_y
+    global C_x, C_y
     events = get_events()
     for event in events:
         if event.type==SDL_QUIT:
             running = False
         elif event.type ==SDL_MOUSEMOTION:
-            M_x, M_y = event.x, KPU_HEIGHT - event.y
+            M_x, M_y = event.x +35, KPU_HEIGHT - event.y -35
         elif event.type==SDL_KEYDOWN and event.key ==SDLK_ESCAPE:
             running = False
+        elif event.type==SDL_MOUSEBUTTONDOWN:
+            C_x, C_y= event.x , KPU_HEIGHT - event.y
 
 
 open_canvas(KPU_WIDTH, KPU_HEIGHT)
@@ -35,7 +38,7 @@ while M_x < KPU_WIDTH and running:
     clear_canvas()
     hide_cursor()
     kpu_ground.draw(KPU_WIDTH//2, KPU_HEIGHT//2)
-    Mouse.clip_draw(0, 0, 100, 100, M_x+35, M_y-35)
+    Mouse.clip_draw(0, 0, 100, 100, M_x, M_y)
 
     character.clip_draw(frame * 100, 100, 100, 100, C_x, C_y)
     frame = (frame + 1) % 8
