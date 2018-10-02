@@ -36,7 +36,7 @@ def character_draw(p1, p2):
 
 
 
-size = 20
+size = 3
 points =[(random.randint(0, 800), random.randint(0, 600)) for i in range(size)]
 
 n = 1
