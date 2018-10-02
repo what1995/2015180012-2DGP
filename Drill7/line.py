@@ -56,15 +56,13 @@ def draw_line_basic(p1, p2):
     draw_big_point(p2)
 
     x1, y1 = p1[0], p1[1]
-    x2, y2= p2[0], p2[1]
-    a = (y2-y1)/(x2-x1)
-    b = y1-x1*a
+    x2, y2 = p2[0], p2[1]
+    a=(y2-y1)/(x2-x1)
+    b=y1-x1*a
 
     for x in range(x1, x2+1, 10):
-
-        y = a*x+b
+        y= a* x+b
         draw_point((x, y))
-
 
     draw_point(p2)
 
@@ -74,7 +72,7 @@ def draw_line(p1, p2):
     draw_big_point(p1)
     draw_big_point(p2)
 
-    for i in range(0, 100+1, 2):
+    for i in range(0, 100, 5):
         t= i/100
         x= (1-t)*p1[0]+t*p2[0]
         y= (1-t)*p1[1]+t*p2[1]
@@ -87,9 +85,9 @@ prepare_turtle_canvas()
 
 
 
+size = 6
+points =[(random.randint(-500, 500), random.randint(-350, 350)) for i in range(size)]
 
-points =[(-300, 200), (400, 350), (300, -300), (-200, -200)]
-size = len(points)
 n = 1
 
 while True:
