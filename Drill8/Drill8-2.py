@@ -68,6 +68,7 @@ size = 10
 points =[(random.randint(0, 800), random.randint(0, 600)) for i in range(size)]
 n=3
 c=0
+cheak=0
 while True:
     character_draw(points[n - 3], points[n-2],points[n-1],points[n])
 
