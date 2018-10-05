@@ -13,10 +13,12 @@ def character_stam():
     for j in range(0, c + 1):
         positon = points[j]
         character.clip_draw(100, 100, 100, 100, positon[0], positon[1])
+
+
 def character_draw(p1, p2,p3, p4):
     frame = 0
     dir = 1
-    global c
+
     if ((p2[0] - p1[0]) > 0):
         dir = -1
     elif ((p2[0] - p1[0]) < 0):
@@ -43,22 +45,6 @@ def character_draw(p1, p2,p3, p4):
         update_canvas()
         frame = (frame + 1) % 8
         delay(0.1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
