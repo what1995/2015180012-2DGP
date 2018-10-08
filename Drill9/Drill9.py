@@ -1,11 +1,21 @@
 from pico2d import *
+import random
 
 class Grass:
     def __init__(self):
+
         self.image = load_image('grass.png')
 
     def draw(self):
-        self.image.draw(400,30)
+        self.image.draw(400, 30)
+
+class BigBall:
+    def __init__(self):
+        self.x, self.y = random.randint(100, 700), 500
+        self.image = load_image('ball41x41.png')
+
+    def draw(self):
+        self.image.draw(self.x, self.y)
 
 def handle_events():
     global running
@@ -19,7 +29,7 @@ def handle_events():
 # initialization code
 open_canvas()
 grass = Grass()
-
+big = BigBall()
 running = True
 
 # game main loop code
@@ -28,6 +38,7 @@ while running:
 
     clear_canvas()
     grass.draw()
+    big.draw()
     update_canvas()
 
     delay(0.05)
