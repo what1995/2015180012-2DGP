@@ -17,6 +17,14 @@ class BigBall:
     def draw(self):
         self.image.draw(self.x, self.y)
 
+class SmallBall:
+    def __init__(self):
+        self.x, self.y = random.randint(100, 700), 500
+        self.image = load_image('ball21x21.png')
+
+    def draw(self):
+        self.image.draw(self.x, self.y)
+
 def handle_events():
     global running
     events = get_events()
@@ -30,6 +38,7 @@ def handle_events():
 open_canvas()
 grass = Grass()
 big = BigBall()
+small=SmallBall()
 running = True
 
 # game main loop code
@@ -39,6 +48,7 @@ while running:
     clear_canvas()
     grass.draw()
     big.draw()
+    small.draw()
     update_canvas()
 
     delay(0.05)
