@@ -41,14 +41,21 @@ big = BigBall()
 small=SmallBall()
 running = True
 
+smallcheak = random.randint(1, 20)
+bigcheak = 20 - smallcheak
+
+smallteam = [SmallBall() for i in range(smallcheak)]
+bigteam = [BigBall() for j in range(bigcheak)]
 # game main loop code
 while running:
     handle_events()
 
     clear_canvas()
     grass.draw()
-    big.draw()
-    small.draw()
+    for big in bigteam:
+        big.draw()
+    for small in smallteam:
+        small.draw()
     update_canvas()
 
     delay(0.05)
