@@ -49,6 +49,8 @@ class Marisa:
         self.Skill3j = 0
         self.Skill3cheak = 0
         self.S3Effect = load_image('MarisaSKill3.png')
+        self.Skill3Eframe1 =0
+        self.Skill3Ex1 = 120
         self.Lastspell = load_image('MarisaLastspell-Motion.png')
         self.LastspellEffect = load_image('MarisaLastspell.png')
         self.Standing = load_image('MarisaStanding-Motion.png')
@@ -184,14 +186,23 @@ class Marisa:
         # 적
         self.Skill3.clip_draw(self.Skill3frame1[self.Skill3i], 0, self.Skill3frame2[self.Skill3j], 110, self.Enemy,self.All_Y)
 
-        if self.Skill3cheak < 10:
-            self.Skill3i = (self.Skill3i + 1) % 10
-            self.Skill3j = (self.Skill3j + 1) % 10
+        if self.Skill3cheak < 17:
+            if self.Skill3cheak<7:
+                self.Skill3i = (self.Skill3i + 1) % 10
+                self.Skill3j = (self.Skill3j + 1) % 10
+            if self.Skill3cheak>=7:
+                self.S3Effect.clip_draw(self.Skill3Eframe1*260, 255, 260, 255, self.Player + self.Skill3Ex1, self.All_Y)
+                self.Skill3Eframe1 = (self.Skill3Eframe1+1)%3
+                self.Skill3Ex1 += 80
+            if self.Skill3cheak >=13:
+                self.Skill3i = (self.Skill3i + 1) % 10
+                self.Skill3j = (self.Skill3j + 1) % 10
             self.Skill3cheak += 1
 
-        if self.Skill3cheak == 10:
+        if self.Skill3cheak == 17:
             self.Skill3i = 0
             self.Skill3j = 0
+            self.Skill3Ex1= 120
             self.Skill3cheak = 0
 
 
