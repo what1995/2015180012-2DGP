@@ -39,9 +39,9 @@ class Marisa:
         self.Skill2j = 0
         self.Skill2cheak=0
         self.S2Effect = load_image('MarisaSkill2.png')
-        self.Skill2Ex1 = 0
-        self.Skill2Ex2 = 0
-        self.Skill2Ex3 = 0
+        self.Skill2Ex1 = 120
+        self.Skill2Ex2 = 100
+        self.Skill2Ex3 = 80
 
 
         self.Skill3 = load_image('MarisaSkill3-Motion.png')
@@ -151,11 +151,25 @@ class Marisa:
         if self.Skill2cheak < 7:
             self.Skill2i = (self.Skill2i + 1) % 8
             self.Skill2j = (self.Skill2j + 1) % 7
+            #Player
+            self.S2Effect.clip_draw(0, 125, 132, 125, self.Player + self.Skill2Ex1, self.All_Y)
+            self.S2Effect.clip_draw(132, 125, 132, 125, self.Player + self.Skill2Ex2, self.All_Y)
+            self.S2Effect.clip_draw(264, 125, 132, 125, self.Player + self.Skill2Ex3, self.All_Y)
+            #Enemy
+            self.S2Effect.clip_draw(0, 0, 132, 125, self.Enemy - self.Skill2Ex1, self.All_Y)
+            self.S2Effect.clip_draw(132, 0, 132, 125, self.Enemy - self.Skill2Ex2, self.All_Y)
+            self.S2Effect.clip_draw(264, 0, 132, 125, self.Enemy - self.Skill2Ex3, self.All_Y)
+            self.Skill2Ex1 += 75
+            self.Skill2Ex2 += 75
+            self.Skill2Ex3 += 75
             self.Skill2cheak += 1
 
         if self.Skill2cheak == 7:
             self.Skill2i = 0
             self.Skill2j = 0
+            self.Skill2Ex1 = 120
+            self.Skill2Ex2 = 100
+            self.Skill2Ex3 = 80
             self.Skill2cheak =0
 
 
@@ -190,6 +204,6 @@ while running:
     #marisa.MSkill1()
     marisa.MSkill2()
     update_canvas()
-    delay(0.5)
+    delay(0.1)
 # finalization code
 close_canvas()
