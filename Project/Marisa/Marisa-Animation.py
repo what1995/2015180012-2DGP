@@ -51,8 +51,15 @@ class Marisa:
         self.S3Effect = load_image('MarisaSKill3.png')
         self.Skill3Eframe1 =0
         self.Skill3Ex1 = 120
+
+
         self.Lastspell = load_image('MarisaLastspell-Motion.png')
+        self.Lastspelli =0
+        self.Lastspellj=0
+        self.Lastspellcheak=0
         self.LastspellEffect = load_image('MarisaLastspell.png')
+        self.LastspellEframe1 =0
+
         self.Standing = load_image('MarisaStanding-Motion.png')
         self.Standi = 0
         self.Standj = 0
@@ -205,6 +212,28 @@ class Marisa:
             self.Skill3Ex1= 120
             self.Skill3cheak = 0
 
+    def MLastspell(self):
+        self.Lastframe1 = [0, 65,127,187,251,305,386,451,536,610,680,750,815,880,943,1010,1070]
+        self.Lastframe2 = [65,62,60,64,55,79,62,80,72,66,66,65,63,60,59,58,58]
+
+        # 플레이어
+        self.Lastspell.clip_draw(self.Lastframe1[self.Lastspelli], 120, self.Lastframe2[self.Lastspellj], 120, self.Player+250,self.All_Y)
+        # 적
+        self.Lastspell.clip_draw(self.Lastframe1[self.Lastspelli], 0, self.Lastframe2[self.Lastspellj], 120, self.Enemy-250,self.All_Y)
+
+        if self.Lastspellcheak < 17:
+            self.Lastspelli = (self.Lastspelli + 1) % 17
+            self.Lastspellj = (self.Lastspellj + 1) % 17
+            if self.Lastspellcheak > 4:
+                self.LastspellEffect.clip_draw(self.LastspellEframe1 * 261, 250, 260, 250, self.Player + 400,self.All_Y-10)
+                self.LastspellEframe1=(self.LastspellEframe1+1)%7
+            self.Lastspellcheak += 1
+
+        if self.Lastspellcheak == 17:
+            self.Lastspelli = 0
+            self.Lastspellj = 0
+            self.Lastspellcheak = 0
+
 
 
 
@@ -236,7 +265,8 @@ while running:
     #marisa.Stand()
     #marisa.MSkill1()
     #marisa.MSkill2()
-    marisa.MSkill3()
+    #marisa.MSkill3()
+    marisa.MLastspell()
     update_canvas()
     delay(0.1)
 # finalization code
