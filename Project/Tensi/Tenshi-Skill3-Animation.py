@@ -27,9 +27,9 @@ def Tenshi_Skill3():
                     j=(j+1)%12
                 if cheak >6:
                     #플레이어
-                    TenshiSkill3effect.clip_draw(frame*210,102,210,102,Player_X+150,All_Y)
+                    TenshiSkill3effect.clip_draw(frame*260,107,260,120,Player_X+150,All_Y-10)
                     #적
-                    TenshiSkill3effect.clip_draw(frame*210,0,210,102,Enemy_X-150,All_Y)
+                    TenshiSkill3effect.clip_draw(frame*260,0,260,107,Enemy_X-150,All_Y)
                     frame= (frame+1)%7
                 update_canvas()
                 delay(0.13)
