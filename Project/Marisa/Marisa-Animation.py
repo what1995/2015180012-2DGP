@@ -221,15 +221,19 @@ class Marisa:
         # 적
         self.Lastspell.clip_draw(self.Lastframe1[self.Lastspelli], 0, self.Lastframe2[self.Lastspellj], 120, self.Enemy-250,self.All_Y)
 
-        if self.Lastspellcheak < 17:
+        if self.Lastspellcheak < 18:
             self.Lastspelli = (self.Lastspelli + 1) % 17
             self.Lastspellj = (self.Lastspellj + 1) % 17
             if self.Lastspellcheak > 4:
-                self.LastspellEffect.clip_draw(self.LastspellEframe1 * 261, 250, 260, 250, self.Player + 400,self.All_Y-10)
-                self.LastspellEframe1=(self.LastspellEframe1+1)%7
+                if self.Lastspellcheak < 11:
+                    #Player
+                    self.LastspellEffect.clip_draw(self.LastspellEframe1 * 261, 250, 260, 250, self.Player + 400,self.All_Y-10)
+                    #Enemy
+                    self.LastspellEffect.clip_draw(self.LastspellEframe1 * 261, 0, 260, 250, self.Enemy - 400, self.All_Y )
+                    self.LastspellEframe1=(self.LastspellEframe1+1)%7
             self.Lastspellcheak += 1
 
-        if self.Lastspellcheak == 17:
+        if self.Lastspellcheak == 18:
             self.Lastspelli = 0
             self.Lastspellj = 0
             self.Lastspellcheak = 0
