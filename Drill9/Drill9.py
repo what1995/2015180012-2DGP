@@ -12,8 +12,8 @@ class Grass:
 
 class BigBall:
     def __init__(self):
-        self.x, self.y = random.randint(100, 700), 500
-        self.speed = random.randint(5, 20)
+        self.x, self.y = random.randint(100, 700), 599
+        self.speed = random.randint(10, 30)
         self.image = load_image('ball41x41.png')
     def update(self):
         if(self.y>90-20):
@@ -23,11 +23,11 @@ class BigBall:
 
 class SmallBall:
     def __init__(self):
-        self.x, self.y = random.randint(100, 700), 500
-        self.speed = random.randint(5, 20)
+        self.x, self.y = random.randint(100, 700), 599
+        self.speed = random.randint(10, 30)
         self.image = load_image('ball21x21.png')
     def update(self):
-        if(self.y>90-30):
+        if(self.y>90-20):
             self.y -= self.speed
     def draw(self):
         self.image.draw(self.x, self.y)
