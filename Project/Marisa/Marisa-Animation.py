@@ -34,12 +34,16 @@ class Marisa:
         self.Skill1Ej = 0
         self.Skill1Eframe1 = 0
 
-
-
-
-
         self.Skill2 = load_image('MarisaSkill2-Motion.png')
+        self.Skill2i = 0
+        self.Skill2j = 0
+        self.Skill2cheak=0
         self.S2Effect = load_image('MarisaSkill2.png')
+        self.Skill2Ex1 = 0
+        self.Skill2Ex2 = 0
+        self.Skill2Ex3 = 0
+
+
         self.Skill3 = load_image('MarisaSkill3-Motion.png')
         self.S3Effect = load_image('MarisaSKill3.png')
         self.Lastspell = load_image('MarisaLastspell-Motion.png')
@@ -108,8 +112,6 @@ class Marisa:
     def MSkill1(self):
         self.Skill1frame1 =[0, 71, 132, 197, 262, 322, 396, 468, 536, 600]
         self.Skill1frame2 =[71,61,65,65,58,72,72,66,60]
-
-        self.Skill1Eframe2=0
         #플레이어
         self.Skill1.clip_draw(self.Skill1frame1[self.Skill1i], 105, self.Skill1frame2[self.Skill1j], 105, self.Player,self.All_Y)
         #적
@@ -131,16 +133,32 @@ class Marisa:
                     self.Skill1j = (self.Skill1j + 1) % 9
             self.Skill1cheak += 1
 
-
-
-
-
-
         if self.Skill1cheak == 18:
             self.Skill1i =0
             self.Skill1j =0
             self.Skill1cheak=0
             self.Skill1Eframe1=0
+
+    def MSkill2(self):
+        self.Skill2frame1 = [0, 85, 165, 240, 318, 395, 464, 525]
+        self.Skill2frame2 = [85, 80, 75, 78, 76, 67, 64]
+
+        # 플레이어
+        self.Skill2.clip_draw(self.Skill2frame1[self.Skill2i], 120, self.Skill2frame2[self.Skill2j], 120, self.Player,self.All_Y)
+        # 적
+        self.Skill2.clip_draw(self.Skill2frame1[self.Skill2i], 0, self.Skill2frame2[self.Skill2j], 120, self.Enemy,self.All_Y)
+
+        if self.Skill2cheak < 7:
+            self.Skill2i = (self.Skill2i + 1) % 8
+            self.Skill2j = (self.Skill2j + 1) % 7
+            self.Skill2cheak += 1
+
+        if self.Skill2cheak == 7:
+            self.Skill2i = 0
+            self.Skill2j = 0
+            self.Skill2cheak =0
+
+
 
 
 
@@ -169,8 +187,9 @@ while running:
     #marisa.Damage()
     #marisa.Downs()
     #marisa.Stand()
-    marisa.MSkill1()
+    #marisa.MSkill1()
+    marisa.MSkill2()
     update_canvas()
-    delay(0.1)
+    delay(0.5)
 # finalization code
 close_canvas()
