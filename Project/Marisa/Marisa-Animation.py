@@ -45,6 +45,9 @@ class Marisa:
 
 
         self.Skill3 = load_image('MarisaSkill3-Motion.png')
+        self.Skill3i = 0
+        self.Skill3j = 0
+        self.Skill3cheak = 0
         self.S3Effect = load_image('MarisaSKill3.png')
         self.Lastspell = load_image('MarisaLastspell-Motion.png')
         self.LastspellEffect = load_image('MarisaLastspell.png')
@@ -172,6 +175,25 @@ class Marisa:
             self.Skill2Ex3 = 80
             self.Skill2cheak =0
 
+    def MSkill3(self):
+        self.Skill3frame1 = [0, 65,125,195,275,332,412,500,590,661]
+        self.Skill3frame2 = [65,60,70,80,60,76,85,89,68,61]
+
+        # 플레이어
+        self.Skill3.clip_draw(self.Skill3frame1[self.Skill3i], 110, self.Skill3frame2[self.Skill3j], 110, self.Player,self.All_Y)
+        # 적
+        self.Skill3.clip_draw(self.Skill3frame1[self.Skill3i], 0, self.Skill3frame2[self.Skill3j], 110, self.Enemy,self.All_Y)
+
+        if self.Skill3cheak < 10:
+            self.Skill3i = (self.Skill3i + 1) % 10
+            self.Skill3j = (self.Skill3j + 1) % 10
+            self.Skill3cheak += 1
+
+        if self.Skill3cheak == 10:
+            self.Skill3i = 0
+            self.Skill3j = 0
+            self.Skill3cheak = 0
+
 
 
 
@@ -202,7 +224,8 @@ while running:
     #marisa.Downs()
     #marisa.Stand()
     #marisa.MSkill1()
-    marisa.MSkill2()
+    #marisa.MSkill2()
+    marisa.MSkill3()
     update_canvas()
     delay(0.1)
 # finalization code
