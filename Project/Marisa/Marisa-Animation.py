@@ -18,7 +18,7 @@ class Marisa:
         self.i = 0
         self.j = 0
         self.cheak=0
-        self.Damage = load_image('MarisaDamage-Motion.png')
+        self.Dmage = load_image('MarisaDamage-Motion.png')
         self.Down = load_image('MarisaDown-Motion.png')
         self.Skill1 = load_image('MarisaSkill1-Motion.png')
         self.S1Effect = load_image('MarisaSkill1.png')
@@ -35,10 +35,13 @@ class Marisa:
        pass
 
 
-    def Dmage(self):
+    def Damage(self):
         self.DamageFlame1 = [0, 90, 175, 240]
         self.DamageFlame2 = [90, 85, 65]
-        self.Damage.clip_draw(self.DamageFlame1[self.i], 115, self.DamageFlame2[self.j],115,self.Player,self.All_Y)
+        #플레이어
+        self.Dmage.clip_draw(self.DamageFlame1[self.i], 115, self.DamageFlame2[self.j],115,self.Player,self.All_Y)
+        #적
+        self.Dmage.clip_draw(self.DamageFlame1[self.i], 0, self.DamageFlame2[self.j], 115, self.Enemy, self.All_Y)
         if self.cheak <3:
             self.i = (self.i + 1) % 4
             self.j = (self.j + 1) % 3
@@ -47,6 +50,8 @@ class Marisa:
             self.i = 0
             self.j = 0
             self.cheak=0
+
+
 
 
 
@@ -73,7 +78,7 @@ while running:
     clear_canvas()
     background.draw()
     marisa.update()
-    marisa.Dmage()
+    marisa.Damage()
     update_canvas()
     delay(0.5)
 # finalization code
