@@ -14,6 +14,10 @@ class Marisa:
         self.Player = 200
         self.Enemy =600
         self.All_Y=200
+
+        self.i = 0
+        self.j = 0
+        self.cheak=0
         self.Damage = load_image('MarisaDamage-Motion.png')
         self.Down = load_image('MarisaDown-Motion.png')
         self.Skill1 = load_image('MarisaSkill1-Motion.png')
@@ -26,10 +30,23 @@ class Marisa:
         self.LastspellEffect = load_image('MarisaLastspell.png')
         self.Standing = load_image('MarisaStanding-Motion.png')
 
+
     def update(self):
-        pass
-    def Damage(self):
-        pass
+       pass
+
+
+    def Dmage(self):
+        self.DamageFlame1 = [0, 90, 175, 240]
+        self.DamageFlame2 = [90, 85, 65]
+        self.Damage.clip_draw(self.DamageFlame1[self.i], 115, self.DamageFlame2[self.j],115,self.Player,self.All_Y)
+        if self.cheak <3:
+            self.i = (self.i + 1) % 4
+            self.j = (self.j + 1) % 3
+            self.cheak += 1
+        if self.cheak ==3:
+            self.i = 0
+            self.j = 0
+            self.cheak=0
 
 
 
@@ -48,13 +65,16 @@ def handle_events():
 
 open_canvas()
 background=BackGround()
+marisa=Marisa()
 running=True
 
 while running:
     handle_events()
     clear_canvas()
     background.draw()
+    marisa.update()
+    marisa.Dmage()
     update_canvas()
-    delay(0.05)
+    delay(0.5)
 # finalization code
 close_canvas()
