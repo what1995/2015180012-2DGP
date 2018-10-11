@@ -1,18 +1,16 @@
 import game_framework
 from pico2d import *
-import CharacterSelection
+#import CharacterSelection
 
 
-name = "TitleState"
+name = "CharacterSelection"
 image = None
 start = None
 
 def enter():
     global image
     global start
-    image=load_image('Main.png')
-    start=load_image('startButton.png')
-
+    image = load_image('CharacterSelection.png')
 
 def exit():
     global image
@@ -30,13 +28,14 @@ def handle_events():
             if(event.type, event.key) == (SDL_KEYDOWN,SDLK_ESCAPE):
                 game_framework.quit()
             elif(event.type, event.key)==(SDL_KEYDOWN,SDLK_SPACE):
-                game_framework.change_state(CharacterSelection)
+                pass
+                #game_framework.change_state(CharacterSelection)
 
 
 def draw():
     clear_canvas()
     image.draw(400,300)
-    start.draw(400,100)
+    
     update_canvas()
 
 
@@ -54,5 +53,3 @@ def pause():
 
 def resume():
     pass
-
-
