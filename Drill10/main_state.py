@@ -63,22 +63,27 @@ class Boy:
 
 
 def enter():
-    global boy,grass,pause
-    pause =Pause()
+    global boy,grass,pause1
+    pause1 =Pause()
     boy =Boy()
     grass = Grass()
 
 
 
 def exit():
-    global boy,grass,pause
+    global boy,grass,pause1
     del(boy)
     del(grass)
-    del(pause)
+    del(pause1)
 
 
 def pause():
-    pass
+    global PAUSE
+    if PAUSE == True:
+        PAUSE = False
+    elif PAUSE == False:
+        PAUSE = True
+    #pause.draw()
 
 
 def resume():
@@ -94,22 +99,19 @@ def handle_events():
         elif  event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_state(title_state)
         elif event.type == SDL_KEYDOWN and event.key == SDLK_p:
-            if PAUSE ==True:
-                PAUSE = False
-            elif PAUSE == False:
-                PAUSE =True
+            pause()
 
 
 def update():
     boy.update()
-    pause.update()
+    pause1.update()
 
 
 def draw():
     clear_canvas()
     grass.draw()
     boy.draw()
-    pause.draw()
+    pause1.draw()
     update_canvas()
 
 
