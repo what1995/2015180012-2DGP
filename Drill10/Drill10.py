@@ -1,8 +1,8 @@
 import game_framework
 import pico2d
 
-import  start_state
+import Drill10start_state
 
 pico2d.open_canvas()
-game_framework.run(start_state)
+game_framework.run(Drill10start_state)
 pico2d.close_canvas()
