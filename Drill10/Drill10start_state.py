@@ -1,6 +1,6 @@
 import game_framework
 from pico2d import *
-import title_state
+import Drill10title_state
 
 
 name = "Drill10StartState"
@@ -23,7 +23,7 @@ def update():
     if(logo_time > 1.0):
         ligo_time =0
         #game_framework.quit()
-        game_framework.change_state(title_state)
+        game_framework.change_state(Drill10title_state)
     delay(0.01)
     logo_time += 0.01
 
