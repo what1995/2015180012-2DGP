@@ -6,6 +6,7 @@ from pico2d import *
 
 import game_framework
 import Drill10title_state
+import Drill10Pause_state
 
 
 
@@ -78,7 +79,7 @@ def handle_events():
         elif  event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_state(Drill10title_state)
         elif event.type == SDL_KEYDOWN and event.key == SDLK_p:
-            pause()
+            game_framework.push_state(Drill10Pause_state)
 
 
 def update():
