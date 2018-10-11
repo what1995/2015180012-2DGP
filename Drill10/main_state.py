@@ -50,13 +50,14 @@ class Boy:
     def update(self):
         if PAUSE==False:
             self.frame = (self.frame + 1) % 8
-            self.x += self.dir
+            self.x += self.dir*5
             if self.x >= 800:
                 self.dir = -1
                 self.cheak=0
             elif self.x <= 0:
                 self.dir = 1
                 self.cheak=1
+            delay(0.03)
 
     def draw(self):
         self.image.clip_draw(self.frame * 100, self.cheak*100, 100, 100, self.x, self.y)
