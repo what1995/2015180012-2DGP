@@ -25,7 +25,20 @@ class Grass:
     def draw(self):
         self.image.draw(400, 30)
 
+class Pause:
+    def __init__(self):
+        self.time =0
+        self.image= load_image('Pause.png')
+    def update(self):
+        if PAUSE ==True:
+            self.time += 1
 
+    def draw(self):
+        if PAUSE ==True:
+            if self.time <30:
+                self.image.draw(400,300)
+            if self.time ==60:
+                self.time=0
 
 class Boy:
     def __init__(self):
@@ -36,29 +49,32 @@ class Boy:
         self.dir = 1
 
     def update(self):
-         self.frame = (self.frame + 1) % 8
-         self.x += self.dir*5
-         if self.x >= 800:
-            self.dir = -1
-            self.cheak=0
-         elif self.x <= 0:
-            self.dir = 1
-            self.cheak=1
-         delay(0.03)
+        if PAUSE == False:
+            self.frame = (self.frame + 1) % 8
+            self.x += self.dir * 5
+            if self.x >= 800:
+                self.dir = -1
+                self.cheak = 0
+            elif self.x <= 0:
+                self.dir = 1
+                self.cheak = 1
+            delay(0.03)
 
     def draw(self):
         self.image.clip_draw(self.frame * 100, self.cheak*100, 100, 100, self.x, self.y)
 
 
 def enter():
-    global boy,grass
+    global boy,grass,pause1
+    pause1=Pause()
     boy =Boy()
     grass = Grass()
 
 
 
 def exit():
-    global boy,grass
+    global boy,grass,pause1
+    del(pause1)
     del(boy)
     del(grass)
 
@@ -79,17 +95,22 @@ def handle_events():
         elif  event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_state(Drill10title_state)
         elif event.type == SDL_KEYDOWN and event.key == SDLK_p:
-            game_framework.push_state(Drill10Pause_state)
+            if PAUSE == True:
+                PAUSE = False
+            elif PAUSE == False:
+                PAUSE = True
 
 
 def update():
     boy.update()
+    pause1.update()
 
 
 
 def draw():
     clear_canvas()
     grass.draw()
+    pause1.draw()
     boy.draw()
     update_canvas()
 
