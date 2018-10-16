@@ -24,7 +24,7 @@ class Player:
         self.Player = 200
         self.Enemy =600
         self.All_Y=200
-        self.stat =40  ##10 레이무 20 이쿠 30 텐시 40 마리사
+        self.stat =10  ##10 레이무 20 이쿠 30 텐시 40 마리사
 ######################STANDING##################################
         self.MStanding = load_image('MarisaStanding-Motion.png')
         self.RStanding = load_image('Reimu-Standing-Motion.png')
@@ -36,12 +36,16 @@ class Player:
 
 ######################SKILL1####################################
         self.MSkill1 = load_image('MarisaSkill1-Motion.png')
+        self.RSKill1 = load_image('Reimu-Skill1-Motion.png')
         self.Skill1i = 0
         self.Skill1j = 0
         self.Skill1cheak = 0
         self.MS1Effect = load_image('MarisaSkill1.png')
+        self.RS1Effect = load_image('Reimu-Skill1.png')
         self.Skill1Ei = 0
         self.Skill1Ej = 0
+        self.Skill1X=80
+        self.S1frame=0
         self.Skill1Eframe1 = 0
 
 
@@ -87,10 +91,10 @@ class Player:
 
         #####STANDING#########
         if self.stat==10:
-            if self.Standcheak<11:
+            if self.Standcheak<12:
                 self.frame =(self.frame+1)%11
                 self.Standcheak += 1
-            if self.Standcheak == 10:
+            if self.Standcheak == 11:
                 self.frame = 0
                 self.Standcheak = 0
         if self.stat==40:
@@ -104,6 +108,28 @@ class Player:
                 self.Standcheak = 0
 
         #####SKILL1#########
+
+             ##레이무
+        if self.stat ==11:
+            if self.Skill1cheak<12:
+                self.RS1Effect.clip_draw(self.S1frame * 70, 0, 80, 110, self.Player + self.Skill1X, self.All_Y)
+                self.Skill1i = (self.Skill1i + 1) % 13
+                self.Skill1j = (self.Skill1j + 1) % 12
+                self.S1frame = (self.S1frame + 1) % 13
+                self.Skill1X = self.Skill1X+ 30
+            self.Skill1cheak += 1
+            if self.Skill1cheak == 12:
+                self.Skill1i = 0
+                self.Skill1j = 0
+                self.Skill1cheak = 0
+                self.Skill1X=80
+                self.S1frame=0
+                self.Skill1Eframe1 = 0
+                player.stat = 10
+
+
+
+            ###마리사
         if self.stat ==41:
             if self.Skill1cheak < 18:
                 if self.Skill1cheak < 6:
@@ -178,8 +204,7 @@ class Player:
                 if self.Lastspellcheak > 4:
                     if self.Lastspellcheak < 11:
                         # Player
-                        self.MLastspellEffect.clip_draw(self.LastspellEframe1 * 261, 250, 260, 250, self.Player + 400,
-                                                       self.All_Y - 10)
+                        self.MLastspellEffect.clip_draw(self.LastspellEframe1 * 261, 250, 260, 250, self.Player + 400,self.All_Y - 10)
                         # Enemy
                      #   self.LastspellEffect.clip_draw(self.LastspellEframe1 * 261, 0, 260, 250, self.Enemy - 400,self.All_Y)
                         self.MLastspellEframe1 = (self.LastspellEframe1 + 1) % 7
@@ -205,6 +230,14 @@ class Player:
           #플레이어
             self.MStanding.clip_draw(self.Standframe1[self.Standi], 110, self.Standframe2[self.Standj], 110, self.Player,self.All_Y )
         #####SKILL1#########
+        ###레이무
+        if self.stat==11:
+            self.Skill1frame1 = [0,108,213,327,434,541,638,787,936,1080,1215,1319,1425]
+            self.Skill1frame2 = [108,105,114,107,107,97,149,149,144,135,104,106]
+
+            self.RSKill1.clip_draw(self.Skill1frame1[self.Skill1i], 110, self.Skill1frame2[self.Skill1j], 110, self.Player, self.All_Y)
+
+        ###마리사
         if self.stat==41:
             self.Skill1frame1 = [0, 71, 132, 197, 262, 322, 396, 468, 536, 600]
             self.Skill1frame2 = [71, 61, 65, 65, 58, 72, 72, 66, 60]
@@ -243,6 +276,10 @@ def handle_events():
             running = False
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_q:
+            player.stat = 10
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_w:
+            player.stat = 40
         elif event.type == SDL_KEYDOWN and event.key == SDLK_a:
             player.stat += 1
         elif event.type == SDL_KEYDOWN and event.key == SDLK_s:
