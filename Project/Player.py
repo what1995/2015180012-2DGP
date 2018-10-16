@@ -27,9 +27,11 @@ class Player:
         self.stat =40  ##10 레이무 20 이쿠 30 텐시 40 마리사
 ######################STANDING##################################
         self.MStanding = load_image('MarisaStanding-Motion.png')
+        self.RStanding = load_image('Reimu-Standing-Motion.png')
         self.Standi = 0
         self.Standj = 0
         self.Standcheak =0
+        self.frame=0
 
 
 ######################SKILL1####################################
@@ -84,6 +86,13 @@ class Player:
     def update(self):
 
         #####STANDING#########
+        if self.stat==10:
+            if self.Standcheak<11:
+                self.frame =(self.frame+1)%11
+                self.Standcheak += 1
+            if self.Standcheak == 10:
+                self.frame = 0
+                self.Standcheak = 0
         if self.stat==40:
             if self.Standcheak < 10:
                 self.Standi = (self.Standi+1) % 11
@@ -188,6 +197,8 @@ class Player:
     def Stand(self):
 
         ####STANDING########
+        if self.stat==10:
+            self.RStanding.clip_draw(self.frame *100,105,97,105,self.Player,self.All_Y)
         if self.stat==40:
             self.Standframe1 = [0,65,126,188,250,312,372,434,495,556,618]
             self.Standframe2 = [65,61,62,62,62,60,62,61,60,62]
@@ -233,13 +244,13 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
         elif event.type == SDL_KEYDOWN and event.key == SDLK_a:
-            player.stat = 41
+            player.stat += 1
         elif event.type == SDL_KEYDOWN and event.key == SDLK_s:
-            player.stat = 42
+            player.stat += 2
         elif event.type == SDL_KEYDOWN and event.key == SDLK_d:
-            player.stat = 43
+            player.stat += 3
         elif event.type == SDL_KEYDOWN and event.key == SDLK_f:
-            player.stat = 44
+            player.stat += 4
         elif event.type == SDL_KEYDOWN and event.key == SDLK_1:
             background.backgroundselection = 1
         elif event.type == SDL_KEYDOWN and event.key == SDLK_2:
