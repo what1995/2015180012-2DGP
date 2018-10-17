@@ -1,5 +1,5 @@
 from pico2d import *
-
+import Player
 
 class BackGround:
     def __init__(self):
@@ -170,11 +170,12 @@ while running:
 
     handle_events()
     clear_canvas()
-    background.draw()
-    marisa.update()
-    enemy.update()
-    marisa.Stand()
-    enemy.Stand()
+    #background.draw()
+    #marisa.update()
+    #enemy.update()
+    #marisa.Stand()
+    Player.Player.Stand(Player)
+    #enemy.Stand()
 
     update_canvas()
     delay(0.1)

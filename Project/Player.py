@@ -28,6 +28,7 @@ class Player:
 ######################STANDING##################################
         self.MStanding = load_image('MarisaStanding-Motion.png')
         self.RStanding = load_image('Reimu-Standing-Motion.png')
+        self.IStanding = load_image('Iku-Standing-Motion.png')
         self.Standi = 0
         self.Standj = 0
         self.Standcheak =0
@@ -120,6 +121,15 @@ class Player:
 
 
         ###이쿠
+        if self.stat==20:
+            if self.Standcheak<9:
+                self.Standi = (self.Standi + 1) % 10
+                self.Standj = (self.Standj + 1) % 9
+                self.Standcheak += 1
+            if self.Standcheak == 8:
+                self.Standi = 0
+                self.Standj= 0
+                self.Standcheak = 0
 
         ###텐시
 
@@ -327,7 +337,11 @@ class Player:
         if self.stat==10:
             self.RStanding.clip_draw(self.frame *100,105,97,105,self.Player,self.All_Y)
 
-
+        ###이쿠
+        if self.stat==20:
+            self.Standframe1 =[0,73, 140, 200, 265,324, 385, 446, 510, 580]
+            self.Standframe2 =[74,64,60,62,58,59,63,65,70]
+            self.IStanding.clip_draw(self.Standframe1[self.Standi],130,self.Standframe2[self.Standj],130,self.Player,self.All_Y)
         ###마리사
         if self.stat==40:
             self.Standframe1 = [0,65,126,188,250,312,372,434,495,556,618]
@@ -406,6 +420,10 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_q:
             player.stat = 10
         elif event.type == SDL_KEYDOWN and event.key == SDLK_w:
+            player.stat = 20
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_e:
+            player.stat = 30
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_r:
             player.stat = 40
         elif event.type == SDL_KEYDOWN and event.key == SDLK_a:
             player.stat += 1
