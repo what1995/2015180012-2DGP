@@ -38,11 +38,15 @@ class Player:
 ######################SKILL1####################################
         self.MSkill1 = load_image('MarisaSkill1-Motion.png')
         self.RSKill1 = load_image('Reimu-Skill1-Motion.png')
+        self.ISkill1 = load_image('IkuSkill1-Motion.png')
         self.Skill1i = 0
         self.Skill1j = 0
         self.Skill1cheak = 0
         self.MS1Effect = load_image('MarisaSkill1.png')
         self.RS1Effect = load_image('Reimu-Skill1.png')
+        self.IS1Effect= load_image('IkuSkill1-1.png')
+        self.IS1Effect2 =load_image('IkuSkill1-2.png')
+
         self.Skill1Ei = 0
         self.Skill1Ej = 0
         self.Skill1X=80
@@ -163,6 +167,30 @@ class Player:
                 self.S1frame=0
                 self.Skill1Eframe1 = 0
                 player.stat = 10
+
+            ###이쿠
+        if self.stat==21:
+            if self.Skill1cheak<23:
+                if self.Skill1cheak<8:
+                    self.Skill1i = (self.Skill1i + 1) % 12
+                    self.Skill1j = (self.Skill1j + 1) % 11
+                if self.Skill1cheak>=8:
+                    if self.Skill1cheak<20:
+                        self.IS1Effect.clip_draw(0,self.S1frame*52,360,52,self.Player+200,self.All_Y+10)
+                        self.IS1Effect2.clip_draw(self.Skill1Eframe1 * 65,0, 68, 60, 600-10, self.All_Y + 10)
+                        self.S1frame=(self.S1frame+1)%12
+                        self.Skill1Eframe1 = (self.Skill1Eframe1+1)%7
+                    if self.Skill1cheak>=20:
+                        self.Skill1i = (self.Skill1i + 1) % 12
+                        self.Skill1j = (self.Skill1j + 1) % 11
+                self.Skill1cheak += 1
+            if self.Skill1cheak == 22:
+                self.Skill1i = 0
+                self.Skill1j = 0
+                self.S1frame =0
+                self.Skill1cheak = 0
+                self.Skill1Eframe1 = 0
+                player.stat = 20
 
 
 
@@ -354,8 +382,12 @@ class Player:
             self.Skill1frame2 = [108,105,114,107,107,97,149,149,144,135,104,106]
 
             self.RSKill1.clip_draw(self.Skill1frame1[self.Skill1i], 110, self.Skill1frame2[self.Skill1j], 110, self.Player, self.All_Y)
-
-        ###마리사
+        ###이쿠
+        if self.stat==21:
+            self.Skill1frame1 =[0,68,133,193,259,329,390,470,543,615,680,745]
+            self.Skill1frame2 =[68,65,60,66,68,59,78,74,70,63,68]
+            self.ISkill1.clip_draw(self.Skill1frame1[self.Skill1i],145,self.Skill1frame2[self.Skill1j],145,self.Player, self.All_Y)
+            ###마리사
         if self.stat==41:
             self.Skill1frame1 = [0, 71, 132, 197, 262, 322, 396, 468, 536, 600]
             self.Skill1frame2 = [71, 61, 65, 65, 58, 72, 72, 66, 60]
