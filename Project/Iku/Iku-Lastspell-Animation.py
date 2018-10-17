@@ -37,10 +37,10 @@ def Iku_Lastspell():
                     IkuLastspelleffect2.clip_draw(S2_frame2[s],0,S2_frame1[c],255,Enemy_X,All_Y+70)
                     IkuLastspelleffect1.clip_draw(S_frame *270,0,270,255,Enemy_X+15,All_Y+210)
                     #적
-                    IkuLastspelleffect2.clip_draw(S2_frame2[(s+1)%2],0,S2_frame1[c],255,Player_X+50,All_Y+70)
-                    IkuLastspelleffect2.clip_draw(S2_frame2[(s+1)%2],0,S2_frame1[c],255,Player_X-40,All_Y+70)
-                    IkuLastspelleffect2.clip_draw(S2_frame2[s],0,S2_frame1[c],255,Player_X,All_Y+70)
-                    IkuLastspelleffect1.clip_draw(S_frame *270,0,270,255,Player_X+25,All_Y+210)
+                    #IkuLastspelleffect2.clip_draw(S2_frame2[(s+1)%2],0,S2_frame1[c],255,Player_X+50,All_Y+70)
+                    #IkuLastspelleffect2.clip_draw(S2_frame2[(s+1)%2],0,S2_frame1[c],255,Player_X-40,All_Y+70)
+                    #IkuLastspelleffect2.clip_draw(S2_frame2[s],0,S2_frame1[c],255,Player_X,All_Y+70)
+                    #IkuLastspelleffect1.clip_draw(S_frame *270,0,270,255,Player_X+25,All_Y+210)
                     S_frame= (S_frame+1)%4
                     s=(s+1)%2
                     c=(c+1)%1

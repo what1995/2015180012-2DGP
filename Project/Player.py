@@ -81,11 +81,13 @@ class Player:
 ######################SKILL3####################################
         self.MSkill3 = load_image('MarisaSkill3-Motion.png')
         self.RSkill3 =load_image('Reimu-Skill3-Motion.png')
+        self.ISkill3 =load_image('IkuSkill3-Motion.png')
         self.Skill3i = 0
         self.Skill3j = 0
         self.Skill3cheak = 0
         self.MS3Effect = load_image('MarisaSKill3.png')
         self.RS3Effect = load_image('Reimu-Skill3.png')
+        self.IS3Effect= load_image('IkuSkill3-1.png')
         self.Skill3Eframe1 = 0
         self.Skill3Ex1 = 120
         self.Skill3Rx = 70
@@ -98,6 +100,7 @@ class Player:
 
         self.MLastspell = load_image('MarisaLastspell-Motion.png')
         self.RLastspell =load_image('Reimu-Last Spell-Motion.png')
+        self.ILastspell =load_image('IkuLastspell-Motion.png')
         self.Lastspelli = 0
         self.Lastspellj = 0
         self.Lastspellcheak = 0
@@ -105,12 +108,16 @@ class Player:
         self.RLastspellEffect1 =load_image('Reimu-Lastspell1.png')
         self.RLastspellEffect2 =load_image('Reimu-Lastspell2-1.png')
         self.RLastspellEffect3 =load_image('Reimu-Lastspell3-2.png')
+        self.ILastspellEffect1= load_image('IkuLastspell1-1.png')
+        self.ILastspellEffect2=load_image('IkuLastspell1-2.png')
         self.LastspellEframe1 = 0
         self.Lastspellframe1 = 0
         self.Lastspellframe2 = 0
         self.Lastspellframe3 = 0
         self.ReimuLastX = [580, 620, 600]
         self.ReimuLastY = [160.175,200,225,250]
+        self.IkuLastX=[0,120,75]
+        self.IkuLastY=[120,75]
         self.Lastspellc=0
         self.Lastspelld=0
 
@@ -308,7 +315,25 @@ class Player:
                 self.Skill3cheak = 0
                 player.stat=10
 
-
+        ###이쿠
+        if self.stat==23:
+            if self.Skill3cheak<19:
+                if self.Skill3cheak<5:
+                    self.Skill3i = (self.Skill3i + 1) % 7
+                    self.Skill3j = (self.Skill3j + 1) % 6
+                if self.Skill3cheak>=5:
+                    self.IS3Effect.clip_draw(self.S3frame *260,0,260,250,600,self.All_Y+25)
+                    self.S3frame = (self.S3frame+1)%4
+                    if self.Skill3cheak>17:
+                        self.Skill3i = (self.Skill3i + 1) % 7
+                        self.Skill3j = (self.Skill3j + 1) % 6
+                self.Skill3cheak += 1
+            if self.Skill3cheak == 18:
+                self.Skill3i = 0
+                self.Skill3j = 0
+                self.S3frame = 0
+                self.Skill3cheak = 0
+                player.stat=20
         ###마리사
         if self.stat==43:
             if self.Skill3cheak < 17:
@@ -365,6 +390,32 @@ class Player:
                 self.LastspellEframe1=0
                 player.stat = 10
 
+        ###이쿠
+        if self.stat==24:
+            if self.Lastspellcheak<19:
+                if self.Lastspellcheak<8:
+                    self.Lastspelli = (self.Lastspelli + 1) % 10
+                    self.Lastspellj = (self.Lastspellj + 1) % 10
+                if self.Lastspellcheak>=8:
+                    self.ILastspellEffect2.clip_draw(self.IkuLastX[(self.Lastspelld + 1) % 2], 0,self.IkuLastY[self.Lastspellc], 255, 600 - 50, self.All_Y + 70)
+                    self.ILastspellEffect2.clip_draw(self.IkuLastX[(self.Lastspelld + 1) % 2], 0,self.IkuLastY[self.Lastspellc], 255, 600 + 40, self.All_Y + 70)
+                    self.ILastspellEffect2.clip_draw(self.IkuLastX[self.Lastspelld], 0,self.IkuLastY[self.Lastspellc], 255, 600, self.All_Y + 70)
+                    self.ILastspellEffect1.clip_draw(self.LastspellEframe1*270, 0,270, 255, 600 +15, self.All_Y + 210)
+                    self.LastspellEframe1 =(self.LastspellEframe1+1)%4
+                    self.Lastspelld = (self.Lastspelld+1)%2
+                    self.Lastspellc= (self.Lastspellc+1)%1
+                if self.Lastspellcheak>=16:
+                    self.Lastspelli = (self.Lastspelli + 1) % 10
+                    self.Lastspellj = (self.Lastspellj + 1) % 10
+                self.Lastspellcheak +=1
+            if self.Lastspellcheak == 18:
+                self.Lastspelli = 0
+                self.Lastspellj = 0
+                self.Lastspellcheak = 0
+                self.LastspellEframe1=0
+                self.Lastspelld = 0
+                self.Lastspellc = 0
+                player.stat = 20
 
         ###마리사
         if self.stat==44:
@@ -452,7 +503,11 @@ class Player:
 
             self.RSkill3.clip_draw(self.Skill3frame1[self.Skill3i],100,self.Skill3frame2[self.Skill3j],100,self.Player,self.All_Y)
 
-
+        ###이쿠
+        if self.stat==23:
+            self.Skill3frame1 =[0,64,126,196,268,338,405]
+            self.Skill3frame2 =[64,62,70,72,67,68]
+            self.ISkill3.clip_draw(self.Skill3frame1[self.Skill3i], 145, self.Skill3frame2[self.Skill3j], 145,self.Player, self.All_Y)
         ###마리사
         if self.stat ==43:
             self.Skill3frame1 = [0, 65, 125, 195, 275, 332, 412, 500, 590, 661]
@@ -468,8 +523,13 @@ class Player:
             self.Lastframe2 = [105,104,102,103,104,103,104,98,88,85,74,77,97,103,100]
             self.RLastspell.clip_draw(self.Lastframe1[self.Lastspelli], 130, self.Lastframe2[self.Lastspellj], 130, self.Player,self.All_Y+15)
 
+        ###이쿠
+        if self.stat ==24:
+            self.Lastframe1 =[0,60,120,180,243,315,440,570,700,825,945,1035]
+            self.Lastframe2 =[60,60,60,63,72,125,130,130,125,120]
+            self.ILastspell.clip_draw(self.Lastframe1[self.Lastspelli], 140, self.Lastframe2[self.Lastspellj], 140, self.Player,self.All_Y)
 
-        ###마리사
+            ###마리사
         if self.stat == 44:
             self.Lastframe1 = [0, 65,127,187,251,305,386,451,536,610,680,750,815,880,943,1010,1070]
             self.Lastframe2 = [65,62,60,64,55,79,62,80,72,66,66,65,63,60,59,58,58]
