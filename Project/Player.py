@@ -59,14 +59,18 @@ class Player:
 ######################SKILL2####################################
         self.MSkill2 = load_image('MarisaSkill2-Motion.png')
         self.RSkill2 = load_image('Reimu-Skill2-Motion.png')
+        self.ISkill2 =load_image('IkuSkill2-Motion.png')
         self.Skill2i = 0
         self.Skill2j = 0
         self.Skill2cheak = 0
         self.MS2Effect = load_image('MarisaSkill2.png')
         self.RS2Effect = load_image('Reimu-Skill2.png')
+        self.IS2Effect=load_image('IkuSkill2-1.png')
         self.Skill2Ex1 = 120
         self.Skill2Ex2 = 100
         self.Skill2Ex3 = 80
+        self.ISkill2Px=300
+        self.ISkill2Mx=330
         self.S2frame=0
 
 
@@ -231,6 +235,32 @@ class Player:
                 self.Skill2cheak = 0
                 self.S2frame=0
                 player.stat=10
+
+        ###이쿠
+        if self.stat==22:
+            if self.Skill2cheak <19:
+                if self.Skill2cheak<11:
+                    self.Skill2i = (self.Skill2i + 1) % 16
+                    self.Skill2j = (self.Skill2j + 1) % 15
+                if self.Skill2cheak>5 and self.Skill2cheak<15:
+                    if self.Skill2cheak>8:
+
+                        self.ISkill2Mx += 10
+                    self.ISkill2Px +=10
+                if self.Skill2cheak>=15:
+                    self.Skill2i = (self.Skill2i + 1) % 16
+                    self.Skill2j = (self.Skill2j + 1) % 15
+                    self.ISkill2Px -= 10
+                self.S2frame = (self.S2frame+1)%6
+            self.Skill2cheak +=1
+            if self.Skill2cheak == 19:
+                self.Skill2i = 0
+                self.Skill2j = 0
+                self.S2frame=0
+                self.ISkill2Px=300
+                self.ISkill2Mx = 330
+                self.Skill2cheak = 0
+                player.stat=20
 
 
 
@@ -398,8 +428,15 @@ class Player:
             self.Skill2frame1 = [0,66,120,217,304,392,480,572,675]
             self.Skill2frame2 = [66,54,97,87,88,88,92,103]
             self.RSkill2.clip_draw(self.Skill2frame1[self.Skill2i],155, self.Skill2frame2[self.Skill2j],120,self.Player,self.All_Y)
+        ###이쿠
+        if self.stat==22:
+            self.Skill2frame1 =[0,70,130,200,283,356,422,490,597,732,912,1087,1247,1375,1463,1520]
+            self.Skill2frame2 =[70,60,70,83,73,66,66,101,133,178,173,157,124,83,63]
+            self.ISkill2.clip_draw(self.Skill2frame1[self.Skill2i],145, self.Skill2frame2[self.Skill2j],145,self.Player+self.ISkill2Px,self.All_Y)
+            if self.Skill2cheak > 8and self.Skill2cheak<15:
+                self.IS2Effect.clip_draw(self.S2frame * 193, 60, 193, 60, self.Player + self.ISkill2Mx, self.All_Y - 5)
 
-        ###마리사
+            ###마리사
         if self.stat==42:
             self.Skill2frame1 = [0, 85, 165, 240, 318, 395, 464, 525]
             self.Skill2frame2 = [85, 80, 75, 78, 76, 67, 64]
