@@ -29,6 +29,7 @@ class Player:
         self.MStanding = load_image('MarisaStanding-Motion.png')
         self.RStanding = load_image('Reimu-Standing-Motion.png')
         self.IStanding = load_image('Iku-Standing-Motion.png')
+        self.TStanding= load_image('TenshiStanding-Motion.png')
         self.Standi = 0
         self.Standj = 0
         self.Standcheak =0
@@ -39,6 +40,7 @@ class Player:
         self.MSkill1 = load_image('MarisaSkill1-Motion.png')
         self.RSKill1 = load_image('Reimu-Skill1-Motion.png')
         self.ISkill1 = load_image('IkuSkill1-Motion.png')
+        self.TSkill1 =load_image('TenshiSkill1-Motion.png')
         self.Skill1i = 0
         self.Skill1j = 0
         self.Skill1cheak = 0
@@ -46,11 +48,15 @@ class Player:
         self.RS1Effect = load_image('Reimu-Skill1.png')
         self.IS1Effect= load_image('IkuSkill1-1.png')
         self.IS1Effect2 =load_image('IkuSkill1-2.png')
+        self.TS1Effect =load_image('TenshiSkill1.png')
+        self.TenshiS1X = [0,106,235,367,509,646,746,875]
+        self.TenshiS1Y = [107,129,132,142,135,98,135]
 
         self.Skill1Ei = 0
         self.Skill1Ej = 0
         self.Skill1X=80
         self.S1frame=0
+        self.Skill1Y=160
         self.Skill1Eframe1 = 0
 
 
@@ -60,15 +66,20 @@ class Player:
         self.MSkill2 = load_image('MarisaSkill2-Motion.png')
         self.RSkill2 = load_image('Reimu-Skill2-Motion.png')
         self.ISkill2 =load_image('IkuSkill2-Motion.png')
+        self.TSkill2 = load_image('TenshiSkill2-Motion.png')
         self.Skill2i = 0
         self.Skill2j = 0
         self.Skill2cheak = 0
         self.MS2Effect = load_image('MarisaSkill2.png')
         self.RS2Effect = load_image('Reimu-Skill2.png')
         self.IS2Effect=load_image('IkuSkill2-1.png')
+        self.TS2Effect =load_image('TenshiSkill2-1.png')
         self.Skill2Ex1 = 120
         self.Skill2Ex2 = 100
         self.Skill2Ex3 = 80
+        self.TSkill2Px1=75
+        self.TSkill2Px2 = 75
+        self.TSkill2Px3 = 75
         self.ISkill2Px=300
         self.ISkill2Mx=330
         self.S2frame=0
@@ -82,12 +93,14 @@ class Player:
         self.MSkill3 = load_image('MarisaSkill3-Motion.png')
         self.RSkill3 =load_image('Reimu-Skill3-Motion.png')
         self.ISkill3 =load_image('IkuSkill3-Motion.png')
+        self.TSkill3 = load_image('TenshiSkill3-Motion.png')
         self.Skill3i = 0
         self.Skill3j = 0
         self.Skill3cheak = 0
         self.MS3Effect = load_image('MarisaSKill3.png')
         self.RS3Effect = load_image('Reimu-Skill3.png')
         self.IS3Effect= load_image('IkuSkill3-1.png')
+        self.TS3Effect = load_image('TenshiSkill3.png')
         self.Skill3Eframe1 = 0
         self.Skill3Ex1 = 120
         self.Skill3Rx = 70
@@ -101,6 +114,7 @@ class Player:
         self.MLastspell = load_image('MarisaLastspell-Motion.png')
         self.RLastspell =load_image('Reimu-Last Spell-Motion.png')
         self.ILastspell =load_image('IkuLastspell-Motion.png')
+        self.TLastspell =load_image('TenshiLastspell-Motion.png')
         self.Lastspelli = 0
         self.Lastspellj = 0
         self.Lastspellcheak = 0
@@ -110,6 +124,8 @@ class Player:
         self.RLastspellEffect3 =load_image('Reimu-Lastspell3-2.png')
         self.ILastspellEffect1= load_image('IkuLastspell1-1.png')
         self.ILastspellEffect2=load_image('IkuLastspell1-2.png')
+        self.TLastspellEffect1=load_image('TenshiLastspell1-1.png')
+        self.TLastspellEffect2 =load_image('TenshiLastspell1-2.png')
         self.LastspellEframe1 = 0
         self.Lastspellframe1 = 0
         self.Lastspellframe2 = 0
@@ -147,6 +163,15 @@ class Player:
                 self.Standcheak = 0
 
         ###텐시
+        if self.stat==30:
+            if self.Standcheak<5:
+                self.Standi = (self.Standi + 1) % 6
+                self.Standj = (self.Standj + 1) % 5
+                self.Standcheak += 1
+            if self.Standcheak == 4:
+                self.Standi = 0
+                self.Standj= 0
+                self.Standcheak = 0
 
         ###마리사
         if self.stat==40:
@@ -203,7 +228,25 @@ class Player:
                 self.Skill1Eframe1 = 0
                 player.stat = 20
 
-
+            ###텐시
+        if self.stat ==31:
+            if self.Skill1cheak<15:
+                self.Skill1i = (self.Skill1i + 1) % 16
+                self.Skill1j = (self.Skill1j + 1) % 15
+                if self.Skill1cheak>7:
+                    self.TS1Effect.clip_draw(self.TenshiS1X[self.S1frame],0,self.TenshiS1Y[self.Skill1Eframe1],165,600,self.All_Y+self.Skill1Y)
+                    self.Skill1Y -=30
+                    self.S1frame = (self.S1frame + 1) % 8
+                    self.Skill1Eframe1 = (self.Skill1Eframe1+1)%7
+                self.Skill1cheak +=1
+            if self.Skill1cheak == 14:
+                self.Skill1i = 0
+                self.Skill1j = 0
+                self.Skill1cheak = 0
+                self.S1frame=0
+                self.Skill1Eframe1 = 0
+                self.Skill1Y =160
+                player.stat = 30
 
             ###마리사
         if self.stat ==41:
@@ -270,7 +313,35 @@ class Player:
                 player.stat=20
 
 
+        ###텐시
+        if self.stat==32:
+            if self.Skill2cheak<21:
+                if self.Skill2cheak<10:
+                    self.Skill2i = (self.Skill2i + 1) % 16
+                    self.Skill2j = (self.Skill2j + 1) % 15
+                if self.Skill2cheak>=10:
+                    self.TS2Effect.clip_draw(0,self.S2frame*50,70,50,self.Player+self.TSkill2Px1,self.All_Y)
+                    self.TS2Effect.clip_draw(0, self.S2frame * 50, 70, 50, self.Player + self.TSkill2Px2, self.All_Y+25)
+                    self.TS2Effect.clip_draw(0, self.S2frame * 50, 70, 50, self.Player + self.TSkill2Px3, self.All_Y-25)
+                    self.S2frame = (self.S2frame+1)%3
+                    if self.Skill2cheak<21:
+                        self.TSkill2Px1 += 50
+                        self.TSkill2Px2 += 75
+                        self.TSkill2Px3 += 90
+                    if self.Skill2cheak>=16:
+                        self.Skill2i = (self.Skill2i + 1) % 16
+                        self.Skill2j = (self.Skill2j + 1) % 15
+                self.Skill2cheak += 1
 
+            if self.Skill2cheak == 20:
+                self.Skill2i = 0
+                self.Skill2j = 0
+                self.S2frame=0
+                self.TSkill2Px1= 75
+                self.TSkill2Px2= 75
+                self.TSkill2Px3= 75
+                self.Skill2cheak = 0
+                player.stat = 30
         ###마리사
         if self.stat ==42:
             if self.Skill2cheak < 7:
@@ -334,6 +405,28 @@ class Player:
                 self.S3frame = 0
                 self.Skill3cheak = 0
                 player.stat=20
+
+        ###텐시
+        if self.stat==33:
+            if self.Skill3cheak<16:
+                if self.Skill3cheak<10:
+                    self.Skill3i = (self.Skill3i + 1) % 13
+                    self.Skill3j = (self.Skill3j + 1) % 12
+                if self.Skill3cheak>6 and self.Skill3cheak<14:
+                    self.TS3Effect.clip_draw(self.S3frame*260,107,260,120,self.Player+350,self.All_Y-10)
+                    self.S3frame = (self.S3frame+1)%7
+                if self.Skill3cheak>=14:
+                    self.Skill3i = (self.Skill3i + 1) % 13
+                    self.Skill3j = (self.Skill3j + 1) % 12
+
+                self.Skill3cheak +=1
+            if self.Skill3cheak == 15:
+                self.Skill3i = 0
+                self.Skill3j = 0
+                self.S3frame = 0
+                self.Skill3cheak = 0
+                player.stat=30
+
         ###마리사
         if self.stat==43:
             if self.Skill3cheak < 17:
@@ -417,6 +510,29 @@ class Player:
                 self.Lastspellc = 0
                 player.stat = 20
 
+
+        ###텐시
+        if self.stat==34:
+            if self.Lastspellcheak <20:
+                self.Lastspelli = (self.Lastspelli + 1) % 21
+                self.Lastspellj = (self.Lastspellj + 1) % 20
+                if self.Lastspellcheak>3:
+                    self.TLastspellEffect2.clip_draw(0,0,250,250,600,self.All_Y)
+                    if self.Lastspellcheak>4:
+                        self.TLastspellEffect1.clip_draw(self.LastspellEframe1*260,0,260,250,600,self.All_Y)
+                        if self.Lastspellcheak ==9:
+                            self.LastspellEframe1 +=1
+                        if self.Lastspellcheak==15:
+                            self.LastspellEframe1 +=1
+                self.Lastspellcheak +=1
+            if self.Lastspellcheak == 19:
+                self.Lastspelli = 0
+                self.Lastspellj = 0
+                self.Lastspellcheak = 0
+                self.LastspellEframe1=0
+
+                player.stat = 30
+
         ###마리사
         if self.stat==44:
             if self.Lastspellcheak < 18:
@@ -451,6 +567,12 @@ class Player:
             self.Standframe1 =[0,73, 140, 200, 265,324, 385, 446, 510, 580]
             self.Standframe2 =[74,64,60,62,58,59,63,65,70]
             self.IStanding.clip_draw(self.Standframe1[self.Standi],130,self.Standframe2[self.Standj],130,self.Player,self.All_Y)
+        ###텐시
+        if self.stat==30:
+            self.Standframe1 =[0,65,126,196,271,345]
+            self.Standframe2 =[65,61,70,75,74]
+            self.TStanding.clip_draw(self.Standframe1[self.Standi], 115, self.Standframe2[self.Standj], 115,self.Player, self.All_Y)
+
         ###마리사
         if self.stat==40:
             self.Standframe1 = [0,65,126,188,250,312,372,434,495,556,618]
@@ -468,6 +590,11 @@ class Player:
             self.Skill1frame1 =[0,68,133,193,259,329,390,470,543,615,680,745]
             self.Skill1frame2 =[68,65,60,66,68,59,78,74,70,63,68]
             self.ISkill1.clip_draw(self.Skill1frame1[self.Skill1i],145,self.Skill1frame2[self.Skill1j],145,self.Player, self.All_Y)
+           ###텐시
+        if self.stat ==31:
+            self.Skill1frame1 = [0,75,143,214,294,379,500,616,695,776,852,929,1006,1076,1146,1210]
+            self.Skill1frame2 = [75,67,70,77,82,120,112,73,73,73,71,68,65,63,64]
+            self.TSkill1.clip_draw(self.Skill1frame1[self.Skill1i],160,self.Skill1frame2[self.Skill1j],160,self.Player, self.All_Y+30)
             ###마리사
         if self.stat==41:
             self.Skill1frame1 = [0, 71, 132, 197, 262, 322, 396, 468, 536, 600]
@@ -486,6 +613,11 @@ class Player:
             self.ISkill2.clip_draw(self.Skill2frame1[self.Skill2i],145, self.Skill2frame2[self.Skill2j],145,self.Player+self.ISkill2Px,self.All_Y)
             if self.Skill2cheak > 8and self.Skill2cheak<15:
                 self.IS2Effect.clip_draw(self.S2frame * 193, 60, 193, 60, self.Player + self.ISkill2Mx, self.All_Y - 5)
+        ###텐시
+        if self.stat ==32:
+            self.Skill2frame1 =[0,70,149,228,305,378,448,520,590,664,740,814,888,960,1026,1100]
+            self.Skill2frame2 =[70,79,79,77,73,69,68,67,70,69,66,69,66,60,60]
+            self.TSkill2.clip_draw(self.Skill2frame1[self.Skill2i], 115, self.Skill2frame2[self.Skill2j], 115,self.Player, self.All_Y)
 
             ###마리사
         if self.stat==42:
@@ -508,6 +640,13 @@ class Player:
             self.Skill3frame1 =[0,64,126,196,268,338,405]
             self.Skill3frame2 =[64,62,70,72,67,68]
             self.ISkill3.clip_draw(self.Skill3frame1[self.Skill3i], 145, self.Skill3frame2[self.Skill3j], 145,self.Player, self.All_Y)
+
+        ###텐시
+        if self.stat==33:
+            self.Skill3frame1 =[0,77,155,240,340,425,528,710,876,960,1040,1110,1190]
+            self.Skill3frame2 =[77,78,83,99,80,98,178,160,70,70,63,68]
+            self.TSkill3.clip_draw(self.Skill3frame1[self.Skill3i], 115, self.Skill3frame2[self.Skill3j], 115,self.Player+200, self.All_Y)
+
         ###마리사
         if self.stat ==43:
             self.Skill3frame1 = [0, 65, 125, 195, 275, 332, 412, 500, 590, 661]
@@ -528,6 +667,12 @@ class Player:
             self.Lastframe1 =[0,60,120,180,243,315,440,570,700,825,945,1035]
             self.Lastframe2 =[60,60,60,63,72,125,130,130,125,120]
             self.ILastspell.clip_draw(self.Lastframe1[self.Lastspelli], 140, self.Lastframe2[self.Lastspellj], 140, self.Player,self.All_Y)
+
+        ###텐시
+        if self.stat ==34:
+            self.Lastframe1 =[0,72,142,266,435,577,715,842,928,1064,1200,1328,1430,1540,1640,1790,1965,2130,2295,2395,2465]
+            self.Lastframe2 =[72,70,124,169,142,137,124,85,132,131,124,96,109,95,145,167,155,150,90,72]
+            self.TLastspell.clip_draw(self.Lastframe1[self.Lastspelli], 165, self.Lastframe2[self.Lastspellj], 165, self.Player+200,self.All_Y+30)
 
             ###마리사
         if self.stat == 44:
