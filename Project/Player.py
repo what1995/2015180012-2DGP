@@ -137,6 +137,17 @@ class Player:
         self.Lastspellc=0
         self.Lastspelld=0
 
+        #########################Damage#############################3
+        self.RDamage =load_image('ReimuDamage-Motion.png')
+        self.Damagecheak =0
+        self.Damageframe=0
+
+
+        ########################DOWN############################
+        self.RDown =load_image('Reimu-Downs-Motion.png')
+        self.Downcheak=0
+        self.Downi=0
+        self.Downj=0
     def update(self):
 
         #####STANDING#########
@@ -551,6 +562,35 @@ class Player:
                 self.Lastspellcheak = 0
                 self.LastspellEframe1=0
                 player.stat = 40
+    ########Damage######
+    ####레이무
+        if self.stat==15:
+            if self.Damagecheak<3:
+                self.Damageframe= (self.Damageframe+1)%3
+                self.Damagecheak += 1
+
+            if self.Damagecheak==3:
+                player.stat =10
+                self.Damagecheak =0
+                self.Damageframe=0
+
+
+    ####이쿠
+
+    ####텐시
+
+    ####마리사
+
+    
+        ########Damage######
+        ####레이무
+
+
+        ####이쿠
+
+        ####텐시
+
+        ####마리사
 
 
 
@@ -681,7 +721,15 @@ class Player:
 
         # 플레이어
             self.MLastspell.clip_draw(self.Lastframe1[self.Lastspelli], 120, self.Lastframe2[self.Lastspellj], 120, self.Player+250,self.All_Y)
+        #########Damage#############3
+        ####레이무
+        if self.stat==15:
+            self.RDamage.clip_draw(self.Damageframe*112,90,110,90,self.Player,self.All_Y)
+        ####이쿠
 
+        ####텐시
+
+        ####마리사
 
 def handle_events():
     global running
@@ -707,6 +755,10 @@ def handle_events():
             player.stat += 3
         elif event.type == SDL_KEYDOWN and event.key == SDLK_f:
             player.stat += 4
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_z:
+            player.stat += 5
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_x:
+            player.stat += 6
         elif event.type == SDL_KEYDOWN and event.key == SDLK_1:
             background.backgroundselection = 1
         elif event.type == SDL_KEYDOWN and event.key == SDLK_2:
