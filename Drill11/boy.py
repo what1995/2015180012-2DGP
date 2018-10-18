@@ -1,9 +1,12 @@
 from pico2d import *
 
 # Boy State
+IDLE, RUN = range(2)
 # fill here
 
 # Boy Event
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP =range(4)
+
 # fill here
 
 key_event_table = {
@@ -14,6 +17,8 @@ key_event_table = {
 }
 
 next_state_table = {
+    IDLE: {RIGHT_UP: RUN, LEFT_UP:RUN, RIGHT_DOWN:RUN,LEFT_DOWN:RUN}
+    RUN:{RIGHT_UP:IDLE,LEFT_UP:IDLE,LEFT_DOWN:IDLE,RIGHT_DOWN:IDLE}
 # fill here
 }
 
@@ -45,10 +50,16 @@ class Boy:
         pass
 
     def do_IDLE(self):
+        self.frame =(self.frame+1)%8
+        self.timer -= 1
         # fill here
         pass
 
     def draw_IDLE(self):
+        if self.dir ==1:
+            self.image.clip_draw(self.frame*100,300,100,100,self.x,self.y)
+        else:
+            self.image.clip_draw(self.frame*100,200,100,100,self.x,self.y)
         # fill here
         pass
 
