@@ -139,15 +139,20 @@ class Player:
 
         #########################Damage#############################3
         self.RDamage =load_image('ReimuDamage-Motion.png')
+        self.IDamage = load_image('IkuDamage-Motion.png')
+        self.Damagei=0
+        self.Damagej=0
         self.Damagecheak =0
         self.Damageframe=0
 
 
         ########################DOWN############################
         self.RDown =load_image('Reimu-Downs-Motion.png')
+        self.IDown =load_image('Iku-Down-Motion.png')
         self.Downcheak=0
         self.Downi=0
         self.Downj=0
+
     def update(self):
 
         #####STANDING#########
@@ -576,17 +581,48 @@ class Player:
 
 
     ####이쿠
+        if self.stat==25:
+            if self.Damagecheak < 3:
+                self.Damagei = (self.Damagei+1)%4
+                self.Damagej = (self.Damagej+1)%3
+                self.Damagecheak +=1
+            if self.Damagecheak==3:
+                player.stat=20
+                self.Damagecheak=0
+                self.Damagei=0
+                self.Damagej=0
 
     ####텐시
 
     ####마리사
 
-    
+
         ########Damage######
         ####레이무
-
+        if self.stat==16:
+            if self.Downcheak<20:
+                if self.Downcheak<9:
+                    self.Downi = (self.Downi+1)%11
+                    self.Downj = (self.Downj+1)%10
+                self.Downcheak +=1
+            if self.Downcheak==20:
+                player.stat =10
+                self.Downi =0
+                self.Downj =0
+                self.Downcheak=0
 
         ####이쿠
+        if self.stat==26:
+            if self.Downcheak<20:
+                if self.Downcheak<6:
+                    self.Downi = (self.Downi + 1) % 8
+                    self.Downj = (self.Downj + 1) % 7
+                self.Downcheak +=1
+            if self.Downcheak==20:
+                player.stat =20
+                self.Downi =0
+                self.Downj =0
+                self.Downcheak=0
 
         ####텐시
 
@@ -726,8 +762,28 @@ class Player:
         if self.stat==15:
             self.RDamage.clip_draw(self.Damageframe*112,90,110,90,self.Player,self.All_Y)
         ####이쿠
+        if self.stat==25:
+            self.Damageframe1 =[0,94,174,245]
+            self.Damageframe2 = [94,80,73]
+            self.IDamage.clip_draw(self.Damageframe1[self.Damagei],135,self.Damageframe2[self.Damagej],135,self.Player,self.All_Y)
 
         ####텐시
+
+        ####마리사
+
+        #########Down#############3
+        ####레이무
+        if self.stat==16:
+            self.Downframe1 = [0,92, 172,272,369, 465, 576, 683, 784, 889, 970]
+            self.Downframe2 = [92,80,100,97,96,110,105,102,105,103,130]
+            self.RDown.clip_draw(self.Downframe1[self.Downi],65,self.Downframe2[self.Downj],65,self.Player,self.All_Y-25)
+        ####이쿠
+        if self.stat==26:
+            self.Downframe1 =[0,125,240,374,514,651,793,945]
+            self.Downframe2 = [125,115,134,140,136,140,158]
+            self.IDown.clip_draw(self.Downframe1[self.Downi], 105, self.Downframe2[self.Downj], 105, self.Player,self.All_Y -25)
+
+            ####텐시
 
         ####마리사
 
