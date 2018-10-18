@@ -140,6 +140,7 @@ class Player:
         #########################Damage#############################3
         self.RDamage =load_image('ReimuDamage-Motion.png')
         self.IDamage = load_image('IkuDamage-Motion.png')
+        self.TDamage =load_image('TenshiDamage-Motion.png')
         self.Damagei=0
         self.Damagej=0
         self.Damagecheak =0
@@ -149,6 +150,7 @@ class Player:
         ########################DOWN############################
         self.RDown =load_image('Reimu-Downs-Motion.png')
         self.IDown =load_image('Iku-Down-Motion.png')
+        self.TDown = load_image('TenshiDown-Motion.png')
         self.Downcheak=0
         self.Downi=0
         self.Downj=0
@@ -593,6 +595,14 @@ class Player:
                 self.Damagej=0
 
     ####텐시
+        if self.stat==35:
+            if self.Damagecheak<5:
+                self.Damageframe = (self.Damageframe+1)%5
+                self.Damagecheak += 1
+            if self.Damagecheak==5:
+                player.stat=30
+                self.Damagecheak=0
+                self.Damageframe =0
 
     ####마리사
 
@@ -625,6 +635,18 @@ class Player:
                 self.Downcheak=0
 
         ####텐시
+        if self.stat==36:
+            if self.Downcheak<20:
+                if self.Downcheak<4:
+                    self.Downi = (self.Downi + 1) % 6
+                    self.Downj = (self.Downj + 1) % 5
+                self.Downcheak += 1
+            if self.Downcheak==20:
+                player.stat =30
+                self.Downi =0
+                self.Downj =0
+                self.Downcheak=0
+
 
         ####마리사
 
@@ -768,6 +790,8 @@ class Player:
             self.IDamage.clip_draw(self.Damageframe1[self.Damagei],135,self.Damageframe2[self.Damagej],135,self.Player,self.All_Y)
 
         ####텐시
+        if self.stat==35:
+            self.TDamage.clip_draw(self.Damageframe*80,115,78,115,self.Player,self.All_Y)
 
         ####마리사
 
@@ -784,6 +808,11 @@ class Player:
             self.IDown.clip_draw(self.Downframe1[self.Downi], 105, self.Downframe2[self.Downj], 105, self.Player,self.All_Y -25)
 
             ####텐시
+
+        if self.stat==36:
+            self.Downframe1 =[0,120,235,350,470,595]
+            self.Downframe2 =[120,115,115,120,125]
+            self.TDown.clip_draw(self.Downframe1[self.Downi], 75, self.Downframe2[self.Downj], 75, self.Player,self.All_Y-30)
 
         ####마리사
 
