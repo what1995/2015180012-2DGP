@@ -2,7 +2,7 @@ from pico2d import *
 
 # Boy Event
 # fill here
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP ,LSHIFT_DOWN,LSHIFT_UP,RSHIFT_DOWN,RSHIFT_UP= range(8)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP ,LSHIFT_DOWN,LSHIFT_UP,RSHIFT_DOWN,RSHIFT_UP,SLEEP_TIMER= range(9)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -31,6 +31,9 @@ class IdleState:
     @staticmethod
     def do(boy):
         boy.frame = (boy.frame+1)%8
+        boy.timer -=1
+        if boy.timer ==0:
+            boy.add_event(SLEEP_TIMER)
 
     @staticmethod
     def draw(boy):
@@ -94,11 +97,30 @@ class DashState:
         else:
             boy.image.clip_draw(boy.frame * 100, 0, 100, 100, boy.x, boy.y)
 
+class SleepState:
+    @staticmethod
+    def enter(boy,event):
+        boy.frame=0
+
+    @staticmethod
+    def exit(boy,event):
+        pass
+    @staticmethod
+    def do(boy):
+        boy.frame =(boy.frame+1)%8
+
+    @staticmethod
+    def draw(boy):
+        if boy.dir ==1:
+            boy.image.clip_composite_draw(boy.frame*100,300,100,100,3.141592/2,'',boy.x-25,boy.y-25,100,100)
+        else:
+            boy.image.clip_composite_draw(boy.frame * 100, 200, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25, 100,100)
 
 next_state_table = {
     IdleState: {RIGHT_UP:RunState,LEFT_UP:RunState,RIGHT_DOWN:RunState,LEFT_DOWN:RunState,RSHIFT_DOWN:IdleState,RSHIFT_UP:IdleState,LSHIFT_DOWN:IdleState,LSHIFT_UP:IdleState},
     RunState:{RIGHT_UP:IdleState,LEFT_UP:IdleState,LEFT_DOWN:IdleState,RIGHT_DOWN:IdleState,RSHIFT_DOWN:DashState,RSHIFT_UP:RunState,LSHIFT_DOWN:DashState,LSHIFT_UP:RunState},
-    DashState:{RIGHT_UP:IdleState,LEFT_UP:IdleState,LEFT_DOWN:IdleState,RIGHT_DOWN:IdleState,RSHIFT_DOWN:RunState,RSHIFT_UP:RunState,LSHIFT_DOWN:RunState,LSHIFT_UP:RunState}
+    DashState:{RIGHT_UP:IdleState,LEFT_UP:IdleState,LEFT_DOWN:IdleState,RIGHT_DOWN:IdleState,RSHIFT_DOWN:RunState,RSHIFT_UP:RunState,LSHIFT_DOWN:RunState,LSHIFT_UP:RunState},
+    SleepState:{RIGHT_UP:RunState,LEFT_UP:RunState,RIGHT_DOWN:RunState,LEFT_DOWN:RunState}
 # fill here
 }
 

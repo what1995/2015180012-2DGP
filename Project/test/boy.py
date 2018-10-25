@@ -2,7 +2,7 @@ from pico2d import *
 
 # Boy Event
 # fill here
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP ,DASH_DOWN,DASH_UP= range(6)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP ,DASH_DOWN,DASH_UP,Stand= range(7)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -11,6 +11,7 @@ key_event_table = {
     (SDL_KEYUP, SDLK_LEFT): LEFT_UP,
     (SDL_KEYDOWN, SDLK_a): DASH_DOWN,
     (SDL_KEYUP, SDLK_a): DASH_UP,
+
 }
 
 
@@ -33,6 +34,8 @@ class IdleState:
     def do(boy):
         boy.frame1 = (boy.frame1 + 1) % 9
         boy.frame2 = (boy.frame2 + 1) % 9
+        if boy.velocity==2:
+            boy.add_event(RIGHT_DOWN)
         delay(0.1)
 
     @staticmethod
@@ -75,6 +78,7 @@ class RunState:
         boy.skill1cheak +=1
         if  boy.skill1cheak==23:
             boy.skill1cheak=0
+            boy.add_event(Stand)
 
 
         delay(0.1)
@@ -104,7 +108,7 @@ class RunState:
 
 next_state_table = {
     IdleState: {RIGHT_UP:RunState,LEFT_UP:RunState,RIGHT_DOWN:RunState,LEFT_DOWN:RunState,DASH_DOWN:RunState,DASH_UP:RunState},
-    RunState:{RIGHT_UP:IdleState,LEFT_UP:IdleState,LEFT_DOWN:IdleState,RIGHT_DOWN:IdleState,DASH_DOWN:IdleState,DASH_UP:IdleState}
+    RunState:{RIGHT_UP:RunState,LEFT_UP:IdleState,LEFT_DOWN:IdleState,RIGHT_DOWN:IdleState,DASH_DOWN:IdleState,DASH_UP:IdleState,Stand:IdleState}
 # fill here
 }
 
@@ -163,8 +167,8 @@ class Boy:
                 self.velocity =1
             elif key_event ==LEFT_DOWN:
                 self.velocity -=1
-            elif key_event == RIGHT_UP:
-                self.velocity -=1
+           # elif key_event == RIGHT_UP:
+           #     self.velocity -=1
             elif key_event==LEFT_UP:
                 self.velocity +=1
             elif key_event==DASH_DOWN:
@@ -172,4 +176,6 @@ class Boy:
             elif key_event == DASH_UP:
                 self.velocity += 5
             self.add_event(key_event)
+        if SDL_MOUSEBUTTONDOWN and SDL_BUTTON_LEFT:
+            self.velocity = 2
 
