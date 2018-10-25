@@ -9,6 +9,7 @@ import game_world
 from iku import Iku
 from reimu import Reimu
 from tenshi import Tenshi
+from marisa import Marisa
 from background import BackGround
 
 
@@ -18,6 +19,7 @@ name = "MainState"
 iku = None
 reimu=None
 tenshi=None
+marisa=None
 grass = None
 Player = 2
 def enter():
@@ -30,7 +32,9 @@ def enter():
         game_world.add_object(reimu, 1)
     elif Player==2:
         tenshi = Tenshi()
-        game_world.add_object(tenshi, 1)
+    elif Player == 3:
+        marisa = Marisa()
+        game_world.add_object(marisa, 1)
     background = BackGround()
     game_world.add_object(background,0)
 
@@ -61,6 +65,8 @@ def handle_events():
                 reimu.handle_event(event)
             if Player == 2:
                 tenshi.handle_event(event)
+            if Player == 3:
+                marisa.handle_event(event)
 
 
 def update():

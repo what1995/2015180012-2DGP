@@ -17,7 +17,7 @@ key_event_table = {
 }
 
 
-# Iku States
+# marisa States
 
 class StandState:
 
@@ -318,7 +318,7 @@ next_state_table = {
 
 }
 
-class Iku:
+class Marisa:
 
     def __init__(self):
         self.x, self.y = 200, 200
