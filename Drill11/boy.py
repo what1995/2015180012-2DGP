@@ -66,16 +66,34 @@ class RunState:
 
 # fill here
 
-class DasgStaate:
+class DashState:
     @staticmethod
     def enter(boy):
-        boy.frame=0
+        boy.frame = 0
         boy.dir = boy.velocity
+
+    @staticmethod
+    def exit(boy):
+        pass
+    @staticmethod
+    def do(boy):
+
+        boy.frame = (boy.frame + 1) % 8
+        boy.x += boy.velocity*5
+        boy.x = clamp(25, boy.x, 800 - 25)
+
+    @staticmethod
+    def draw(boy):
+        if boy.velocity == 1:
+            boy.image.clip_draw(boy.frame * 100, 100, 100, 100, boy.x, boy.y)
+        else:
+            boy.image.clip_draw(boy.frame * 100, 0, 100, 100, boy.x, boy.y)
 
 
 next_state_table = {
-    IdleState: {RIGHT_UP:RunState,LEFT_UP:RunState,RIGHT_DOWN:RunState,LEFT_DOWN:RunState},
-    RunState:{RIGHT_UP:IdleState,LEFT_UP:IdleState,LEFT_DOWN:IdleState,RIGHT_DOWN:IdleState}
+    IdleState: {RIGHT_UP:RunState,LEFT_UP:RunState,RIGHT_DOWN:RunState,LEFT_DOWN:RunState,RSHIFT_DOWN:IdleState,RSHIFT_UP:IdleState,LSHIFT_DOWN:IdleState,LSHIFT_UP:IdleState},
+    RunState:{RIGHT_UP:IdleState,LEFT_UP:IdleState,LEFT_DOWN:IdleState,RIGHT_DOWN:IdleState,RSHIFT_DOWN:DashState,RSHIFT_UP:RunState,LSHIFT_DOWN:DashState,LSHIFT_UP:RunState},
+    DashState:{RIGHT_UP:IdleState,LEFT_UP:IdleState,LEFT_DOWN:IdleState,RIGHT_DOWN:IdleState,RSHIFT_DOWN:RunState,RSHIFT_UP:RunState,LSHIFT_DOWN:RunState,LSHIFT_UP:RunState}
 # fill here
 }
 
@@ -92,7 +110,7 @@ class Boy:
         self.image = load_image('animation_sheet.png')
         self.dir = 1
         self.velocity = 0
-        self.speed=1
+        #self.speed=1
         self.event_que = []
         self.cur_state=IdleState
         self.cur_state.enter(self)
@@ -129,13 +147,13 @@ class Boy:
         if(event.type,event.key) in key_event_table:
             key_event = key_event_table[(event.type,event.key)]
             if key_event ==RIGHT_DOWN:
-                self.velocity +=1*(self.speed)
+                self.velocity +=1
             elif key_event ==LEFT_DOWN:
-                self.velocity -=1*(self.speed)
+                self.velocity -=1
             elif key_event == RIGHT_UP:
-                self.velocity -=1*(self.speed)
+                self.velocity -=1
             elif key_event==LEFT_UP:
-                self.velocity +=1*(self.speed)
+                self.velocity +=1
 
             self.add_event(key_event)
 
