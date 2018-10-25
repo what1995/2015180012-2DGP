@@ -108,7 +108,28 @@ class SleepState:
             boy.image.clip_composite_draw(boy.frame * 100, 200, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25, 100,100)
 
 
+class DashState:
+    @staticmethod
+    def enter(boy):
+        boy.frame = 0
+        boy.time = 0
+        boy.speed = 5
+        boy.dir = boy.velocity
 
+    @staticmethod
+    def exit(boy):
+        pass
+
+    @staticmethod
+    def do(boy):
+        boy.frame = (boy.frame + 1) % 8
+        boy.time = (boy.time + 1) % 30
+        boy.x += boy.velocity * boy.speed
+        boy.x = clamp(25, boy.x, 800 - 25)
+
+    @staticmethod
+    def draw(boy):
+        pass
 
 
 
