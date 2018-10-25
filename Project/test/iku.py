@@ -2,17 +2,18 @@ from pico2d import *
 
 import game_world
 
-# Boy Event
-RIGHT_DOWN, LEFT_DOWN,Stand = range(3)
+# iku Event
+Stand,Skill1, Skill2,Skill3, Last = range(5)
 
 key_event_table = {
-    #(SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
-(SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT): RIGHT_DOWN,
-    (SDL_KEYDOWN, SDLK_LEFT): LEFT_DOWN
+(SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT): Skill1,
+    (SDL_KEYDOWN, SDLK_a): Skill2,
+    (SDL_KEYDOWN, SDLK_s): Skill3,
+    (SDL_KEYDOWN, SDLK_d): Last
 }
 
 
-# Boy States
+# Iku States
 
 class StandState:
 
@@ -23,9 +24,9 @@ class StandState:
         iku.frame2 = 0
         iku.Standframe1 = [0, 73, 140, 200, 265, 324, 385, 446, 510, 580]
         iku.Standframe2 = [74, 64, 60, 62, 58, 59, 63, 65, 70]
-        if event == RIGHT_DOWN:
+        if event == Skill1:
             iku.motion = 1
-        if event == LEFT_DOWN:
+        if event == Skill2:
             iku.motion = 2
             iku.timer = 300
 
@@ -45,141 +46,209 @@ class StandState:
         if iku.motion ==0:
             iku.stand.clip_draw(iku.Standframe1[iku.frame1], 130, iku.Standframe2[iku.frame2], 130, iku.x, iku.y)
 
-
 class Skill1State:
 
     @staticmethod
-    def enter(boy, event):
-        boy.frame1 = 0
-        boy.frame2 = 0
-        boy.S1frame = 0
-        boy.Skill1Eframe1 = 0
-        boy.skill1cheak = 0
-        boy.Skill1frame1 = [0, 68, 133, 193, 259, 329, 390, 470, 543, 615, 680, 745]
-        boy.Skill1frame2 = [68, 65, 60, 66, 68, 59, 78, 74, 70, 63, 68]
-        if event == RIGHT_DOWN:
-            boy.motion = 1
+    def enter(iku, event):
+        iku.frame1 = 0
+        iku.frame2 = 0
+        iku.S1frame = 0
+        iku.Skill1Eframe1 = 0
+        iku.skill1cheak = 0
+        iku.Skill1frame1 = [0, 68, 133, 193, 259, 329, 390, 470, 543, 615, 680, 745]
+        iku.Skill1frame2 = [68, 65, 60, 66, 68, 59, 78, 74, 70, 63, 68]
+        if event == Skill1:
+            iku.motion = 1
 
 
     @staticmethod
-    def exit(boy, event):
+    def exit(iku, event):
         pass
         #if event ==SPACE:
         #    boy.fire_ball()
     @staticmethod
-    def do(boy):
-        if boy.skill1cheak<8:
-            boy.frame1 = (boy.frame1 + 1) % 11
-            boy.frame2 = (boy.frame2 + 1) % 11
-        if boy.skill1cheak>=8 and boy.skill1cheak<20:
-            boy.S1frame = (boy.S1frame + 1) % 12
-            boy.Skill1Eframe1 = (boy.Skill1Eframe1 + 1) % 7
-        if boy.skill1cheak>=20:
-            boy.frame1 = (boy.frame1 + 1) % 11
-            boy.frame2 = (boy.frame2 + 1) % 11
-        boy.skill1cheak +=1
-        if  boy.skill1cheak==23:
-            boy.skill1cheak=0
+    def do(iku):
+        if iku.skill1cheak<8:
+            iku.frame1 = (iku.frame1 + 1) % 11
+            iku.frame2 = (iku.frame2 + 1) % 11
+        if iku.skill1cheak>=8 and iku.skill1cheak<20:
+            iku.S1frame = (iku.S1frame + 1) % 12
+            iku.Skill1Eframe1 = (iku.Skill1Eframe1 + 1) % 7
+        if iku.skill1cheak>=20:
+            iku.frame1 = (iku.frame1 + 1) % 11
+            iku.frame2 = (iku.frame2 + 1) % 11
+        iku.skill1cheak +=1
+        if  iku.skill1cheak==23:
+            iku.skill1cheak=0
 
-            boy.add_event(Stand)
+            iku.add_event(Stand)
         delay(0.1)
 
     @staticmethod
-    def draw(boy):
-        if boy.motion == 1:
-            boy.skill1.clip_draw(boy.Skill1frame1[boy.frame1], 145, boy.Skill1frame2[boy.frame2], 145, boy.x, boy.y)
-            if boy.skill1cheak >= 8 and boy.skill1cheak < 20:
-                boy.S1effect.clip_draw(0, boy.S1frame * 52, 360, 52, boy.x + 200, boy.y + 10)
-                boy.S1effect2.clip_draw(boy.Skill1Eframe1 * 65, 0, 68, 60,boy.x + 400, boy.y + 10)
-
+    def draw(iku):
+        if iku.motion == 1:
+            iku.skill1.clip_draw(iku.Skill1frame1[iku.frame1], 145, iku.Skill1frame2[iku.frame2], 145, iku.x, iku.y)
+            if iku.skill1cheak >= 8 and iku.skill1cheak < 20:
+                iku.S1effect.clip_draw(0, iku.S1frame * 52, 360, 52, iku.x + 200, iku.y + 10)
+                iku.S1effect2.clip_draw(iku.Skill1Eframe1 * 65, 0, 68, 60,600-10, iku.y + 10)
 
 class Skill2State:
     @staticmethod
-    def enter(boy,event):
-        boy.frame1 = 0
-        boy.frame2 = 0
-        boy.S2frame = 0
-        boy.Skill2Eframe1 = 0
-        boy.skill2cheak = 0
-        boy.skill2Px = 300
-        boy.skill2Mx = 330
-        boy.Skill2frame1 = [0, 70, 130, 200, 283, 356, 422, 490, 597, 732, 912, 1087, 1247, 1375, 1463, 1520]
-        boy.Skill2frame2 = [70, 60, 70, 83, 73, 66, 66, 101, 133, 178, 173, 157, 124, 83, 63]
-        if event == LEFT_DOWN:
-            boy.motion = 2
+    def enter(iku,event):
+        iku.frame1 = 0
+        iku.frame2 = 0
+        iku.S2frame = 0
+        iku.Skill2Eframe1 = 0
+        iku.skill2cheak = 0
+        iku.skill2Px = 300
+        iku.skill2Mx = 330
+        iku.Skill2frame1 = [0, 70, 130, 200, 283, 356, 422, 490, 597, 732, 912, 1087, 1247, 1375, 1463, 1520]
+        iku.Skill2frame2 = [70, 60, 70, 83, 73, 66, 66, 101, 133, 178, 173, 157, 124, 83, 63]
+        if event == Skill2:
+            iku.motion = 2
 
     @staticmethod
-    def exit(boy,event):
+    def exit(iku,event):
         pass
     @staticmethod
-    def do(boy):
-        if boy.skill2cheak < 19:
-            if boy.skill2cheak < 11:
-                boy.frame1 = (boy.frame1 + 1) % 16
-                boy.frame2 = (boy.frame2 + 1) % 15
-            if boy.skill2cheak > 5 and boy.skill2cheak < 15:
-                if boy.skill2cheak > 8:
-                    boy.skill2Mx += 10
-                    boy.skill2Px += 10
-            if boy.skill2cheak >= 15:
-                boy.frame1 = (boy.frame1 + 1) % 16
-                boy.frame2 = (boy.frame2 + 1) % 15
-                boy.skill2Px -= 10
-                boy.Skill2Eframe1 = (boy.Skill2Eframe1 + 1) % 6
-            boy.skill2cheak += 1
-        if boy.skill2cheak == 19:
-            boy.skill2cheak = 0
-            boy.add_event(Stand)
+    def do(iku):
+        if iku.skill2cheak < 19:
+            if iku.skill2cheak < 11:
+                iku.frame1 = (iku.frame1 + 1) % 15
+                iku.frame2 = (iku.frame2 + 1) % 15
+            if iku.skill2cheak > 5 and iku.skill2cheak < 15:
+                if iku.skill2cheak > 8:
+                    iku.skill2Mx += 10
+                    iku.skill2Px += 10
+            if iku.skill2cheak >= 15:
+                iku.frame1 = (iku.frame1 + 1) % 15
+                iku.frame2 = (iku.frame2 + 1) % 15
+                iku.skill2Px -= 10
+                iku.Skill2Eframe1 = (iku.Skill2Eframe1 + 1) % 6
+            iku.skill2cheak += 1
+        if iku.skill2cheak == 19:
+            iku.skill2cheak = 0
+            iku.add_event(Stand)
         delay(0.1)
 
     @staticmethod
-    def draw(boy):
-        if boy.motion == 2:
-            boy.skill2.clip_draw(boy.Skill2frame1[boy.frame1], 145, boy.Skill2frame2[boy.frame2], 145,boy.x+boy.skill2Px, boy.y)
-            if boy.skill2cheak > 5 and boy.skill2cheak < 15:
-                boy.S2effect.clip_draw(boy.S2frame * 193, 60, 193, 60, boy.x + boy.skill2Mx, boy.y - 5)
+    def draw(iku):
+        if iku.motion == 2:
+            iku.skill2.clip_draw(iku.Skill2frame1[iku.frame1], 145, iku.Skill2frame2[iku.frame2], 145,iku.x+iku.skill2Px, iku.y)
+            if iku.skill2cheak > 6 and iku.skill2cheak < 15:
+                iku.S2effect.clip_draw(iku.S2frame * 193, 60, 193, 60, iku.x + iku.skill2Mx, iku.y - 5)
 
-class DashState:
+class Skill3State:
     @staticmethod
-    def enter(boy,event):
-        boy.frame = 0
-        boy.time = 0
-        boy.speed = 5
+    def enter(iku,event):
+        iku.frame1 = 0
+        iku.frame2 = 0
+        iku.S3frame = 0
+        iku.Skill3Eframe1 = 0
+        iku.skill3cheak = 0
+        iku.Skill3frame1 = [0, 64, 126, 196, 268, 338, 405]
+        iku.Skill3frame2 = [64, 62, 70, 72, 67, 68]
+        if event == Skill3:
+            iku.motion = 3
 
 
     @staticmethod
-    def exit(boy,event):
+    def exit(iku,event):
         pass
 
     @staticmethod
-    def do(boy):
-        boy.frame = (boy.frame + 1) % 8
-        boy.time = (boy.time + 1) % 75
-        if boy.time ==0:
-            boy.speed = 1
-        boy.x += boy.velocity * boy.speed
-        boy.x = clamp(25, boy.x, 1600 - 25)
-    @staticmethod
-    def draw(boy):
-        if boy.motion == 1:
-            boy.image.clip_draw(boy.frame * 100, 100, 100, 100, boy.x, boy.y)
-        else:
-            boy.image.clip_draw(boy.frame * 100, 0, 100, 100, boy.x, boy.y)
+    def do(iku):
+        if iku.skill3cheak < 19:
+            if iku.skill3cheak < 5:
+                iku.frame1 = (iku.frame1 + 1) % 6
+                iku.frame2 = (iku.frame2 + 1) % 6
+            if iku.skill3cheak >= 5:
 
+                iku.S3frame = (iku.S3frame + 1) % 4
+                if iku.skill3cheak > 17:
+                    iku.frame1 = (iku.frame1 + 1) % 6
+                    iku.frame2 = (iku.frame2 + 1) % 6
+            iku.skill3cheak += 1
+        if iku.skill3cheak == 18:
+            iku.skill3cheak = 0
+            iku.add_event(Stand)
+        delay(0.1)
+    @staticmethod
+    def draw(iku):
+        if iku.motion == 3:
+            iku.skill3.clip_draw(iku.Skill3frame1[iku.frame1], 145, iku.Skill3frame2[iku.frame2], 145,iku.x, iku.y)
+            if iku.skill3cheak >= 5:
+                iku.S3effect.clip_draw(iku.S3frame * 260, 0, 260, 250, 600,  iku.y + 25)
+
+class Laststate:
+    @staticmethod
+    def enter(iku, event):
+        iku.frame1 = 0
+        iku.frame2 = 0
+        iku.lastframe = 0
+        iku.lastEframe1 = 0
+        iku.lastcheak = 0
+        iku.LastspellEframe1 = 0
+        iku.Lastspellframe1 = 0
+        iku.Lastspellframe2 = 0
+        iku.Lastspellframe3 = 0
+        iku.Lastspellc = 0
+        iku.Lastspelld = 0
+        iku.IkuLastX = [0, 120, 75]
+        iku.IkuLastY = [120, 75]
+        iku.Lastframe1 = [0, 60, 120, 180, 243, 315, 440, 570, 700, 825, 945, 1035]
+        iku.Lastframe2 = [60, 60, 60, 63, 72, 125, 130, 130, 125, 120]
+
+        if event == Last:
+            iku.motion = 4
+
+    @staticmethod
+    def exit(iku, event):
+        pass
+
+    @staticmethod
+    def do(iku):
+        if iku.lastcheak < 19:
+            if iku.lastcheak < 8:
+                iku.frame1 = (iku.frame1 + 1) % 10
+                iku.frame2 = (iku.frame2 + 1) % 10
+            if iku.lastcheak >= 8:
+                iku.LastspellEframe1 = (iku.LastspellEframe1 + 1) % 4
+                iku.Lastspelld = (iku.Lastspelld + 1) % 2
+                iku.Lastspellc = (iku.Lastspellc + 1) % 1
+            if iku.lastcheak >= 16:
+                iku.frame1 = (iku.frame1 + 1) % 10
+                iku.frame2 = (iku.frame2 + 1) % 10
+            iku.lastcheak += 1
+        if iku.lastcheak == 18:
+            iku.lastcheak = 0
+            iku.add_event(Stand)
+        delay(0.1)
+
+    @staticmethod
+    def draw(iku):
+        if iku.motion == 4:
+            iku.Lastspell.clip_draw(iku.Lastframe1[iku.frame1], 140, iku.Lastframe2[iku.frame2], 140,iku.x, iku.y)
+            if iku.lastcheak >= 8:
+                iku.Lasteffect2.clip_draw(iku.IkuLastX[(iku.Lastspelld + 1) % 2], 0,iku.IkuLastY[iku.Lastspellc], 255, 600 - 50, iku.y + 70)
+                iku.Lasteffect2.clip_draw(iku.IkuLastX[(iku.Lastspelld + 1) % 2], 0, iku.IkuLastY[iku.Lastspellc], 255, 600 + 40, iku.y + 70)
+                iku.Lasteffect2.clip_draw(iku.IkuLastX[iku.Lastspelld], 0, iku.IkuLastY[iku.Lastspellc], 255,600, iku.y + 70)
+                iku.Lasteffect.clip_draw(iku.LastspellEframe1 * 270, 0, 270, 255, 600 + 15, iku.y + 210)
 
 
 next_state_table = {
-    StandState: {RIGHT_DOWN: Skill1State, LEFT_DOWN: Skill2State},
-    Skill1State: {RIGHT_DOWN: StandState,LEFT_DOWN: Skill1State,Stand:StandState},
-    Skill2State:{ RIGHT_DOWN: Skill2State, LEFT_DOWN: StandState,Stand:StandState},
-    DashState:{LEFT_DOWN:StandState,RIGHT_DOWN:StandState}
+    StandState: {Skill1: Skill1State, Skill2: Skill2State, Skill3:Skill3State,Last:Laststate},
+    Skill1State: {Skill1: StandState,  Stand:StandState},
+    Skill2State: {Skill2: StandState, Stand:StandState},
+    Skill3State: {Skill3: StandState ,Stand: StandState},
+    Laststate: {Last:StandState,Stand: StandState}
 
 }
 
 class Iku:
 
     def __init__(self):
-        self.x, self.y = 1600 // 2, 90
+        self.x, self.y = 200, 200
         self.stand = load_image('Iku-Standing-Motion.png')
 
         self.skill1 = load_image('IkuSkill1-Motion.png')
@@ -188,6 +257,13 @@ class Iku:
 
         self.skill2 = load_image('IkuSkill2-Motion.png')
         self.S2effect = load_image('IkuSkill2-1.png')
+
+        self.skill3 = load_image('IkuSkill3-Motion.png')
+        self.S3effect = load_image('IkuSkill3-1.png')
+
+        self.Lastspell = load_image('IkuLastspell-Motion.png')
+        self.Lasteffect = load_image('IkuLastspell1-1.png')
+        self.Lasteffect2 = load_image('IkuLastspell1-2.png')
 
         self.dir = 1
         self.motion = 0

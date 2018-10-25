@@ -7,7 +7,7 @@ import game_framework
 import game_world
 
 from iku import Iku
-from grass import Grass
+from background import BackGround
 
 
 
@@ -17,10 +17,10 @@ iku = None
 grass = None
 
 def enter():
-    global iku, grass
+    global iku, background
     iku = Iku()
-    grass = Grass()
-    game_world.add_object(grass,0)
+    background = BackGround()
+    game_world.add_object(background,0)
     game_world.add_object(iku,1)
 
 
