@@ -66,12 +66,16 @@ class RunState:
 
 # fill here
 
-
+class DasgStaate:
+    @staticmethod
+    def enter(boy):
+        boy.frame=0
+        boy.dir = boy.velocity
 
 
 next_state_table = {
-    IdleState: {RIGHT_UP:RunState,LEFT_UP:RunState,RIGHT_DOWN:RunState,LEFT_DOWN:RunState,DASH_DOWN:RunState,DASH_UP:RunState},
-    RunState:{RIGHT_UP:IdleState,LEFT_UP:IdleState,LEFT_DOWN:IdleState,RIGHT_DOWN:IdleState,DASH_DOWN:IdleState,DASH_UP:IdleState}
+    IdleState: {RIGHT_UP:RunState,LEFT_UP:RunState,RIGHT_DOWN:RunState,LEFT_DOWN:RunState},
+    RunState:{RIGHT_UP:IdleState,LEFT_UP:IdleState,LEFT_DOWN:IdleState,RIGHT_DOWN:IdleState}
 # fill here
 }
 
@@ -88,6 +92,7 @@ class Boy:
         self.image = load_image('animation_sheet.png')
         self.dir = 1
         self.velocity = 0
+        self.speed=1
         self.event_que = []
         self.cur_state=IdleState
         self.cur_state.enter(self)
@@ -124,16 +129,13 @@ class Boy:
         if(event.type,event.key) in key_event_table:
             key_event = key_event_table[(event.type,event.key)]
             if key_event ==RIGHT_DOWN:
-                self.velocity +=1
+                self.velocity +=1*(self.speed)
             elif key_event ==LEFT_DOWN:
-                self.velocity -=1
+                self.velocity -=1*(self.speed)
             elif key_event == RIGHT_UP:
-                self.velocity -=1
+                self.velocity -=1*(self.speed)
             elif key_event==LEFT_UP:
-                self.velocity +=1
-            elif key_event==DASH_DOWN:
-                self.velocity -=5
-            elif key_event == DASH_UP:
-                self.velocity += 5
+                self.velocity +=1*(self.speed)
+
             self.add_event(key_event)
 
