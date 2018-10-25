@@ -11,7 +11,8 @@ from reimu import Reimu
 from tenshi import Tenshi
 from marisa import Marisa
 from background import BackGround
-
+from PlayerHP import Player_HP
+from EnemyHP import Enemy_HP
 
 
 name = "MainState"
@@ -21,9 +22,9 @@ reimu=None
 tenshi=None
 marisa=None
 grass = None
-Player = 3
+Player = 0
 def enter():
-    global iku, background, Player,reimu,tenshi,marisa
+    global iku, background, Player,reimu,tenshi,marisa,PlayerHP,EnemyHP
     if Player==0:
         iku = Iku()
         game_world.add_object(iku, 1)
@@ -36,7 +37,11 @@ def enter():
         marisa = Marisa()
         game_world.add_object(marisa, 1)
     background = BackGround()
+    PlayerHP=Player_HP()
+    EnemyHP=Enemy_HP()
     game_world.add_object(background,0)
+    game_world.add_object(PlayerHP, 0)
+    game_world.add_object(EnemyHP, 0)
 
 
 

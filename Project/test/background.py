@@ -5,9 +5,11 @@ os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\FCGimage')
 class BackGround:
     def __init__(self):
         self.image = load_image('Hakurei Shrine.png')
+        self.center =load_image('center.png')
 
     def update(self):
         pass
 
     def draw(self):
         self.image.draw(400, 300)
+        self.center.draw(400, 500)

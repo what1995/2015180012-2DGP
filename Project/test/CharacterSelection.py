@@ -53,7 +53,7 @@ def update():
 
 
 def pause():
-    pass
+    global character
 
 
 def resume():
