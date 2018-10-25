@@ -110,14 +110,14 @@ class SleepState:
 
 class DashState:
     @staticmethod
-    def enter(boy):
+    def enter(boy,event):
         boy.frame = 0
         boy.time = 0
         boy.speed = 5
-        boy.dir = boy.velocity
+
 
     @staticmethod
-    def exit(boy):
+    def exit(boy,event):
         pass
 
     @staticmethod
@@ -125,11 +125,14 @@ class DashState:
         boy.frame = (boy.frame + 1) % 8
         boy.time = (boy.time + 1) % 30
         boy.x += boy.velocity * boy.speed
-        boy.x = clamp(25, boy.x, 800 - 25)
+        boy.x = clamp(25, boy.x, 1600 - 25)
 
     @staticmethod
     def draw(boy):
-        pass
+        if boy.velocity == 1:
+            boy.image.clip_draw(boy.frame * 100, 100, 100, 100, boy.x, boy.y)
+        else:
+            boy.image.clip_draw(boy.frame * 100, 0, 100, 100, boy.x, boy.y)
 
 
 
