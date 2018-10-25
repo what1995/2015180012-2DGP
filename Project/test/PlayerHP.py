@@ -7,11 +7,14 @@ class Player_HP:
         self.x = 200
         self.y = 500
         self.damage=0
+        self.Power=10
         self.HPBar = load_image('HP-Damege.png')
         self.HP = load_image('HP-HP.png')
 
     def update(self):
-        self.damage -=2
+        if self.Power>0:
+            self.damage -=2
+            self.Power-=1
 
     def draw(self):
         self.HPBar.draw(self.x, self.y)
