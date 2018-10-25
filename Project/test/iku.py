@@ -3,13 +3,15 @@ from pico2d import *
 import game_world
 
 # iku Event
-Stand,Skill1, Skill2,Skill3, Last = range(5)
+Stand,Skill1, Skill2,Skill3, Last, Damage,Down = range(7)
 
 key_event_table = {
 (SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT): Skill1,
     (SDL_KEYDOWN, SDLK_a): Skill2,
     (SDL_KEYDOWN, SDLK_s): Skill3,
-    (SDL_KEYDOWN, SDLK_d): Last
+    (SDL_KEYDOWN, SDLK_d): Last,
+(SDL_KEYDOWN, SDLK_z): Damage,
+(SDL_KEYDOWN, SDLK_x): Down
 }
 
 
@@ -235,13 +237,82 @@ class Laststate:
                 iku.Lasteffect2.clip_draw(iku.IkuLastX[iku.Lastspelld], 0, iku.IkuLastY[iku.Lastspellc], 255,600, iku.y + 70)
                 iku.Lasteffect.clip_draw(iku.LastspellEframe1 * 270, 0, 270, 255, 600 + 15, iku.y + 210)
 
+class Damagestate:
+    @staticmethod
+    def enter(iku, event):
+        iku.frame1 = 0
+        iku.frame2 = 0
+        iku.Damagecheak = 0
+        iku.Damageframe = 0
+        iku.Damageframe1 = [0, 94, 174, 245]
+        iku.Damageframe2 = [94, 80, 73]
+        if event == Damage:
+            iku.motion = 5
+    @staticmethod
+    def exit(iku, event):
+        pass
+
+    @staticmethod
+    def do(iku):
+        if iku.Damagecheak < 3:
+            iku.frame1 = (iku.frame1 + 1) % 4
+            iku.frame2 = (iku.frame2 + 1) % 3
+            iku.Damagecheak += 1
+        if iku.Damagecheak == 3:
+            iku.Damagecheak = 0
+            iku.add_event(Stand)
+        delay(0.1)
+
+
+    @staticmethod
+    def draw(iku):
+        if iku.motion == 5:
+            iku.Damage.clip_draw(iku.Damageframe1[iku.frame1],135,iku.Damageframe2[iku.frame2],135, iku.x, iku.y)
+
+class Downstate:
+    @staticmethod
+    def enter(iku, event):
+        iku.frame1 = 0
+        iku.frame2 = 0
+        iku.Downcheak=0
+        iku.Downframe1 = [0, 125, 240, 374, 514, 651, 793, 945]
+        iku.Downframe2 = [125, 115, 134, 140, 136, 140, 158]
+
+        if event == Down:
+            iku.motion = 6
+
+
+    @staticmethod
+    def exit(iku, event):
+        pass
+
+    @staticmethod
+    def do(iku):
+        if iku.Downcheak < 20:
+            if iku.Downcheak < 6:
+                iku.frame1 = (iku.frame1 + 1) % 8
+                iku.frame2 = (iku.frame2 + 1) % 7
+            iku.Downcheak += 1
+        if iku.Downcheak == 20:
+            iku.Downcheak = 0
+            iku.add_event(Stand)
+
+        delay(0.1)
+        iku.timer -= 1
+
+    @staticmethod
+    def draw(iku):
+        if iku.motion == 6:
+            iku.Down.clip_draw(iku.Downframe1[iku.frame1], 105, iku.Downframe2[iku.frame2], 105, iku.x, iku.y-30)
 
 next_state_table = {
-    StandState: {Skill1: Skill1State, Skill2: Skill2State, Skill3:Skill3State,Last:Laststate},
+    StandState: {Skill1: Skill1State, Skill2: Skill2State, Skill3:Skill3State,Last:Laststate, Damage:Damagestate,Down:Downstate},
     Skill1State: {Skill1: StandState,  Stand:StandState},
     Skill2State: {Skill2: StandState, Stand:StandState},
     Skill3State: {Skill3: StandState ,Stand: StandState},
-    Laststate: {Last:StandState,Stand: StandState}
+    Laststate: {Last:StandState,Stand: StandState},
+    Damagestate: {Damage:StandState, Stand:StandState},
+    Downstate: {Down:StandState,Stand:StandState}
 
 }
 
@@ -264,6 +335,10 @@ class Iku:
         self.Lastspell = load_image('IkuLastspell-Motion.png')
         self.Lasteffect = load_image('IkuLastspell1-1.png')
         self.Lasteffect2 = load_image('IkuLastspell1-2.png')
+
+        self.Damage = load_image('IkuDamage-Motion.png')
+
+        self.Down = load_image('Iku-Down-Motion.png')
 
         self.dir = 1
         self.motion = 0
