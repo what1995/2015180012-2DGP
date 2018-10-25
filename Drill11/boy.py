@@ -71,6 +71,7 @@ class DashState:
     def enter(boy):
         boy.speed=5
         boy.frame = 0
+        boy.time=0
         boy.dir = boy.velocity
 
     @staticmethod
@@ -80,6 +81,9 @@ class DashState:
     def do(boy):
 
         boy.frame = (boy.frame + 3) % 8
+        boy.time =(boy.time +1)%30
+        if(boy.time==0):
+            boy.speed=1
         boy.x += boy.velocity*boy.speed
         boy.x = clamp(25, boy.x, 800 - 25)
 
