@@ -28,11 +28,8 @@ class StandState:
         iku.frame2 = 0
         iku.Standframe1 = [0, 73, 140, 200, 265, 324, 385, 446, 510, 580]
         iku.Standframe2 = [74, 64, 60, 62, 58, 59, 63, 65, 70]
-        if event == Skill1:
-            iku.motion = 1
-        if event == Skill2:
-            iku.motion = 2
-            iku.timer = 300
+
+
 
     @staticmethod
     def exit(iku, event):
@@ -42,7 +39,7 @@ class StandState:
         iku.frame1 = (iku.frame1 + 1) % 9
         iku.frame2 = (iku.frame2 + 1) % 9
         delay(0.1)
-        iku.timer -= 1
+
 
 
     @staticmethod

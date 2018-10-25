@@ -7,6 +7,7 @@ import game_framework
 import game_world
 
 from iku import Iku
+from reimu import Reimu
 from background import BackGround
 
 
@@ -14,14 +15,20 @@ from background import BackGround
 name = "MainState"
 
 iku = None
+reimu=None
 grass = None
-
+Player = 1
 def enter():
-    global iku, background
-    iku = Iku()
+    global iku, background, Player,reimu
+    if Player==0:
+        iku = Iku()
+        game_world.add_object(iku, 1)
+    elif Player==1:
+        reimu = Reimu()
+        game_world.add_object(reimu, 1)
     background = BackGround()
     game_world.add_object(background,0)
-    game_world.add_object(iku,1)
+
 
 
 def exit():
@@ -43,7 +50,10 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
                 game_framework.quit()
         else:
-            iku.handle_event(event)
+            if Player == 0:
+                iku.handle_event(event)
+            if Player == 1:
+                reimu.handle_event(event)
 
 
 def update():
