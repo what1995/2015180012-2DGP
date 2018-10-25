@@ -8,6 +8,7 @@ import game_world
 
 from iku import Iku
 from reimu import Reimu
+from tenshi import Tenshi
 from background import BackGround
 
 
@@ -16,16 +17,20 @@ name = "MainState"
 
 iku = None
 reimu=None
+tenshi=None
 grass = None
-Player = 1
+Player = 2
 def enter():
-    global iku, background, Player,reimu
+    global iku, background, Player,reimu,tenshi
     if Player==0:
         iku = Iku()
         game_world.add_object(iku, 1)
     elif Player==1:
         reimu = Reimu()
         game_world.add_object(reimu, 1)
+    elif Player==2:
+        tenshi = Tenshi()
+        game_world.add_object(tenshi, 1)
     background = BackGround()
     game_world.add_object(background,0)
 
@@ -54,6 +59,8 @@ def handle_events():
                 iku.handle_event(event)
             if Player == 1:
                 reimu.handle_event(event)
+            if Player == 2:
+                tenshi.handle_event(event)
 
 
 def update():
