@@ -123,7 +123,9 @@ class DashState:
     @staticmethod
     def do(boy):
         boy.frame = (boy.frame + 1) % 8
-        boy.time = (boy.time + 1) % 30
+        boy.time = (boy.time + 1) % 75
+        if boy.time ==0:
+            boy.speed = 1
         boy.x += boy.velocity * boy.speed
         boy.x = clamp(25, boy.x, 1600 - 25)
 
