@@ -21,9 +21,9 @@ reimu=None
 tenshi=None
 marisa=None
 grass = None
-Player = 2
+Player = 3
 def enter():
-    global iku, background, Player,reimu,tenshi
+    global iku, background, Player,reimu,tenshi,marisa
     if Player==0:
         iku = Iku()
         game_world.add_object(iku, 1)
