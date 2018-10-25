@@ -80,7 +80,7 @@ class DashState:
     @staticmethod
     def do(boy):
 
-        boy.frame = (boy.frame + 3) % 8
+        boy.frame = (boy.frame + 1) % 8
         boy.time =(boy.time +1)%30
         if(boy.time==0):
             boy.speed=1
