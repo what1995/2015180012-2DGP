@@ -22,33 +22,31 @@ key_event_table = {
 class StandState:
 
     @staticmethod
-    def enter(iku, event):
-        iku.motion = 0
-        iku.frame1 = 0
-        iku.frame2 = 0
-        iku.Standframe1 = [0, 73, 140, 200, 265, 324, 385, 446, 510, 580]
-        iku.Standframe2 = [74, 64, 60, 62, 58, 59, 63, 65, 70]
+    def enter(tenshi, event):
+        tenshi.motion = 0
+        tenshi.frame1 = 0
+        tenshi.frame2 = 0
+        tenshi.Standframe1 = [0, 73, 140, 200, 265, 324, 385, 446, 510, 580]
+        tenshi.Standframe2 = [74, 64, 60, 62, 58, 59, 63, 65, 70]
         if event == Skill1:
-            iku.motion = 1
+            tenshi.motion = 1
         if event == Skill2:
-            iku.motion = 2
-            iku.timer = 300
+            tenshi.motion = 2
 
     @staticmethod
-    def exit(iku, event):
+    def exit(tenshi, event):
         pass
     @staticmethod
-    def do(iku):
-        iku.frame1 = (iku.frame1 + 1) % 9
-        iku.frame2 = (iku.frame2 + 1) % 9
+    def do(tenshi):
+        tenshi.frame1 = (tenshi.frame1 + 1) % 9
+        tenshi.frame2 = (tenshi.frame2 + 1) % 9
         delay(0.1)
-        iku.timer -= 1
 
 
     @staticmethod
-    def draw(iku):
-        if iku.motion ==0:
-            iku.stand.clip_draw(iku.Standframe1[iku.frame1], 130, iku.Standframe2[iku.frame2], 130, iku.x, iku.y)
+    def draw(tenshi):
+        if tenshi.motion ==0:
+            tenshi.stand.clip_draw(tenshi.Standframe1[tenshi.frame1], 130, tenshi.Standframe2[tenshi.frame2], 130, tenshi.x, tenshi.y)
 
 class Skill1State:
 
@@ -318,29 +316,28 @@ next_state_table = {
 
 }
 
-class Iku:
+class Tenshi:
 
     def __init__(self):
         self.x, self.y = 200, 200
-        self.stand = load_image('Iku-Standing-Motion.png')
+        self.stand = load_image('TenshiStanding-Motion.png')
 
-        self.skill1 = load_image('IkuSkill1-Motion.png')
-        self.S1effect = load_image('IkuSkill1-1.png')
-        self.S1effect2 = load_image('IkuSkill1-2.png')
+        self.skill1 = load_image('TenshiSkill1-Motion.png')
+        self.S1effect = load_image('TenshiSkill1.png')
 
-        self.skill2 = load_image('IkuSkill2-Motion.png')
-        self.S2effect = load_image('IkuSkill2-1.png')
+        self.skill2 = load_image('TenshiSkill2-Motion.png')
+        self.S2effect = load_image('TenshiSkill2-1.png')
 
-        self.skill3 = load_image('IkuSkill3-Motion.png')
-        self.S3effect = load_image('IkuSkill3-1.png')
+        self.skill3 = load_image('TenshiSkill3-Motion.png')
+        self.S3effect = load_image('TenshiSkill3.png')
 
-        self.Lastspell = load_image('IkuLastspell-Motion.png')
-        self.Lasteffect = load_image('IkuLastspell1-1.png')
-        self.Lasteffect2 = load_image('IkuLastspell1-2.png')
+        self.Lastspell = load_image('TenshiLastspell-Motion.png')
+        self.Lasteffect = load_image('TenshiLastspell1-1.png')
+        self.Lasteffect2 = load_image('TenshiLastspell1-2.png')
 
-        self.Damage = load_image('IkuDamage-Motion.png')
+        self.Damage = load_image('TenshiDamage-Motion.png')
 
-        self.Down = load_image('Iku-Down-Motion.png')
+        self.Down = load_image('TenshiDown-Motion.png')
 
         self.dir = 1
         self.motion = 0
