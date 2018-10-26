@@ -16,7 +16,7 @@ key_event_table = {
 (SDL_KEYDOWN, SDLK_x): Down
 }
 
-
+name = 'iku'
 # Iku States
 
 class StandState:

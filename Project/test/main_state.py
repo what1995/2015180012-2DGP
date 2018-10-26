@@ -2,10 +2,11 @@ import random
 import json
 import os
 
+os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\test')
 from pico2d import *
 import game_framework
-import game_world
 import CharacterSelection
+import game_world
 from iku import Iku
 from reimu import Reimu
 from tenshi import Tenshi
@@ -17,6 +18,7 @@ from Enemy_marisa import Enemy_Marisa
 from Enemy_reimu import Enemy_Reimu
 from Enemy_tenshi import Enemy_Tenshi
 from Enemy_iku import Enemy_Iku
+
 name = "MainState"
 
 iku = None
@@ -28,42 +30,35 @@ Enemy_marisa=None
 Enemy_reimu =None
 Enemy_tenshi=None
 Enemy_iku=None
-Player = 2
+Player = None
+EnemyPlayer=None
 def enter():
-    global iku, background, Player,reimu,tenshi,marisa,PlayerHP,EnemyHP,Enemy_marisa,Enemy_reimu,Enemy_tenshi,Enemy_iku
+    global iku, background, Player,reimu,tenshi,marisa,PlayerHP,EnemyHP,Enemy_marisa,Enemy_reimu,Enemy_tenshi,Enemy_iku,EnemyPlayer
+    Player = CharacterSelection.character
+    EnemyPlayer=CharacterSelection.Enemycharacter
     if Player==0:
         iku = Iku()
-
-        Enemy_marisa=Enemy_Marisa()
-
-        game_world.add_object(Enemy_marisa, 1)
-
         game_world.add_object(iku, 1)
-
     elif Player==1:
         reimu = Reimu()
-
         game_world.add_object(reimu, 1)
-
-        Enemy_reimu = Enemy_Reimu()
-
-        game_world.add_object(Enemy_reimu, 1)
     elif Player==2:
         tenshi = Tenshi()
-
         game_world.add_object(tenshi, 1)
-
-        Enemy_iku=Enemy_Iku()
-
-        game_world.add_object(Enemy_iku, 1)
-
     elif Player == 3:
         marisa = Marisa()
-
         game_world.add_object(marisa, 1)
-
+    if EnemyPlayer==0:
+        Enemy_marisa=Enemy_Marisa()
+        game_world.add_object(Enemy_marisa, 1)
+    elif EnemyPlayer==1:
+        Enemy_reimu = Enemy_Reimu()
+        game_world.add_object(Enemy_reimu, 1)
+    elif EnemyPlayer==2:
+        Enemy_iku=Enemy_Iku()
+        game_world.add_object(Enemy_iku, 1)
+    elif EnemyPlayer == 3:
         Enemy_tenshi=Enemy_Tenshi()
-
         game_world.add_object(Enemy_tenshi, 1)
     background = BackGround()
     PlayerHP=Player_HP()
@@ -95,22 +90,21 @@ def handle_events():
         else:
             if Player == 0:
                 iku.handle_event(event)
-
-                Enemy_marisa.handle_event(event)
-
             if Player == 1:
                 reimu.handle_event(event)
-
-                Enemy_reimu.handle_event(event)
-
             if Player == 2:
                 tenshi.handle_event(event)
-
-                Enemy_iku.handle_event(event)
             if Player == 3:
                 marisa.handle_event(event)
-
+            if EnemyPlayer==0:
+                Enemy_marisa.handle_event(event)
+            if EnemyPlayer==1:
+                Enemy_reimu.handle_event(event)
+            if EnemyPlayer==2:
+                Enemy_iku.handle_event(event)
+            if EnemyPlayer==3:
                 Enemy_tenshi.handle_event(event)
+
 
 
 def update():

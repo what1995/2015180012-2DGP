@@ -1,15 +1,18 @@
 import game_framework
+import random
 from pico2d import *
-import os
 import main_state
+import os
+
 os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\FCGimage')
 #import CharacterSelection
 import game_world
 
-name = "CharacterSelection"
+name = "characterSelection"
 image = None
 start = None
 character = None
+Enemycharacter=None
 def enter():
     global image,character
     global start
@@ -23,7 +26,7 @@ def exit():
 
 
 def handle_events():
-    global character
+    global character,Enemycharacter
     events = get_events()
     for event in events:
         if event.type ==SDL_QUIT:
@@ -32,8 +35,9 @@ def handle_events():
             if(event.type, event.key) == (SDL_KEYDOWN,SDLK_ESCAPE):
                 game_framework.quit()
             elif(event.type, event.key)==(SDL_KEYDOWN,SDLK_SPACE):
-                character=1
-                game_framework.change_state(main_state)
+                character=3
+
+                game_framework.push_state(main_state)
 
 
 def draw():
@@ -48,7 +52,8 @@ def draw():
 
 
 def update():
-    global character
+    global character,Enemycharacter
+    Enemycharacter = random.randint(0, 3)
     character = 1
 
 
