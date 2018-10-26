@@ -6,6 +6,7 @@ os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\test')
 from pico2d import *
 import game_framework
 import CharacterSelection
+import Iku
 import game_world
 from iku import Iku
 from reimu import Reimu
@@ -32,22 +33,23 @@ Enemy_tenshi=None
 Enemy_iku=None
 Player = None
 EnemyPlayer=None
+turn = 1
 def enter():
     global iku, background, Player,reimu,tenshi,marisa,PlayerHP,EnemyHP,Enemy_marisa,Enemy_reimu,Enemy_tenshi,Enemy_iku,EnemyPlayer
     Player = CharacterSelection.character
     EnemyPlayer=CharacterSelection.Enemycharacter
     if Player==0:
-        iku = Iku()
-        game_world.add_object(iku, 1)
-    elif Player==1:
         reimu = Reimu()
         game_world.add_object(reimu, 1)
-    elif Player==2:
-        tenshi = Tenshi()
-        game_world.add_object(tenshi, 1)
-    elif Player == 3:
+    elif Player==1:
         marisa = Marisa()
         game_world.add_object(marisa, 1)
+    elif Player==2:
+        iku = Iku()
+        game_world.add_object(iku, 1)
+    elif Player == 3:
+        tenshi = Tenshi()
+        game_world.add_object(tenshi, 1)
     if EnemyPlayer==0:
         Enemy_marisa=Enemy_Marisa()
         game_world.add_object(Enemy_marisa, 1)
@@ -81,28 +83,38 @@ def resume():
 
 
 def handle_events():
+    global turn
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-                game_framework.quit()
+                game_framework.push_state(CharacterSelection)
+                game_world.remove_object(reimu)
+                game_world.remove_object(marisa)
+                game_world.remove_object(iku)
+                game_world.remove_object(tenshi)
+                game_world.remove_object(Enemy_reimu)
+                game_world.remove_object(Enemy_marisa)
+                game_world.remove_object(Enemy_iku)
+                game_world.remove_object(Enemy_tenshi)
+
         else:
-            if Player == 0:
-                iku.handle_event(event)
-            if Player == 1:
+            if Player == 0 and turn ==1:
                 reimu.handle_event(event)
-            if Player == 2:
-                tenshi.handle_event(event)
-            if Player == 3:
+            if Player == 1and turn ==1:
                 marisa.handle_event(event)
-            if EnemyPlayer==0:
+            if Player == 2and turn ==1:
+                iku.handle_event(event)
+            if Player == 3and turn ==1:
+                tenshi.handle_event(event)
+            if EnemyPlayer==0and turn ==-1:
                 Enemy_marisa.handle_event(event)
-            if EnemyPlayer==1:
+            if EnemyPlayer==1and turn ==-1:
                 Enemy_reimu.handle_event(event)
-            if EnemyPlayer==2:
+            if EnemyPlayer==2and turn ==-1:
                 Enemy_iku.handle_event(event)
-            if EnemyPlayer==3:
+            if EnemyPlayer==3and turn ==-1:
                 Enemy_tenshi.handle_event(event)
 
 

@@ -34,10 +34,18 @@ def handle_events():
         else:
             if(event.type, event.key) == (SDL_KEYDOWN,SDLK_ESCAPE):
                 game_framework.quit()
-            elif(event.type, event.key)==(SDL_KEYDOWN,SDLK_SPACE):
-                character=3
+            elif(event.type, event.button)==(SDL_MOUSEBUTTONDOWN,SDL_BUTTON_LEFT):
+                if event.x > 0 and event.x < 150:
+                    character = 0
+                elif event.x > 150 and event.x < 300:
+                    character = 1
+                elif event.x > 300 and event.x < 450:
+                    character = 2
+                elif event.x > 450 and event.x < 600:
+                    character = 3
+                if event.x > 0 and event.x < 600 and 600- event.y<400:
+                    game_framework.push_state(main_state)
 
-                game_framework.push_state(main_state)
 
 
 def draw():

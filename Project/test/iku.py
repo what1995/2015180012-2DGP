@@ -18,7 +18,7 @@ key_event_table = {
 
 name = 'iku'
 # Iku States
-
+turn =None
 class StandState:
 
     @staticmethod
@@ -80,6 +80,7 @@ class Skill1State:
             iku.frame2 = (iku.frame2 + 1) % 11
         iku.skill1cheak +=1
         if  iku.skill1cheak==23:
+            turn = -1
             iku.skill1cheak=0
 
             iku.add_event(Stand)
@@ -355,6 +356,7 @@ class Iku:
         self.event_que.insert(0, event)
 
     def update(self):
+
         self.cur_state.do(self)
         if len(self.event_que) > 0:
             event = self.event_que.pop()
