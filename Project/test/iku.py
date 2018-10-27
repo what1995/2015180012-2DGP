@@ -294,8 +294,8 @@ class Downstate:
                 iku.frame2 = (iku.frame2 + 1) % 7
             iku.Downcheak += 1
         if iku.Downcheak == 20:
-            iku.Downcheak = 0
-            iku.add_event(Stand)
+            iku.Downcheak = 20
+            #iku.add_event(Stand)
 
         delay(0.1)
         iku.timer -= 1

@@ -12,7 +12,7 @@ name = "characterSelection"
 image = None
 cheak = None
 character = None
-
+mouse_x,mouse_y=0,0
 Enemycharacter=None
 def enter():
     global image,character
@@ -27,32 +27,43 @@ def exit():
 
 
 def handle_events():
-    global character,Enemycharacter
+    global character,Enemycharacter,mouse_x,mouse_y
     events = get_events()
     for event in events:
         if event.type ==SDL_QUIT:
             game_framework.quit()
+        if event.type == SDL_MOUSEMOTION:
+            mouse_x, mouse_y=event.x, 600- event.y
         else:
             if(event.type, event.key) == (SDL_KEYDOWN,SDLK_ESCAPE):
                 game_framework.quit()
             elif(event.type, event.button)==(SDL_MOUSEBUTTONDOWN,SDL_BUTTON_LEFT):
-                if event.x > 0 and event.x < 150:
+                if mouse_x> 0 and mouse_x < 150:
                     character = 0
-                elif event.x > 150 and event.x < 300:
+                elif mouse_x> 150 and mouse_x < 300:
                     character = 1
-                elif event.x > 300 and event.x < 450:
+                elif mouse_x > 300 and mouse_x < 450:
                     character = 2
-                elif event.x > 450 and event.x < 600:
+                elif mouse_x> 450 and mouse_x < 600:
                     character = 3
-                if event.x > 0 and event.x < 600 and 600- event.y<400:
+                if mouse_x > 0 and event.x < 600 and mouse_y<400:
                     game_framework.push_state(DeckSelection)
 
 
 
 def draw():
+    global mouse_x,mouse_y
 
     clear_canvas()
     image.draw(400,300)
+    if 0< mouse_x and mouse_x<150 and mouse_y<400:
+        cheak.draw(75,450)
+    if 150< mouse_x and mouse_x<300 and mouse_y<400:
+        cheak.draw(225,450)
+    if 300< mouse_x and mouse_x<450 and mouse_y<400:
+        cheak.draw(375,450)
+    if 450< mouse_x and mouse_x<600 and mouse_y<400:
+        cheak.draw(525,450)
 
     
     update_canvas()
