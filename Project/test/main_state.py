@@ -5,7 +5,7 @@ import os
 os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\test')
 from pico2d import *
 import game_framework
-import CharacterSelection
+import DeckSelection
 import Iku
 import game_world
 from iku import Iku
@@ -36,8 +36,8 @@ EnemyPlayer=None
 turn = 1
 def enter():
     global iku, background, Player,reimu,tenshi,marisa,PlayerHP,EnemyHP,Enemy_marisa,Enemy_reimu,Enemy_tenshi,Enemy_iku,EnemyPlayer
-    Player = CharacterSelection.character
-    EnemyPlayer=CharacterSelection.Enemycharacter
+    Player = DeckSelection.character
+    EnemyPlayer=DeckSelection.Enemycharacter
     if Player==0:
         reimu = Reimu()
         game_world.add_object(reimu, 1)
@@ -89,7 +89,7 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-                game_framework.push_state(CharacterSelection)
+                game_framework.push_state(DeckSelection)
                 game_world.remove_object(reimu)
                 game_world.remove_object(marisa)
                 game_world.remove_object(iku)

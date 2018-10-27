@@ -1,7 +1,7 @@
 import game_framework
 import random
 from pico2d import *
-import main_state
+import DeckSelection
 import os
 
 os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\FCGimage')
@@ -10,19 +10,20 @@ import game_world
 
 name = "characterSelection"
 image = None
-start = None
+cheak = None
 character = None
+
 Enemycharacter=None
 def enter():
     global image,character
-    global start
+    global cheak
     image = load_image('CharacterSelection.png')
+    cheak = load_image('Character_Cheak.png')
+
 
 def exit():
     global image
-    global start
-    del(image)
-    del(start)
+
 
 
 def handle_events():
@@ -44,13 +45,15 @@ def handle_events():
                 elif event.x > 450 and event.x < 600:
                     character = 3
                 if event.x > 0 and event.x < 600 and 600- event.y<400:
-                    game_framework.push_state(main_state)
+                    game_framework.push_state(DeckSelection)
 
 
 
 def draw():
+
     clear_canvas()
     image.draw(400,300)
+
     
     update_canvas()
 
@@ -62,7 +65,6 @@ def draw():
 def update():
     global character,Enemycharacter
     Enemycharacter = random.randint(0, 3)
-    character = 1
 
 
 def pause():
