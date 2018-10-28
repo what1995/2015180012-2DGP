@@ -2,6 +2,7 @@ import game_framework
 import random
 from pico2d import *
 import CharacterSelection
+import BackgroundSelection
 import main_state
 import os
 
@@ -42,7 +43,7 @@ def handle_events():
                 game_framework.push_state(CharacterSelection)
             elif(event.type, event.button)==(SDL_MOUSEBUTTONDOWN,SDL_BUTTON_LEFT):
                 if event.x > 625 and event.x < 750 and 600- event.y>450and 600- event.y<550:
-                    game_framework.push_state(main_state)
+                    game_framework.push_state(BackgroundSelection)
 
 
 
