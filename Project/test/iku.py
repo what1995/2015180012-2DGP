@@ -19,7 +19,8 @@ key_event_table = {
 name = 'iku'
 # Iku States
 turn =None
-
+damage=None
+attack=None
 class StandState:
 
     @staticmethod
@@ -77,8 +78,8 @@ class Skill1State:
         if iku.skill1cheak>=8 and iku.skill1cheak<20:
             iku.S1frame = (iku.S1frame + 1) % 12
             iku.Skill1Eframe1 = (iku.Skill1Eframe1 + 1) % 7
-            #if iku.skill1cheak==12:
-            #    damage=10
+            if iku.skill1cheak==12:
+                damage=10
         if iku.skill1cheak>=20:
             iku.frame1 = (iku.frame1 + 1) % 11
             iku.frame2 = (iku.frame2 + 1) % 11
@@ -324,7 +325,6 @@ class Iku:
 
     def __init__(self):
         self.x, self.y = 200, 200
-        self.damage=0
         self.stand = load_image('Iku-Standing-Motion.png')
 
         self.skill1 = load_image('IkuSkill1-Motion.png')
@@ -361,8 +361,8 @@ class Iku:
         self.event_que.insert(0, event)
 
     def update(self):
-        #global damage,attack
-        #attack=damage
+        global damage,attack
+        attack=damage
 
         self.cur_state.do(self)
         if len(self.event_que) > 0:

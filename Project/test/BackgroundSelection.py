@@ -11,6 +11,7 @@ import game_world
 
 name = "backgroundSelection"
 Main=None
+logo =None
 BGbamboo = None
 BGHakureiShrine = None
 BGclocktower = None
@@ -21,9 +22,10 @@ BGcheak=None
 cheak = None
 mouse_x,mouse_y=0,0
 def enter():
-    global BGbamboo,BGHakureiShrine,BGclocktower,Main,minibamboo,miniHakureiShrine,miniclocktower
+    global BGbamboo,BGHakureiShrine,BGclocktower,Main,minibamboo,miniHakureiShrine,miniclocktower,logo
     global cheak,BGcheak
     Main= load_image('Main.png')
+    logo = load_image('BackGround logo.png')
     BGbamboo = load_image('BGbamboo.png')
     BGHakureiShrine = load_image('BGHakurei Shrine.png')
     BGclocktower = load_image('BGclock tower.png')
@@ -81,6 +83,7 @@ def draw():
     minibamboo.draw(150,300)
     miniHakureiShrine.draw(400, 300)
     miniclocktower.draw(650, 300)
+    logo.draw(400,550)
     update_canvas()
 
 
