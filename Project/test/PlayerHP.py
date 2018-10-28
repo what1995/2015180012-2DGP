@@ -1,26 +1,26 @@
 from pico2d import *
 import os
-
+import main_state
 os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\FCGimage')
 import iku
 attack=None
 class Player_HP:
     def __init__(self):
+        global attack
         self.x = 200
         self.y = 500
         self.damage=0
-        self.Power=0
+        self.Power= 1
+        self.stop=0
         self.HPBar = load_image('HP-Damege.png')
         self.HP = load_image('HP-HP.png')
 
     def update(self):
         global attack
-        attack= 10
-        self.Power = attack
-
-        if self.Power > 0:
+        attack = iku.HP
+        if self.Power <attack:
             self.damage -=2
-            self.Power-=1
+            self.Power+=1
 
     def draw(self):
         self.HPBar.draw(self.x, self.y)
