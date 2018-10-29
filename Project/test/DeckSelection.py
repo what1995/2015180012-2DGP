@@ -18,11 +18,16 @@ Enemycharacter=None
 Enemycharacter=None
 def enter():
     global iku,reimu,tenshi,marisa,character,Enemycharacter
+    global reimuDeck,marisaDeck,ikuDeck,tenshiDeck
     global next
     reimu= load_image('Reimu-Deck.png')
+    reimuDeck= load_image('RimuSpellCard.png')
     marisa= load_image('Marisa-Deck.png')
+    marisaDeck= load_image('MarisaSpellCard.png')
     iku = load_image('Iku-Deck.png')
+    ikuDeck= load_image('IkuSpellCard.png')
     tenshi = load_image('Tensi-Deck.png')
+    tenshiDeck= load_image('TenshiSpellCard.png')
     next=load_image('Deck_Next.png')
     character = CharacterSelection.character
 
