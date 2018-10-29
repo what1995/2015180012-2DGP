@@ -120,17 +120,22 @@ class SleepState:
 
     @staticmethod
     def do(boy):
+        boy.set = (boy.set+0.2)%180
+        boy.op = (boy.op+0.1)%1
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+        delay(0.01)
 
     @staticmethod
     def draw(boy):
         if boy.dir == 1:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25, 100, 100)
-            boy.ghost.opacify(0.5)
-            boy.ghost.clip_draw(int(boy.frame) * 100, 300, 100, 100, boy.x, boy.y)
+            boy.ghost.opacify(boy.op)
+            boy.ghost.clip_draw(int(boy.frame) * 100, 300, 100, 100, boy.x+100*math.sin(boy.set), boy.y+100*math.cos(boy.set))
 
         else:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
+            boy.ghost.opacify(boy.op)
+            boy.ghost.clip_draw(int(boy.frame) * 100, 200, 100, 100, boy.x + 100 * math.sin(boy.set),boy.y + 100 * math.cos(boy.set))
 
 
 
@@ -153,6 +158,8 @@ class Boy:
         self.font = load_font('ENCR10B.TTF',16)
         # fill here
         #self.timer =pico2d.get_time()
+        self.set =0
+        self.op=0
         self.dir = 1
         self.velocity = 0
         self.frame = 0
