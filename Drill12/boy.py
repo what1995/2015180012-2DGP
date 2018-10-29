@@ -1,6 +1,8 @@
 import game_framework
 from pico2d import *
 from ball import Ball
+import math
+import random
 
 import game_world
 
@@ -47,7 +49,7 @@ class IdleState:
             boy.velocity -= RUN_SPEED_PPS
         elif event == LEFT_UP:
             boy.velocity += RUN_SPEED_PPS
-        boy.timer = 0
+        boy.timer = pico2d.get_time()
 
     @staticmethod
     def exit(boy, event):
@@ -58,8 +60,8 @@ class IdleState:
     @staticmethod
     def do(boy):
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        boy.timer = get_time()%10
-        if boy.timer == 5:
+        time1=pico2d.get_time()
+        if time1 - boy.timer >= 3.0:
             boy.add_event(SLEEP_TIMER)
 
     @staticmethod
@@ -124,6 +126,9 @@ class SleepState:
     def draw(boy):
         if boy.dir == 1:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25, 100, 100)
+            boy.ghost.opacify(0.5)
+            boy.ghost.clip_draw(int(boy.frame) * 100, 300, 100, 100, boy.x, boy.y)
+
         else:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
 
@@ -144,8 +149,10 @@ class Boy:
         self.x, self.y = 1600 // 2, 90
         # Boy is only once created, so instance image loading is fine
         self.image = load_image('animation_sheet.png')
+        self.ghost= load_image('animation_sheet.png')
         self.font = load_font('ENCR10B.TTF',16)
         # fill here
+        #self.timer =pico2d.get_time()
         self.dir = 1
         self.velocity = 0
         self.frame = 0
