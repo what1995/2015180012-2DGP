@@ -11,17 +11,13 @@ RUN_SPEED_MPM = (RUN_SPEED_KMPH*1000.0/60.0)
 RUN_SPEED_MPS=(RUN_SPEED_MPM/60.0)
 RUN_SPEED_PPS=(RUN_SPEED_MPS*PIXEL_PER_METER)
 # fill expressions correctly
-PIXEL_PER_METER = 0
-RUN_SPEED_KMPH = 0
-RUN_SPEED_MPM = 0
-RUN_SPEED_MPS = 0
-RUN_SPEED_PPS = 0
 
 # Boy Action Speed
+TIME_PER_ACTION=0.5
+ACTION_PER_TIME= 1.0/TIME_PER_ACTION
+FRAMES_PER_ACTION =8
 # fill expressions correctly
-TIME_PER_ACTION = 0
-ACTION_PER_TIME = 0
-FRAMES_PER_ACTION = 0
+
 
 
 
@@ -51,7 +47,7 @@ class IdleState:
             boy.velocity -= RUN_SPEED_PPS
         elif event == LEFT_UP:
             boy.velocity += RUN_SPEED_PPS
-        boy.timer = 10
+        boy.timer = 0
 
     @staticmethod
     def exit(boy, event):
@@ -62,8 +58,8 @@ class IdleState:
     @staticmethod
     def do(boy):
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        boy.timer = get_time()
-        if boy.timer == 10:
+        boy.timer = get_time()%10
+        if boy.timer == 5:
             boy.add_event(SLEEP_TIMER)
 
     @staticmethod
@@ -86,7 +82,7 @@ class RunState:
             boy.velocity -= RUN_SPEED_PPS
         elif event == LEFT_UP:
             boy.velocity += RUN_SPEED_PPS
-        boy.dir=clamp(-1,boy.velocity,2)
+        boy.dir=clamp(-1,boy.velocity,1)
         # fill here
         pass
 
@@ -97,7 +93,7 @@ class RunState:
 
     @staticmethod
     def do(boy):
-        boy.frame = (boy.frame + 1) % 8
+        boy.frame = (boy.frame  + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         boy.x += boy.velocity * game_framework.frame_time
         # fill here
         boy.x = clamp(25, boy.x, 1600 - 25)
