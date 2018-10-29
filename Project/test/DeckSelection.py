@@ -18,8 +18,10 @@ Enemycharacter=None
 Enemycharacter=None
 Deckcheak1=0
 Deck1=0
-Deckcheak2=0
+Deckcheak2=6
 Deck2=0
+Deck3=[0,0,0,0,0,0,0,0,0,0,0,0]
+Deck_y=[230,230,230,230,230,230,165,165,165,165,165,165]
 mouse_x,mouse_y=0,0
 def enter():
     global iku,reimu,tenshi,marisa,character,Enemycharacter
@@ -56,10 +58,18 @@ def handle_events():
                 Deckcheak1=0
                 game_framework.push_state(CharacterSelection)
             elif(event.type, event.button)==(SDL_MOUSEBUTTONDOWN,SDL_BUTTON_LEFT):
-                if Deckcheak1 <7:
+                if Deckcheak1<12 and mouse_x > 75 and mouse_x < 125 and mouse_y > 365 and mouse_y < 435:
+                    Deck3[Deckcheak1] = 0
                     Deckcheak1 += 1
-                if Deckcheak1==7 and Deckcheak2 <6:
-                    Deckcheak2 += 1
+                if Deckcheak1<12 and mouse_x > 175 and mouse_x < 225 and mouse_y > 365 and mouse_y < 435:
+                    Deck3[Deckcheak1] = 45
+                    Deckcheak1 += 1
+                if Deckcheak1<12 and mouse_x > 275 and mouse_x < 325 and mouse_y > 365 and mouse_y < 435:
+                    Deck3[Deckcheak1] = 90
+                    Deckcheak1 += 1
+                if Deckcheak1<12 and mouse_x > 375 and mouse_x < 425 and mouse_y > 365 and mouse_y < 435:
+                    Deck3[Deckcheak1] = 135
+                    Deckcheak1 += 1
                 if mouse_x > 625 and mouse_x < 750 and mouse_y>450and mouse_y<550:
                     game_framework.push_state(BackgroundSelection)
 
@@ -109,9 +119,16 @@ def draw():
 
     next.draw(700,500)
     for Deck1 in range(0,Deckcheak1):
-        ikuDeck.clip_draw(0, 0, 45, 65, 510+45*(Deck1%6), 230)
-    for Deck2 in range(0,Deckcheak2):
-        ikuDeck.clip_draw(45, 0, 45, 65, 510 + 45 * (Deck2 % 6), 165)
+        if character == 0:
+            reimuDeck.clip_draw(Deck3[Deck1], 0, 45, 65, 510 + 45 * (Deck1 % 6), Deck_y[Deck1])
+        elif character == 1:
+            marisaDeck.clip_draw(Deck3[Deck1], 0, 45, 65, 510+45*(Deck1%6), Deck_y[Deck1])
+        elif character == 2:
+            ikuDeck.clip_draw(Deck3[Deck1], 0, 45, 65, 510+45*(Deck1%6), Deck_y[Deck1])
+        elif character == 3:
+            tenshiDeck.clip_draw(Deck3[Deck1], 0, 45, 65, 510+45*(Deck1%6), Deck_y[Deck1])
+
+
 
 
     
