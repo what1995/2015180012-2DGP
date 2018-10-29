@@ -77,7 +77,7 @@ class Skill1State:
         if iku.skill1cheak>=8 and iku.skill1cheak<20:
             iku.S1frame = (iku.S1frame + 1) % 12
             iku.Skill1Eframe1 = (iku.Skill1Eframe1 + 1) % 7
-            if iku.skill1cheak==12:
+            if iku.skill1cheak==10:
                 HP=HP+10
         if iku.skill1cheak>=20:
             iku.frame1 = (iku.frame1 + 1) % 11
@@ -118,6 +118,7 @@ class Skill2State:
         pass
     @staticmethod
     def do(iku):
+        global HP
         if iku.skill2cheak < 19:
             if iku.skill2cheak < 11:
                 iku.frame1 = (iku.frame1 + 1) % 15
@@ -126,6 +127,8 @@ class Skill2State:
                 if iku.skill2cheak > 8:
                     iku.skill2Mx += 10
                     iku.skill2Px += 10
+                if iku.skill2cheak==9:
+                    HP= HP+15
             if iku.skill2cheak >= 15:
                 iku.frame1 = (iku.frame1 + 1) % 15
                 iku.frame2 = (iku.frame2 + 1) % 15
@@ -164,6 +167,7 @@ class Skill3State:
 
     @staticmethod
     def do(iku):
+        global HP
         if iku.skill3cheak < 19:
             if iku.skill3cheak < 5:
                 iku.frame1 = (iku.frame1 + 1) % 6
@@ -171,6 +175,8 @@ class Skill3State:
             if iku.skill3cheak >= 5:
 
                 iku.S3frame = (iku.S3frame + 1) % 4
+                if iku.skill3cheak ==6:
+                    HP= HP+20
                 if iku.skill3cheak > 17:
                     iku.frame1 = (iku.frame1 + 1) % 6
                     iku.frame2 = (iku.frame2 + 1) % 6
@@ -214,6 +220,7 @@ class Laststate:
 
     @staticmethod
     def do(iku):
+        global HP
         if iku.lastcheak < 19:
             if iku.lastcheak < 8:
                 iku.frame1 = (iku.frame1 + 1) % 10
@@ -222,6 +229,8 @@ class Laststate:
                 iku.LastspellEframe1 = (iku.LastspellEframe1 + 1) % 4
                 iku.Lastspelld = (iku.Lastspelld + 1) % 2
                 iku.Lastspellc = (iku.Lastspellc + 1) % 1
+                if iku.lastcheak==8:
+                    HP= HP+30
             if iku.lastcheak >= 16:
                 iku.frame1 = (iku.frame1 + 1) % 10
                 iku.frame2 = (iku.frame2 + 1) % 10
