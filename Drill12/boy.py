@@ -19,7 +19,12 @@ TIME_PER_ACTION=0.5
 ACTION_PER_TIME= 1.0/TIME_PER_ACTION
 FRAMES_PER_ACTION =8
 # fill expressions correctly
-
+# Boy Circle Speed
+PIXEL_PER_METER=(10.0/0.3)
+CIRCLE_SPEED_KMPH = 720/60
+CIRCLE_SPEED_MPM = (CIRCLE_SPEED_KMPH/60.0)
+CIRCLE_SPEED_MPS=(CIRCLE_SPEED_MPM/60.0)
+CIRCLE_SPEED_PPS=(CIRCLE_SPEED_MPS*PIXEL_PER_METER)
 
 
 
@@ -120,22 +125,23 @@ class SleepState:
 
     @staticmethod
     def do(boy):
-        boy.set = (boy.set+0.2)%180
+        boy.ghostx=boy.x
+        boy.ghosty=boy.y +30
+        boy.set += CIRCLE_SPEED_PPS
         boy.op = (boy.op+0.1)%1
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        delay(0.01)
 
     @staticmethod
     def draw(boy):
         if boy.dir == 1:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25, 100, 100)
             boy.ghost.opacify(boy.op)
-            boy.ghost.clip_draw(int(boy.frame) * 100, 300, 100, 100, boy.x+100*math.sin(boy.set), boy.y+100*math.cos(boy.set))
+            boy.ghost.clip_draw(int(boy.frame) * 100, 300, 100, 100, boy.ghostx+100*math.sin(boy.set), boy.ghosty+100*math.cos(boy.set))
 
         else:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
             boy.ghost.opacify(boy.op)
-            boy.ghost.clip_draw(int(boy.frame) * 100, 200, 100, 100, boy.x + 100 * math.sin(boy.set),boy.y + 100 * math.cos(boy.set))
+            boy.ghost.clip_draw(int(boy.frame) * 100, 200, 100, 100, boy.ghostx + 100 * math.sin(boy.set),boy.ghosty + 100 * math.cos(boy.set))
 
 
 
@@ -152,6 +158,7 @@ class Boy:
 
     def __init__(self):
         self.x, self.y = 1600 // 2, 90
+        self.ghostx,self.ghosty=1600//2,90
         # Boy is only once created, so instance image loading is fine
         self.image = load_image('animation_sheet.png')
         self.ghost= load_image('animation_sheet.png')

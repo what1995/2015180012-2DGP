@@ -4,15 +4,15 @@ import os
 os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\FCGimage')
 import game_world
 
-cheak1 = False
+cheak1 = 0
 # iku Event
 Stand,Skill1, Skill2,Skill3, Last, Damage,Down = range(7)
 
 key_event_table = {
-(SDL_MOUSEBUTTONDOWN, True): Skill1,
-    (SDL_KEYDOWN, SDLK_a): Skill2,
-    (SDL_KEYDOWN, SDLK_s): Skill3,
-    (SDL_KEYDOWN, SDLK_d): Last,
+(SDL_MOUSEBUTTONDOWN, 1): Skill1,
+    (SDL_MOUSEBUTTONDOWN, 2): Skill2,
+    (SDL_MOUSEBUTTONDOWN, 3): Skill3,
+    (SDL_MOUSEBUTTONDOWN, 4): Last,
 (SDL_KEYDOWN, SDLK_z): Damage,
 (SDL_KEYDOWN, SDLK_x): Down
 }
@@ -386,7 +386,7 @@ class Iku:
     def handle_event(self, event):
         global cheak1
         if (event.type, event.button) == (SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT): ##스킬키 체크
-            cheak1=True
+            cheak1=3
         if (event.type, event.button) in key_event_table:
                 key_event = key_event_table[(event.type,cheak1)]
                 self.add_event(key_event)
