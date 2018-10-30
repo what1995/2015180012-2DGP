@@ -1,5 +1,6 @@
 from pico2d import *
 import game_framework
+import random
 import game_world
 import math
 
@@ -22,12 +23,14 @@ class Ghost:
             Ghost.image = load_image('animation_sheet.png')
         self.x, self.y= x, y
         self.frame = 0
+        self.opacify=0
         self.set=0
 
     def draw(self):
         self.image.opacify(0.5)
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         self.image.clip_draw(int(self.frame) * 100, 300, 100, 100, self.x + 100 * math.sin(self.set),self.y + 100 * math.cos(self.set))
 
     def update(self):
         self.set += CIRCLE_SPEED_PPS
-        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+

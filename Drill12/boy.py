@@ -119,14 +119,15 @@ class SleepState:
     @staticmethod
     def enter(boy, event):
         boy.frame = 0
+        boy.Wath_ghost()
 
     @staticmethod
     def exit(boy, event):
-        boy.Wath_ghost()
+        boy.delete_What_ghost()
 
     @staticmethod
     def do(boy):
-        boy.Wath_ghost()
+
         #boy.ghostx=boy.x
         #boy.ghosty=boy.y +30
         #boy.set += CIRCLE_SPEED_PPS
@@ -160,14 +161,11 @@ class Boy:
 
     def __init__(self):
         self.x, self.y = 1600 // 2, 90
-        self.ghostx,self.ghosty=1600//2,90
         # Boy is only once created, so instance image loading is fine
         self.image = load_image('animation_sheet.png')
-        self.ghost= load_image('animation_sheet.png')
         self.font = load_font('ENCR10B.TTF',16)
         # fill here
         #self.timer =pico2d.get_time()
-        self.set =0
         self.op=0
         self.dir = 1
         self.velocity = 0
@@ -181,8 +179,13 @@ class Boy:
         ball = Ball(self.x, self.y, self.dir*3)
         game_world.add_object(ball, 1)
     def Wath_ghost(self):
+        global  ghost
         ghost= Ghost(self.x, self.y)
         game_world.add_object(ghost, 1)
+    def delete_What_ghost(self):
+        global ghost
+        game_world.remove_object(ghost)
+
 
 
     def add_event(self, event):
