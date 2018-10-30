@@ -21,7 +21,7 @@ FRAMES_PER_ACTION =8
 # fill expressions correctly
 # Boy Circle Speed
 PIXEL_PER_METER=(10.0/0.3)
-CIRCLE_SPEED_KMPH = 720/60
+CIRCLE_SPEED_KMPH = 6
 CIRCLE_SPEED_MPM = (CIRCLE_SPEED_KMPH/60.0)
 CIRCLE_SPEED_MPS=(CIRCLE_SPEED_MPM/60.0)
 CIRCLE_SPEED_PPS=(CIRCLE_SPEED_MPS*PIXEL_PER_METER)
@@ -193,7 +193,7 @@ class Boy:
 
     def draw(self):
         self.cur_state.draw(self)
-        self.font.draw(self.x-60,self.y+50,'(Time: %3.2f)' % get_time())
+        self.font.draw(self.x-60,self.y+50,'(Time: %3.2f)' % get_time(),(255,255,0))
         # fill here
 
     def handle_event(self, event):

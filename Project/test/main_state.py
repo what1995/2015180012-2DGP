@@ -6,7 +6,7 @@ os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\test')
 from pico2d import *
 import game_framework
 import DeckSelection
-import Iku
+import iku
 import game_world
 from iku import Iku
 from reimu import Reimu
@@ -209,6 +209,7 @@ def update():
 
     for game_objcet in game_world.all_objects():
         game_objcet.update()
+
 
 
 def draw():

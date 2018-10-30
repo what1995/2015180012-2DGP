@@ -391,6 +391,7 @@ class Iku:
                 key_event = key_event_table[(event.type,cheak1)]
                 self.add_event(key_event)
 
+
         elif (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
