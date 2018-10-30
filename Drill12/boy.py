@@ -67,7 +67,7 @@ class IdleState:
     def do(boy):
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         time1=pico2d.get_time()
-        if time1 - boy.timer >= 3.0:
+        if time1 - boy.timer >= 10.0:
             boy.add_event(SLEEP_TIMER)
 
     @staticmethod

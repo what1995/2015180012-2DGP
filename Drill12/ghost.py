@@ -4,6 +4,13 @@ import random
 import game_world
 import math
 
+
+PIXEL_PER_METER=(10.0/0.3)
+RUN_SPEED_KMPH = 10
+RUN_SPEED_MPM = (RUN_SPEED_KMPH*1000.0/60.0)
+RUN_SPEED_MPS=(RUN_SPEED_MPM/60.0)
+RUN_SPEED_PPS=(RUN_SPEED_MPS*PIXEL_PER_METER)
+
 TIME_PER_ACTION=0.5
 ACTION_PER_TIME= 1.0/TIME_PER_ACTION
 FRAMES_PER_ACTION =8
@@ -36,7 +43,7 @@ class Ghost:
         if cheak< 100:
             self.image.opacify(0.3)
             self.image.clip_draw(int(self.frame) * 100, 300, 100, 100, self.x,self.y+cheak)
-            cheak +=0.5
+            cheak +=RUN_SPEED_PPS* game_framework.frame_time
         else:
             self.image.opacify(self.opacify)
             self.image.clip_draw(int(self.frame) * 100, 300, 100, 100, self.x + 100 * math.sin(self.set),self.y + 100 * math.cos(self.set))
