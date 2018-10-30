@@ -201,7 +201,7 @@ class Boy:
 
     def draw(self):
         self.cur_state.draw(self)
-        self.font.draw(self.x-60,self.y+50,'(Time: %3.2f)' % get_time(),(255,255,0))
+        self.font.draw(self.x-60,self.y+50,'(Time: %3.2f)' % get_time(),(0,0,0))
         # fill here
 
     def handle_event(self, event):

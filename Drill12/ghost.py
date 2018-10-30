@@ -21,10 +21,8 @@ CIRCLE_SPEED_MPM = (CIRCLE_SPEED_KMPH/60.0)
 CIRCLE_SPEED_MPS=(CIRCLE_SPEED_MPM/60.0)
 CIRCLE_SPEED_PPS=(CIRCLE_SPEED_MPS*PIXEL_PER_SETA)
 
-
 class Ghost:
     image = None
-
     def __init__(self, x = 400, y = 300):
         global cheak
         if Ghost.image == None:
