@@ -2,6 +2,7 @@ import game_framework
 from pico2d import *
 from ball import Ball
 import math
+from ghost import Ghost
 import random
 
 import game_world
@@ -121,27 +122,28 @@ class SleepState:
 
     @staticmethod
     def exit(boy, event):
-        pass
+        boy.Wath_ghost()
 
     @staticmethod
     def do(boy):
-        boy.ghostx=boy.x
-        boy.ghosty=boy.y +30
-        boy.set += CIRCLE_SPEED_PPS
-        boy.op = (boy.op+0.1)%1
+        boy.Wath_ghost()
+        #boy.ghostx=boy.x
+        #boy.ghosty=boy.y +30
+        #boy.set += CIRCLE_SPEED_PPS
+        #boy.op = (boy.op+0.1)%1
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
 
     @staticmethod
     def draw(boy):
         if boy.dir == 1:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25, 100, 100)
-            boy.ghost.opacify(boy.op)
-            boy.ghost.clip_draw(int(boy.frame) * 100, 300, 100, 100, boy.ghostx+100*math.sin(boy.set), boy.ghosty+100*math.cos(boy.set))
+            #boy.ghost.opacify(boy.op)
+            #boy.ghost.clip_draw(int(boy.frame) * 100, 300, 100, 100, boy.ghostx+100*math.sin(boy.set), boy.ghosty+100*math.cos(boy.set))
 
         else:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
-            boy.ghost.opacify(boy.op)
-            boy.ghost.clip_draw(int(boy.frame) * 100, 200, 100, 100, boy.ghostx + 100 * math.sin(boy.set),boy.ghosty + 100 * math.cos(boy.set))
+            #boy.ghost.opacify(boy.op)
+            #boy.ghost.clip_draw(int(boy.frame) * 100, 200, 100, 100, boy.ghostx + 100 * math.sin(boy.set),boy.ghosty + 100 * math.cos(boy.set))
 
 
 
@@ -178,6 +180,9 @@ class Boy:
     def fire_ball(self):
         ball = Ball(self.x, self.y, self.dir*3)
         game_world.add_object(ball, 1)
+    def Wath_ghost(self):
+        ghost= Ghost(self.x, self.y)
+        game_world.add_object(ghost, 1)
 
 
     def add_event(self, event):
