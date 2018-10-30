@@ -2,7 +2,7 @@ from pico2d import *
 import os
 import main_state
 os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\FCGimage')
-import iku
+import Enemy_iku
 attack=None
 class Player_HP:
     def __init__(self):
@@ -17,12 +17,14 @@ class Player_HP:
 
     def update(self):
         global attack
-        attack = iku.HP
-        if self.Power <attack:
+        #attack = iku.HP
+        if self.Power <0:
             self.damage -=2
             self.Power+=1
 
     def draw(self):
         self.HPBar.draw(self.x, self.y)
-        self.HP.clip_draw(0, 0,252+self.damage,15,self.x-(self.damage/2),self.y)
+        
+        #self.HP.clip_draw(0, 0,252+self.damage,15,self.x-(self.damage/2),self.y)
+        self.HP.draw_now(self.x, self.y,200,17)
 
