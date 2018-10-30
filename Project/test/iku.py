@@ -385,11 +385,17 @@ class Iku:
 
     def handle_event(self, event):
         global cheak1
+        cheak1=4
         if (event.type, event.button) == (SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT): ##스킬키 체크
-            cheak1=3
-        if (event.type, event.button) in key_event_table:
-                key_event = key_event_table[(event.type,cheak1)]
-                self.add_event(key_event)
+            if cheak1==1:
+                self.add_event(Skill1)
+            if cheak1==2:
+                self.add_event(Skill2)
+            if cheak1==3:
+                self.add_event(Skill3)
+            if cheak1==4:
+                self.add_event(Last)
+
 
 
         elif (event.type, event.key) in key_event_table:
