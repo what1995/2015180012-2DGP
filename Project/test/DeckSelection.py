@@ -64,34 +64,45 @@ def handle_events():
         else:
             if(event.type, event.key) == (SDL_KEYDOWN,SDLK_ESCAPE):
                 Deckcheak1=0
+                skill1cheak, skill2cheak, skill3cheak, lastcheak, common1cheak, common2cheak, common3cheak=0,0,0,0,0,0,0
                 game_framework.push_state(CharacterSelection)
             elif(event.type, event.button)==(SDL_MOUSEBUTTONDOWN,SDL_BUTTON_LEFT):
                 if skill1cheak <3and Deckcheak1<12 and mouse_x > 75 and mouse_x < 125 and mouse_y > 365 and mouse_y < 435:
                     Deck3[Deckcheak1] = 0
+                    Deck2[Deckcheak1] = 0
                     Deckcheak1 += 1
                     skill1cheak += 1
-                if Deckcheak1<12 and mouse_x > 175 and mouse_x < 225 and mouse_y > 365 and mouse_y < 435:
+                if skill2cheak <3 and Deckcheak1<12 and mouse_x > 175 and mouse_x < 225 and mouse_y > 365 and mouse_y < 435:
                     Deck3[Deckcheak1] = 45
+                    Deck2[Deckcheak1] = 0
                     Deckcheak1 += 1
-                if Deckcheak1<12 and mouse_x > 275 and mouse_x < 325 and mouse_y > 365 and mouse_y < 435:
+                    skill2cheak += 1
+                if skill3cheak <3 and Deckcheak1<12 and mouse_x > 275 and mouse_x < 325 and mouse_y > 365 and mouse_y < 435:
                     Deck3[Deckcheak1] = 90
+                    Deck2[Deckcheak1] = 0
                     Deckcheak1 += 1
-                if Deckcheak1<12 and mouse_x > 375 and mouse_x < 425 and mouse_y > 365 and mouse_y < 435:
+                    skill3cheak += 1
+                if lastcheak<2 and Deckcheak1<12 and mouse_x > 375 and mouse_x < 425 and mouse_y > 365 and mouse_y < 435:
                     Deck3[Deckcheak1] = 135
+                    Deck2[Deckcheak1] = 0
                     Deckcheak1 += 1
-                if Deckcheak1<12 and mouse_x > 125 and mouse_x < 175 and mouse_y > 165 and mouse_y < 235:
+                    lastcheak += 1
+                if common1cheak <3 and Deckcheak1<12 and mouse_x > 125 and mouse_x < 175 and mouse_y > 165 and mouse_y < 235:
                     Deck2[Deckcheak1] = 65
                     Deck3[Deckcheak1] = 0
                     Deckcheak1 += 1
-                if Deckcheak1<12 and mouse_x > 225 and mouse_x < 275 and mouse_y > 165 and mouse_y < 235:
+                    common1cheak += 1
+                if common2cheak <3 and Deckcheak1<12 and mouse_x > 225 and mouse_x < 275 and mouse_y > 165 and mouse_y < 235:
                     Deck2[Deckcheak1] = 65
                     Deck3[Deckcheak1] = 45
                     Deckcheak1 += 1
-                if Deckcheak1<12 and mouse_x > 325 and mouse_x < 375 and mouse_y > 165 and mouse_y < 235:
+                    common2cheak += 1
+                if common3cheak <3 and Deckcheak1<12 and mouse_x > 325 and mouse_x < 375 and mouse_y > 165 and mouse_y < 235:
                     Deck2[Deckcheak1] = 65
                     Deck3[Deckcheak1] = 90
                     Deckcheak1 += 1
-                if mouse_x > 625 and mouse_x < 750 and mouse_y>450and mouse_y<550:
+                    common3cheak += 1
+                if Deckcheak1==12 and mouse_x > 625 and mouse_x < 750 and mouse_y>450and mouse_y<550:
                     game_framework.push_state(BackgroundSelection)
 
 
@@ -102,40 +113,32 @@ def draw():
     clear_canvas()
     if character ==0:
         reimu.draw(400,300)
-        reimuDeck.clip_draw(0,0,45,65,100,400)
-        reimuDeck.clip_draw(45, 0, 45, 65, 200, 400)
-        reimuDeck.clip_draw(90, 0, 45, 65, 300, 400)
-        reimuDeck.clip_draw(135, 0, 45, 65, 400, 400)
-        commonDeck.clip_draw(0, 0, 45, 65, 150, 200)
-        commonDeck.clip_draw(45, 0, 45, 65, 250, 200)
-        commonDeck.clip_draw(90, 0, 45, 65, 350, 200)
+        for D in range(0, 4):
+            reimuDeck.clip_draw(45*D,0,45,65,100*(D+1),400)
+        for C in range(0,3):
+            commonDeck.clip_draw(45*C, 0, 45, 65, 50+100*(C+1), 200)
+
     elif character ==1:
         marisa.draw(400,300)
-        marisaDeck.clip_draw(0, 0, 45, 65, 100, 400)
-        marisaDeck.clip_draw(45, 0, 45, 65, 200, 400)
-        marisaDeck.clip_draw(90, 0, 45, 65, 300, 400)
-        marisaDeck.clip_draw(135, 0, 45, 65, 400, 400)
-        commonDeck.clip_draw(0, 0, 45, 65, 150, 200)
-        commonDeck.clip_draw(45, 0, 45, 65, 250, 200)
-        commonDeck.clip_draw(90, 0, 45, 65, 350, 200)
+        for D in range(0, 4):
+            marisaDeck.clip_draw(45*D,0,45,65,100*(D+1),400)
+        for C in range(0,3):
+            commonDeck.clip_draw(45*C, 0, 45, 65, 50+100*(C+1), 200)
+
     elif character ==2:
         iku.draw(400,300)
-        ikuDeck.clip_draw(0, 0, 45, 65, 100, 400)
-        ikuDeck.clip_draw(45, 0, 45, 65, 200, 400)
-        ikuDeck.clip_draw(90, 0, 45, 65, 300, 400)
-        ikuDeck.clip_draw(135, 0, 45, 65, 400, 400)
-        commonDeck.clip_draw(0, 0, 45, 65, 150, 200)
-        commonDeck.clip_draw(45, 0, 45, 65, 250, 200)
-        commonDeck.clip_draw(90, 0, 45, 65, 350, 200)
+        for D in range(0, 4):
+            ikuDeck.clip_draw(45*D,0,45,65,100*(D+1),400)
+        for C in range(0,3):
+            commonDeck.clip_draw(45*C, 0, 45, 65, 50+100*(C+1), 200)
+
     elif character ==3:
         tenshi.draw(400,300)
-        tenshiDeck.clip_draw(0, 0, 45, 65, 100, 400)
-        tenshiDeck.clip_draw(45, 0, 45, 65, 200, 400)
-        tenshiDeck.clip_draw(90, 0, 45, 65, 300, 400)
-        tenshiDeck.clip_draw(135, 0, 45, 65, 400, 400)
-        commonDeck.clip_draw(0, 0, 45, 65, 150, 200)
-        commonDeck.clip_draw(45, 0, 45, 65, 250, 200)
-        commonDeck.clip_draw(90, 0, 45, 65, 350, 200)
+        for D in range(0, 4):
+            tenshiDeck.clip_draw(45*D,0,45,65,100*(D+1),400)
+        for C in range(0,3):
+            commonDeck.clip_draw(45*C, 0, 45, 65, 50+100*(C+1), 200)
+
 
     next.draw(700,500)
     for Deck1 in range(0,Deckcheak1):
