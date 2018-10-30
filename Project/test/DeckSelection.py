@@ -18,11 +18,18 @@ Enemycharacter=None
 Enemycharacter=None
 Deckcheak1=0
 Deck1=0
-Deckcheak2=6
-Deck2=0
+Deckcheak2=0
+Deck2=[0,0,0,0,0,0,0,0,0,0,0,0]
 Deck3=[0,0,0,0,0,0,0,0,0,0,0,0]
 Deck_y=[230,230,230,230,230,230,165,165,165,165,165,165]
 mouse_x,mouse_y=0,0
+skill1cheak=0
+skill2cheak=0
+skill3cheak=0
+lastcheak=0
+common1cheak=0
+common2cheak=0
+common3cheak=0
 def enter():
     global iku,reimu,tenshi,marisa,character,Enemycharacter
     global reimuDeck,marisaDeck,ikuDeck,tenshiDeck,commonDeck
@@ -47,6 +54,7 @@ def exit():
 
 def handle_events():
     global character,Enemycharacter,Deckcheak,mouse_x,mouse_y,Deckcheak1,Deckcheak2
+    global skill1cheak,skill2cheak,skill3cheak,lastcheak,common1cheak,common2cheak,common3cheak
     events = get_events()
     for event in events:
         if event.type == SDL_MOUSEMOTION:
@@ -58,9 +66,10 @@ def handle_events():
                 Deckcheak1=0
                 game_framework.push_state(CharacterSelection)
             elif(event.type, event.button)==(SDL_MOUSEBUTTONDOWN,SDL_BUTTON_LEFT):
-                if Deckcheak1<12 and mouse_x > 75 and mouse_x < 125 and mouse_y > 365 and mouse_y < 435:
+                if skill1cheak <3and Deckcheak1<12 and mouse_x > 75 and mouse_x < 125 and mouse_y > 365 and mouse_y < 435:
                     Deck3[Deckcheak1] = 0
                     Deckcheak1 += 1
+                    skill1cheak += 1
                 if Deckcheak1<12 and mouse_x > 175 and mouse_x < 225 and mouse_y > 365 and mouse_y < 435:
                     Deck3[Deckcheak1] = 45
                     Deckcheak1 += 1
@@ -70,6 +79,18 @@ def handle_events():
                 if Deckcheak1<12 and mouse_x > 375 and mouse_x < 425 and mouse_y > 365 and mouse_y < 435:
                     Deck3[Deckcheak1] = 135
                     Deckcheak1 += 1
+                if Deckcheak1<12 and mouse_x > 125 and mouse_x < 175 and mouse_y > 165 and mouse_y < 235:
+                    Deck2[Deckcheak1] = 65
+                    Deck3[Deckcheak1] = 0
+                    Deckcheak1 += 1
+                if Deckcheak1<12 and mouse_x > 225 and mouse_x < 275 and mouse_y > 165 and mouse_y < 235:
+                    Deck2[Deckcheak1] = 65
+                    Deck3[Deckcheak1] = 45
+                    Deckcheak1 += 1
+                if Deckcheak1<12 and mouse_x > 325 and mouse_x < 375 and mouse_y > 165 and mouse_y < 235:
+                    Deck2[Deckcheak1] = 65
+                    Deck3[Deckcheak1] = 90
+                    Deckcheak1 += 1
                 if mouse_x > 625 and mouse_x < 750 and mouse_y>450and mouse_y<550:
                     game_framework.push_state(BackgroundSelection)
 
@@ -78,7 +99,6 @@ def handle_events():
 def draw():
     global Deck1,Deck2,Deckcheak1,Deckcheak2
     Deck1 = 0
-    Deck2=0
     clear_canvas()
     if character ==0:
         reimu.draw(400,300)
@@ -120,13 +140,13 @@ def draw():
     next.draw(700,500)
     for Deck1 in range(0,Deckcheak1):
         if character == 0:
-            reimuDeck.clip_draw(Deck3[Deck1], 0, 45, 65, 510 + 45 * (Deck1 % 6), Deck_y[Deck1])
+            reimuDeck.clip_draw(Deck3[Deck1], Deck2[Deck1], 45, 65, 510 + 45 * (Deck1 % 6), Deck_y[Deck1])
         elif character == 1:
-            marisaDeck.clip_draw(Deck3[Deck1], 0, 45, 65, 510+45*(Deck1%6), Deck_y[Deck1])
+            marisaDeck.clip_draw(Deck3[Deck1], Deck2[Deck1], 45, 65, 510 + 45 * (Deck1 % 6), Deck_y[Deck1])
         elif character == 2:
-            ikuDeck.clip_draw(Deck3[Deck1], 0, 45, 65, 510+45*(Deck1%6), Deck_y[Deck1])
+            ikuDeck.clip_draw(Deck3[Deck1], Deck2[Deck1], 45, 65, 510+45*(Deck1%6), Deck_y[Deck1])
         elif character == 3:
-            tenshiDeck.clip_draw(Deck3[Deck1], 0, 45, 65, 510+45*(Deck1%6), Deck_y[Deck1])
+            tenshiDeck.clip_draw(Deck3[Deck1], Deck2[Deck1], 45, 65, 510+45*(Deck1%6), Deck_y[Deck1])
 
 
 
