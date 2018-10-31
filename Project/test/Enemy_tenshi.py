@@ -3,7 +3,13 @@ import os
 
 os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\FCGimage')
 import game_world
-
+import game_framework
+STAND_TIME_PER_ACTION=1
+STANDACTION_PER_TIME= 1.0/STAND_TIME_PER_ACTION
+#LAST_PER_ACTION =10
+#LASTEFFECT1_PER_ACTION=4
+#LASTEFFECT2_PER_ACTION=2
+STAND_PER_ACTION=5
 # iku Event
 Stand,Skill1, Skill2,Skill3, Last, Damage,Down = range(7)
 
@@ -33,15 +39,15 @@ class StandState:
         pass
     @staticmethod
     def do(tenshi):
-        tenshi.frame1 = (tenshi.frame1 + 1) % 5
-        tenshi.frame2 = (tenshi.frame2 + 1) % 5
+        tenshi.frame1 = (tenshi.frame1 + STAND_PER_ACTION * STANDACTION_PER_TIME * game_framework.frame_time) % 5
+        tenshi.frame2 = (tenshi.frame2 + STAND_PER_ACTION * STANDACTION_PER_TIME * game_framework.frame_time) % 5
 
 
 
     @staticmethod
     def draw(tenshi):
         if tenshi.motion ==0:
-            tenshi.stand.clip_draw(tenshi.Standframe1[tenshi.frame1], 0, tenshi.Standframe2[tenshi.frame2], 115, tenshi.x, tenshi.y)
+            tenshi.stand.clip_draw(tenshi.Standframe1[int(tenshi.frame1)], 0, tenshi.Standframe2[int(tenshi.frame2)], 115, tenshi.x, tenshi.y)
 
 class Skill1State:
 

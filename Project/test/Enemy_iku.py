@@ -3,7 +3,13 @@ import os
 
 os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\FCGimage')
 import game_world
-
+import game_framework
+STAND_TIME_PER_ACTION=1
+STANDACTION_PER_TIME= 1.0/STAND_TIME_PER_ACTION
+#LAST_PER_ACTION =10
+#LASTEFFECT1_PER_ACTION=4
+#LASTEFFECT2_PER_ACTION=2
+STAND_PER_ACTION=9
 # iku Event
 Stand,Skill1, Skill2,Skill3, Last, Damage,Down = range(7)
 
@@ -36,8 +42,8 @@ class StandState:
         pass
     @staticmethod
     def do(iku):
-        iku.frame1 = (iku.frame1 + 1) % 9
-        iku.frame2 = (iku.frame2 + 1) % 9
+        iku.frame1 = (iku.frame1 + STAND_PER_ACTION * STANDACTION_PER_TIME * game_framework.frame_time) % 9
+        iku.frame2 = (iku.frame2 + STAND_PER_ACTION * STANDACTION_PER_TIME * game_framework.frame_time) % 9
 
 
 
@@ -45,7 +51,7 @@ class StandState:
     @staticmethod
     def draw(iku):
         if iku.motion ==0:
-            iku.stand.clip_draw(iku.Standframe1[iku.frame1], 0, iku.Standframe2[iku.frame2], 130, iku.x, iku.y)
+            iku.stand.clip_draw(iku.Standframe1[int(iku.frame1)], 0, iku.Standframe2[int(iku.frame2)], 130, iku.x, iku.y)
 
 class Skill1State:
 

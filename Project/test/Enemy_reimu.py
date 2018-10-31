@@ -3,7 +3,13 @@ import os
 
 os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\FCGimage')
 import game_world
-
+import game_framework
+STAND_TIME_PER_ACTION=1
+STANDACTION_PER_TIME= 1.0/STAND_TIME_PER_ACTION
+#LAST_PER_ACTION =10
+#LASTEFFECT1_PER_ACTION=4
+#LASTEFFECT2_PER_ACTION=2
+STAND_PER_ACTION=11
 # reimuEvent
 Stand,Skill1, Skill2,Skill3, Last, Damage,Down = range(7)
 
@@ -34,7 +40,7 @@ class StandState:
         pass
     @staticmethod
     def do(reimu):
-        reimu.frame1 = (reimu.frame1 + 1) % 11
+        reimu.frame1 = (reimu.frame1+ STAND_PER_ACTION * STANDACTION_PER_TIME * game_framework.frame_time) % 11
 
 
 
@@ -42,7 +48,7 @@ class StandState:
     @staticmethod
     def draw(reimu):
         if reimu.motion ==0:
-            reimu.stand.clip_draw(reimu.frame1 *100,0,97,105, reimu.x, reimu.y)
+            reimu.stand.clip_draw(int(reimu.frame1) *100,0,97,105, reimu.x, reimu.y)
 
 class Skill1State:
 

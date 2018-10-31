@@ -7,14 +7,15 @@ import game_framework
 
 
 
+#iku stand
+STAND_TIME_PER_ACTION=1
+STANDACTION_PER_TIME= 1.0/STAND_TIME_PER_ACTION
+STAND_PER_ACTION=9
+
 
 # iku lastspell Action Speed
-TIME_PER_ACTION=2
-ACTION_PER_TIME= 1.0/TIME_PER_ACTION
-#LAST_PER_ACTION =10
-#LASTEFFECT1_PER_ACTION=4
-#LASTEFFECT2_PER_ACTION=2
-STAND_PER_ACTION=9
+LASTTIME_PER_ACTION=2
+LASTACTION_PER_TIME= 1.0/LASTTIME_PER_ACTION
 LASTCHEAK_PER_ACTION=20
 
 #motion speed
@@ -60,8 +61,8 @@ class StandState:
         pass
     @staticmethod
     def do(iku):
-        iku.frame1 = (iku.frame1 + STAND_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 9
-        iku.frame2 = (iku.frame2 + STAND_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 9
+        iku.frame1 = (iku.frame1 + STAND_PER_ACTION * STANDACTION_PER_TIME * game_framework.frame_time) % 9
+        iku.frame2 = (iku.frame2 + STAND_PER_ACTION * STANDACTION_PER_TIME * game_framework.frame_time) % 9
 
 
 
@@ -229,7 +230,6 @@ class Laststate:
         iku.Lastspellframe3 = 0
         iku.Lastspellc = 0
         iku.Lastspelld = 0
-        iku.c =0
         iku.IkuLastX = [0, 120, 75]
         iku.IkuLastY = [120, 75]
         iku.Lastframe1 = [0, 60, 120, 180, 243, 315, 440, 570, 700, 825, 945, 1035]
@@ -248,19 +248,17 @@ class Laststate:
         global HP
         if int(iku.lastcheak) < 19:
             if int(iku.lastcheak) < 8:
-                iku.frame1 = (iku.frame1 + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 10
-                iku.frame2 = (iku.frame2 + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 10
+                iku.frame1 = (iku.frame1 + LASTCHEAK_PER_ACTION * LASTACTION_PER_TIME * game_framework.frame_time) % 10
+                iku.frame2 = (iku.frame2 + LASTCHEAK_PER_ACTION * LASTACTION_PER_TIME * game_framework.frame_time) % 10
             if int(iku.lastcheak) >= 8:
-                iku.LastspellEframe1 = (iku.LastspellEframe1 + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-                iku.Lastspelld = (iku.Lastspelld +LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
-                iku.Lastspellc = (iku.Lastspellc + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
+                iku.LastspellEframe1 = (iku.LastspellEframe1 + LASTCHEAK_PER_ACTION * LASTACTION_PER_TIME * game_framework.frame_time) % 4
+                iku.Lastspelld = (iku.Lastspelld +LASTCHEAK_PER_ACTION * LASTACTION_PER_TIME * game_framework.frame_time) % 2
+                iku.Lastspellc = (iku.Lastspellc + LASTCHEAK_PER_ACTION * LASTACTION_PER_TIME * game_framework.frame_time) % 2
             if int(iku.lastcheak) >= 16:
-                iku.frame1 = (iku.frame1 + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 10
-                iku.frame2 = (iku.frame2 + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 10
+                iku.frame1 = (iku.frame1 + LASTCHEAK_PER_ACTION * LASTACTION_PER_TIME * game_framework.frame_time) % 10
+                iku.frame2 = (iku.frame2 + LASTCHEAK_PER_ACTION * LASTACTION_PER_TIME * game_framework.frame_time) % 10
 
-        iku.lastcheak = (iku.lastcheak + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) %20
-
-            #iku.lastcheak +=int(MOTION_SPEED_PPS)
+        iku.lastcheak = (iku.lastcheak + LASTCHEAK_PER_ACTION * LASTACTION_PER_TIME * game_framework.frame_time) %20
         if int(iku.lastcheak) >= 19:
             iku.lastcheak = 0
             iku.add_event(Stand)

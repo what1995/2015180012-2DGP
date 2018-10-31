@@ -1,9 +1,15 @@
 from pico2d import *
 import os
-
+import game_framework
 os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\FCGimage')
 import game_world
 
+STAND_TIME_PER_ACTION=1
+STANDACTION_PER_TIME= 1.0/STAND_TIME_PER_ACTION
+#LAST_PER_ACTION =10
+#LASTEFFECT1_PER_ACTION=4
+#LASTEFFECT2_PER_ACTION=2
+STAND_PER_ACTION=9
 # marisa Event
 Stand,Skill1, Skill2,Skill3, Last, Damage,Down = range(7)
 
@@ -34,8 +40,8 @@ class StandState:
         pass
     @staticmethod
     def do(marisa):
-        marisa.frame1 = (marisa.frame1 + 1) % 9
-        marisa.frame2 = (marisa.frame2 + 1) % 9
+        marisa.frame1 = (marisa.frame1 + STAND_PER_ACTION * STANDACTION_PER_TIME * game_framework.frame_time) % 9
+        marisa.frame2 = (marisa.frame2 + STAND_PER_ACTION * STANDACTION_PER_TIME * game_framework.frame_time) % 9
 
 
 
@@ -43,7 +49,7 @@ class StandState:
     @staticmethod
     def draw(marisa):
         if marisa.motion ==0:
-            marisa.stand.clip_draw(marisa.Standframe1[marisa.frame1], 0, marisa.Standframe2[marisa.frame2], 110, marisa.x, marisa.y)
+            marisa.stand.clip_draw(marisa.Standframe1[int(marisa.frame1)], 0, marisa.Standframe2[int(marisa.frame2)], 110, marisa.x, marisa.y)
 
 class Skill1State:
 
