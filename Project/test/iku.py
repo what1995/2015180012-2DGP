@@ -1,6 +1,28 @@
 from pico2d import *
 import os
+import game_framework
 
+
+
+
+
+
+
+# iku lastspell Action Speed
+TIME_PER_ACTION=2
+ACTION_PER_TIME= 1.0/TIME_PER_ACTION
+#LAST_PER_ACTION =10
+#LASTEFFECT1_PER_ACTION=4
+#LASTEFFECT2_PER_ACTION=2
+STAND_PER_ACTION=9
+LASTCHEAK_PER_ACTION=20
+
+#motion speed
+PIXEL_PER_METER=(10.0/0.3)
+MOTION_SPEED_KMPH = 0.2
+MOTION_SPEED_MPM = (MOTION_SPEED_KMPH*1000.0/60.0)
+MOTION_SPEED_MPS=(MOTION_SPEED_MPM/60.0)
+MOTION_SPEED_PPS=(MOTION_SPEED_MPS*PIXEL_PER_METER)
 os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\FCGimage')
 import game_world
 
@@ -38,16 +60,16 @@ class StandState:
         pass
     @staticmethod
     def do(iku):
-        iku.frame1 = (iku.frame1 + 1) % 9
-        iku.frame2 = (iku.frame2 + 1) % 9
-        delay(0.1)
+        iku.frame1 = (iku.frame1 + STAND_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 9
+        iku.frame2 = (iku.frame2 + STAND_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 9
+
 
 
 
     @staticmethod
     def draw(iku):
         if iku.motion ==0:
-            iku.stand.clip_draw(iku.Standframe1[iku.frame1], 130, iku.Standframe2[iku.frame2], 130, iku.x, iku.y)
+            iku.stand.clip_draw(iku.Standframe1[int(iku.frame1)], 130, iku.Standframe2[int(iku.frame2)], 130, iku.x, iku.y)
 
 class Skill1State:
 
@@ -83,7 +105,7 @@ class Skill1State:
         if iku.skill1cheak>=20:
             iku.frame1 = (iku.frame1 + 1) % 11
             iku.frame2 = (iku.frame2 + 1) % 11
-        iku.skill1cheak +=1
+        iku.skill1cheak +=int(MOTION_SPEED_PPS)
         if  iku.skill1cheak==23:
             turn = -1
             iku.skill1cheak=0
@@ -126,20 +148,20 @@ class Skill2State:
                 iku.frame2 = (iku.frame2 + 1) % 15
             if iku.skill2cheak > 5 and iku.skill2cheak < 15:
                 if iku.skill2cheak > 8:
-                    iku.skill2Mx += 10
-                    iku.skill2Px += 10
+                    iku.skill2Mx += int(MOTION_SPEED_PPS)*20
+                    iku.skill2Px += int(MOTION_SPEED_PPS)*20
                 if iku.skill2cheak==9:
                     HP= HP+15
             if iku.skill2cheak >= 15:
                 iku.frame1 = (iku.frame1 + 1) % 15
                 iku.frame2 = (iku.frame2 + 1) % 15
-                iku.skill2Px -= 10
+                iku.skill2Px -= int(MOTION_SPEED_PPS)*20
                 iku.Skill2Eframe1 = (iku.Skill2Eframe1 + 1) % 6
-            iku.skill2cheak += 1
+            iku.skill2cheak += (MOTION_SPEED_PPS)
         if iku.skill2cheak == 19:
             iku.skill2cheak = 0
             iku.add_event(Stand)
-        delay(0.1)
+        #delay(0.1)
 
     @staticmethod
     def draw(iku):
@@ -181,7 +203,7 @@ class Skill3State:
                 if iku.skill3cheak > 17:
                     iku.frame1 = (iku.frame1 + 1) % 6
                     iku.frame2 = (iku.frame2 + 1) % 6
-            iku.skill3cheak += 1
+            iku.skill3cheak += int(MOTION_SPEED_PPS)
         if iku.skill3cheak == 18:
             iku.skill3cheak = 0
             iku.add_event(Stand)
@@ -207,10 +229,12 @@ class Laststate:
         iku.Lastspellframe3 = 0
         iku.Lastspellc = 0
         iku.Lastspelld = 0
+        iku.c =0
         iku.IkuLastX = [0, 120, 75]
         iku.IkuLastY = [120, 75]
         iku.Lastframe1 = [0, 60, 120, 180, 243, 315, 440, 570, 700, 825, 945, 1035]
         iku.Lastframe2 = [60, 60, 60, 63, 72, 125, 130, 130, 125, 120]
+        iku.timer = pico2d.get_time()
 
         if event == Last:
             iku.motion = 4
@@ -222,34 +246,35 @@ class Laststate:
     @staticmethod
     def do(iku):
         global HP
-        if iku.lastcheak < 19:
-            if iku.lastcheak < 8:
-                iku.frame1 = (iku.frame1 + 1) % 10
-                iku.frame2 = (iku.frame2 + 1) % 10
-            if iku.lastcheak >= 8:
-                iku.LastspellEframe1 = (iku.LastspellEframe1 + 1) % 4
-                iku.Lastspelld = (iku.Lastspelld + 1) % 2
-                iku.Lastspellc = (iku.Lastspellc + 1) % 1
-                if iku.lastcheak==8:
-                    HP= HP+30
-            if iku.lastcheak >= 16:
-                iku.frame1 = (iku.frame1 + 1) % 10
-                iku.frame2 = (iku.frame2 + 1) % 10
-            iku.lastcheak += 1
-        if iku.lastcheak == 18:
+        if int(iku.lastcheak) < 19:
+            if int(iku.lastcheak) < 8:
+                iku.frame1 = (iku.frame1 + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 10
+                iku.frame2 = (iku.frame2 + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 10
+            if int(iku.lastcheak) >= 8:
+                iku.LastspellEframe1 = (iku.LastspellEframe1 + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
+                iku.Lastspelld = (iku.Lastspelld +LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
+                iku.Lastspellc = (iku.Lastspellc + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
+            if int(iku.lastcheak) >= 16:
+                iku.frame1 = (iku.frame1 + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 10
+                iku.frame2 = (iku.frame2 + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 10
+
+        iku.lastcheak = (iku.lastcheak + LASTCHEAK_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) %20
+
+            #iku.lastcheak +=int(MOTION_SPEED_PPS)
+        if int(iku.lastcheak) >= 19:
             iku.lastcheak = 0
             iku.add_event(Stand)
-        delay(0.1)
+        #delay(0.1)
 
     @staticmethod
     def draw(iku):
         if iku.motion == 4:
-            iku.Lastspell.clip_draw(iku.Lastframe1[iku.frame1], 140, iku.Lastframe2[iku.frame2], 140,iku.x, iku.y)
-            if iku.lastcheak >= 8:
-                iku.Lasteffect2.clip_draw(iku.IkuLastX[(iku.Lastspelld + 1) % 2], 0,iku.IkuLastY[iku.Lastspellc], 255, 600 - 50, iku.y + 70)
-                iku.Lasteffect2.clip_draw(iku.IkuLastX[(iku.Lastspelld + 1) % 2], 0, iku.IkuLastY[iku.Lastspellc], 255, 600 + 40, iku.y + 70)
-                iku.Lasteffect2.clip_draw(iku.IkuLastX[iku.Lastspelld], 0, iku.IkuLastY[iku.Lastspellc], 255,600, iku.y + 70)
-                iku.Lasteffect.clip_draw(iku.LastspellEframe1 * 270, 0, 270, 255, 600 + 15, iku.y + 210)
+            iku.Lastspell.clip_draw(iku.Lastframe1[int(iku.frame1)], 140, iku.Lastframe2[int(iku.frame2)], 140,iku.x, iku.y)
+            if int(iku.lastcheak) >= 8:
+                iku.Lasteffect2.clip_draw(iku.IkuLastX[int((iku.Lastspelld + 1) % 2)], 0,iku.IkuLastY[int(iku.Lastspellc)], 255, 600 - 50, iku.y + 70)
+                iku.Lasteffect2.clip_draw(iku.IkuLastX[int((iku.Lastspelld + 1) % 2)], 0, iku.IkuLastY[int(iku.Lastspellc)], 255, 600 + 40, iku.y + 70)
+                iku.Lasteffect2.clip_draw(iku.IkuLastX[int(iku.Lastspelld)], 0, iku.IkuLastY[int(iku.Lastspellc)], 255,600, iku.y + 70)
+                iku.Lasteffect.clip_draw(int(iku.LastspellEframe1) * 270, 0, 270, 255, 600 + 15, iku.y + 210)
 
 class Damagestate:
     @staticmethod
@@ -269,9 +294,9 @@ class Damagestate:
     @staticmethod
     def do(iku):
         if iku.Damagecheak < 3:
-            iku.frame1 = (iku.frame1 + 1) % 4
+            iku.frame1 = (iku.frame1 + 1) % 3
             iku.frame2 = (iku.frame2 + 1) % 3
-            iku.Damagecheak += 1
+            iku.Damagecheak += int(MOTION_SPEED_PPS)
         if iku.Damagecheak == 3:
             iku.Damagecheak = 0
             iku.add_event(Stand)
@@ -304,9 +329,9 @@ class Downstate:
     def do(iku):
         if iku.Downcheak < 20:
             if iku.Downcheak < 6:
-                iku.frame1 = (iku.frame1 + 1) % 8
+                iku.frame1 = (iku.frame1 + 1) % 7
                 iku.frame2 = (iku.frame2 + 1) % 7
-            iku.Downcheak += 1
+            iku.Downcheak += int(MOTION_SPEED_PPS)
         if iku.Downcheak == 20:
             iku.Downcheak = 20
             #iku.add_event(Stand)

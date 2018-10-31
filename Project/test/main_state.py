@@ -21,7 +21,7 @@ from Enemy_tenshi import Enemy_Tenshi
 from Enemy_iku import Enemy_Iku
 
 name = "MainState"
-
+turncheak=0
 iku = None
 reimu=None
 tenshi=None
@@ -109,13 +109,51 @@ def resume():
 
 
 def handle_events():
-    global iku, background, Player, reimu, tenshi, marisa, PlayerHP, EnemyHP, Enemy_marisa, Enemy_reimu, Enemy_tenshi, Enemy_iku, EnemyPlayer, turn
+    global iku, background, Player, reimu, tenshi, marisa, PlayerHP, EnemyHP, Enemy_marisa, Enemy_reimu, Enemy_tenshi, Enemy_iku, EnemyPlayer, turn,turncheak
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
             turn = turn * -1
+            turncheak=1
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+                game_framework.push_state(DeckSelection)
+                game_world.remove_object(reimu)
+                game_world.remove_object(marisa)
+                game_world.remove_object(iku)
+                game_world.remove_object(tenshi)
+                game_world.remove_object(Enemy_reimu)
+                game_world.remove_object(Enemy_marisa)
+                game_world.remove_object(Enemy_iku)
+                game_world.remove_object(Enemy_tenshi)
+
+        else:
+            if Player == 0 and turn ==1:
+                reimu.handle_event(event)
+            if Player == 1and turn ==1:
+                marisa.handle_event(event)
+            if Player == 2and turn ==1:
+                iku.handle_event(event)
+            if Player == 3and turn ==1:
+                tenshi.handle_event(event)
+            if EnemyPlayer==0and turn ==-1:
+                Enemy_marisa.handle_event(event)
+            if EnemyPlayer==1and turn ==-1:
+                Enemy_reimu.handle_event(event)
+            if EnemyPlayer==2and turn ==-1:
+                Enemy_iku.handle_event(event)
+            if EnemyPlayer==3and turn ==-1:
+                Enemy_tenshi.handle_event(event)
+
+
+
+def update():
+    global iku, background, Player, reimu, tenshi, marisa, PlayerHP, EnemyHP, Enemy_marisa, Enemy_reimu, Enemy_tenshi, Enemy_iku, EnemyPlayer, turn, turncheak
+
+    for game_objcet in game_world.all_objects():
+        game_objcet.update()
+        if(turncheak==1):
             game_world.remove_object(reimu)
             game_world.remove_object(marisa)
             game_world.remove_object(iku)
@@ -174,41 +212,7 @@ def handle_events():
                 elif EnemyPlayer == 3:
                     Enemy_tenshi = Enemy_Tenshi()
                     game_world.add_object(Enemy_tenshi, 1)
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-                game_framework.push_state(DeckSelection)
-                game_world.remove_object(reimu)
-                game_world.remove_object(marisa)
-                game_world.remove_object(iku)
-                game_world.remove_object(tenshi)
-                game_world.remove_object(Enemy_reimu)
-                game_world.remove_object(Enemy_marisa)
-                game_world.remove_object(Enemy_iku)
-                game_world.remove_object(Enemy_tenshi)
-
-        else:
-            if Player == 0 and turn ==1:
-                reimu.handle_event(event)
-            if Player == 1and turn ==1:
-                marisa.handle_event(event)
-            if Player == 2and turn ==1:
-                iku.handle_event(event)
-            if Player == 3and turn ==1:
-                tenshi.handle_event(event)
-            if EnemyPlayer==0and turn ==-1:
-                Enemy_marisa.handle_event(event)
-            if EnemyPlayer==1and turn ==-1:
-                Enemy_reimu.handle_event(event)
-            if EnemyPlayer==2and turn ==-1:
-                Enemy_iku.handle_event(event)
-            if EnemyPlayer==3and turn ==-1:
-                Enemy_tenshi.handle_event(event)
-
-
-
-def update():
-
-    for game_objcet in game_world.all_objects():
-        game_objcet.update()
+            turncheak=0
 
 
 

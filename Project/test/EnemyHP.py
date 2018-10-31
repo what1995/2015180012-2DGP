@@ -3,7 +3,7 @@ import os
 
 os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\FCGimage')
 import iku
-attack=None
+attack=0
 class Enemy_HP:
     def __init__(self):
 
@@ -16,7 +16,7 @@ class Enemy_HP:
 
     def update(self):
         global attack
-        attack = iku.HP
+        attack = attack+ iku.HP
         if self.Power < attack:
             self.damage -= 4
             self.Power += 1
