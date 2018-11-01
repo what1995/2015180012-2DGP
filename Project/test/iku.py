@@ -60,6 +60,7 @@ name = 'iku'
 # Iku States
 turn =None
 HP=0
+HPcheak=0
 class StandState:
 
     @staticmethod
@@ -110,23 +111,27 @@ class Skill1State:
         #    boy.fire_ball()
     @staticmethod
     def do(iku):
-        global HP
+        global HP,HPcheak
         if int(iku.skill1cheak)<8:
             iku.frame1 = (iku.frame1+ SKILL1_PER_ACTION * SKILL1ACTION_PER_TIME * game_framework.frame_time) % 11
             iku.frame2 = (iku.frame2 + SKILL1_PER_ACTION * SKILL1ACTION_PER_TIME * game_framework.frame_time) % 11
-        if int(iku.skill1cheak)>=8 and int(iku.skill1cheak)<20:
+        if int(iku.skill1cheak)>=7 and int(iku.skill1cheak)<20:
             iku.S1frame = (iku.S1frame +SKILL1_PER_ACTION * SKILL1ACTION_PER_TIME * game_framework.frame_time) % 12
             iku.Skill1Eframe1 = (iku.Skill1Eframe1 + SKILL1_PER_ACTION * SKILL1ACTION_PER_TIME * game_framework.frame_time) % 7
-            #if int(iku.skill1cheak)==10:
-                #HP=HP+10
-        if int(iku.skill1cheak)>=20:
+            if int(iku.skill1cheak)==10:
+                #HP=10
+                HPcheak=1
+            if int(iku.skill1cheak)==11:
+                #HP=10
+                HPcheak=0
+
+        if int(iku.skill1cheak)>20:
             iku.frame1 = (iku.frame1 + SKILL1_PER_ACTION * SKILL1ACTION_PER_TIME * game_framework.frame_time) % 11
             iku.frame2 = (iku.frame2 + SKILL1_PER_ACTION * SKILL1ACTION_PER_TIME * game_framework.frame_time) % 11
         iku.skill1cheak =(iku.skill1cheak + SKILL1_PER_ACTION * SKILL1ACTION_PER_TIME * game_framework.frame_time)%24
-        if int(iku.skill1cheak)>=23:
+        if int(iku.skill1cheak)>=22:
             #turn = -1
-            iku.skill1cheak=0
-
+            #iku.skill1cheak=0
             iku.add_event(Stand)
         delay(0.1)
 
@@ -423,7 +428,7 @@ class Iku:
 
     def handle_event(self, event):
         global cheak1
-        cheak1=3
+        cheak1=1
         if (event.type, event.button) == (SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT): ##스킬키 체크
             if cheak1==1:
                 self.add_event(Skill1)
