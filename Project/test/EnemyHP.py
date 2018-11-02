@@ -2,6 +2,7 @@ from pico2d import *
 import os
 
 os.chdir('C:\\2DGP\\2015180012-2DGP\\Project\\FCGimage')
+
 import iku
 attack=1
 class Enemy_HP:
