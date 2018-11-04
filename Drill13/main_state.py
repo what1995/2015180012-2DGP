@@ -8,7 +8,7 @@ import game_world
 
 from boy import Boy
 from grass import Grass
-from ball import Ball
+from ball import Ball, BigBall
 
 name = "MainState"
 
@@ -47,7 +47,7 @@ def enter():
 
     # fill here for balls
     global balls
-    balls = [Ball() for i in range(10)]
+    balls = [Ball() for i in range(10)] + [BigBall() for i in range(10)]
     game_world.add_objects(balls,1)
 
 
@@ -83,6 +83,9 @@ def update():
         if collide(boy, ball):
             balls.remove(ball)
             game_world.remove_object(ball)
+    for ball in balls:
+        if collide(grass, ball):
+            ball.stop()
 
     # fill here for collision check
 
