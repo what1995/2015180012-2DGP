@@ -35,6 +35,10 @@ key_event_table = {
 def Left_Clamp_Line(x1,x2,y1,y2,y):
     x= (x2-x1)/(y2-y1)*(y-y1) + x1
     return x
+
+def Right_Clamp_Line(x1,x2,y1,y2,y):
+    x= (x2-x1)/(y2-y1)*(y-y1) + x1
+    return x
 # Boy States
 
 class WalkingState:
@@ -72,7 +76,7 @@ class WalkingState:
         boy.x += boy.x_velocity * game_framework.frame_time
         boy.y += boy.y_velocity * game_framework.frame_time
 
-        boy.x = clamp(Left_Clamp_Line(20,205,70,1110,boy.y),boy.x,boy.bg.w)
+        boy.x = clamp(Left_Clamp_Line(20,205,70,1110,boy.y),boy.x,Left_Clamp_Line(1820,1630,70,1110,boy.y))
         boy.y = clamp(70, boy.y,boy.bg.h)
         # fill here
 
