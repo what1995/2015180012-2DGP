@@ -32,7 +32,9 @@ key_event_table = {
     (SDL_KEYDOWN, SDLK_SPACE): SPACE
 }
 
-
+def Left_Clamp_Line(x1,x2,y1,y2,y):
+    x= (x2-x1)/(y2-y1)*(y-y1) + x1
+    return x
 # Boy States
 
 class WalkingState:
@@ -70,7 +72,7 @@ class WalkingState:
         boy.x += boy.x_velocity * game_framework.frame_time
         boy.y += boy.y_velocity * game_framework.frame_time
 
-        #boy.x = clamp(0,boy.x,boy.bg.w)
+        boy.x = clamp(Left_Clamp_Line(20,205,70,1110,boy.y),boy.x,boy.bg.w)
         boy.y = clamp(70, boy.y,boy.bg.h)
         # fill here
 
