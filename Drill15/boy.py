@@ -76,13 +76,8 @@ class WalkingState:
         boy.x += boy.x_velocity * game_framework.frame_time
         boy.y += boy.y_velocity * game_framework.frame_time
 
-        #boy.x = clamp(Left_Clamp_Line(20,205,70,1110,boy.y),boy.x,Left_Clamp_Line(1820,1630,70,1110,boy.y))
-        #boy.y = clamp(70, boy.y,boy.bg.h)
-
-
-        # fill here
-
-
+        boy.x = clamp(Left_Clamp_Line(20,205,70,1110,boy.y),boy.x,Left_Clamp_Line(1820,1630,70,1110,boy.y))
+        boy.y = clamp(70, boy.y,boy.bg.h)
 
     @staticmethod
     def draw(boy):
