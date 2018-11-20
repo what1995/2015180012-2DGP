@@ -56,6 +56,7 @@ class InfiniteBackground:
         # fill here
 
     def update(self):
+
         # quadrant 3
         self.q3l = (int(self.center_object.x) - self.canvas_width // 2) % self.w
         self.q3b = (int(self.center_object.y) - self.canvas_height // 2) % self.h
