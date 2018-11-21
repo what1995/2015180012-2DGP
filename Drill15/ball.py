@@ -3,6 +3,7 @@ from pico2d import *
 import game_world
 import game_framework
 
+import boy
 class Ball:
     image = None
 
@@ -12,6 +13,7 @@ class Ball:
             self.canvas_width = get_canvas_width()
             self.canvas_height = get_canvas_height()
         self.x, self.y, self.fall_speed = random.randint(0,2400), random.randint(0, 2400), 0
+
 
     def set_background(self, bg):
         self.bg = bg
@@ -29,5 +31,6 @@ class Ball:
         draw_rectangle(*self.get_bb())
 
     def update(self):
+        self.x +=1
         pass
 
