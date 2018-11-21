@@ -77,6 +77,7 @@ class WalkingState:
 
     @staticmethod
     def draw(boy):
+        global cx,cy
         # fill here
         cx, cy = boy.x -boy.bg.window_left, boy.y - boy.bg.window_bottom
         if boy.x_velocity > 0:
@@ -144,7 +145,7 @@ class Boy:
 
     def draw(self):
         self.cur_state.draw(self)
-        self.font.draw(self.canvas_width//2 - 60, self.canvas_height//2 + 50, '(%5d, %5d)' % (self.x, self.y), (255, 255, 0))
+        self.font.draw(cx-50, cy+50, '(%5d, %5d)' % (self.x, self.y), (255, 255, 0))
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
