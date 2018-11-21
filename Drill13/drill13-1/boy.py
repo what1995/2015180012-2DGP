@@ -1,6 +1,6 @@
 import game_framework
 from pico2d import *
-
+from ball import Ball
 import game_world
 
 # Boy Run Speed
@@ -32,7 +32,13 @@ key_event_table = {
     (SDL_KEYDOWN, SDLK_SPACE): SPACE
 }
 
+def Left_Clamp_Line(x1,x2,y1,y2,y):
+    x= (x2-x1)/(y2-y1)*(y-y1) + x1
+    return x
 
+def Right_Clamp_Line(x1,x2,y1,y2,y):
+    x= (x2-x1)/(y2-y1)*(y-y1) + x1
+    return x
 # Boy States
 
 class WalkingState:
@@ -70,13 +76,13 @@ class WalkingState:
         boy.x += boy.x_velocity * game_framework.frame_time
         boy.y += boy.y_velocity * game_framework.frame_time
 
-        # fill here
-
+        boy.x = clamp(Left_Clamp_Line(20,205,70,1110,boy.y),boy.x,Left_Clamp_Line(1820,1630,70,1110,boy.y))
+        boy.y = clamp(70, boy.y,boy.bg.h)
 
     @staticmethod
     def draw(boy):
         # fill here
-
+        cx, cy = boy.canvas_width//2, boy.canvas_height//2
         if boy.x_velocity > 0:
             boy.image.clip_draw(int(boy.frame) * 100, 100, 100, 100, cx, cy)
             boy.dir = 1
@@ -116,9 +122,15 @@ class Boy:
         self.dir = 1
         self.x_velocity, self.y_velocity = 0, 0
         self.frame = 0
+        self.Ball_eat=0
         self.event_que = []
         self.cur_state = WalkingState
         self.cur_state.enter(self, None)
+        self.bgm = load_music('football.mp3')
+        self.bgm.set_volume(64)
+        self.bgm.repeat_play()
+        self.eat_sound = load_wav('pickup.wav')
+        self.eat_sound.set_volume(32)
 
     def get_bb(self):
         return self.x - 50, self.y - 50, self.x + 50, self.y + 50
@@ -128,7 +140,9 @@ class Boy:
         self.bg = bg
         self.x = self.bg.w / 2
         self.y = self.bg.h / 2
-
+    def eat(self, ball):
+        self.eat_sound.play()
+        pass
     def add_event(self, event):
         self.event_que.insert(0, event)
 
@@ -142,7 +156,8 @@ class Boy:
 
     def draw(self):
         self.cur_state.draw(self)
-        self.font.draw(self.canvas_width//2 - 60, self.canvas_height//2 + 50, '(%5d, %5d)' % (self.x, self.y), (255, 255, 0))
+        self.font.draw(self.canvas_width//2-60, self.canvas_height//2 + 50, '(%5d, %5d)' % (self.x, self.y), (255, 255, 0))
+        self.font.draw(self.canvas_width // 2 - 10, self.canvas_height // 2 + 70, '(%1d)' % self.Ball_eat,(255, 0, 0))
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
