@@ -126,6 +126,9 @@ class Boy:
         self.event_que = []
         self.cur_state = WalkingState
         self.cur_state.enter(self, None)
+        self.bgm = load_music('football.mp3')
+        self.bgm.set_volume(64)
+        self.bgm.repeat_play()
 
     def get_bb(self):
         return self.x - 50, self.y - 50, self.x + 50, self.y + 50
