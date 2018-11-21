@@ -16,7 +16,7 @@ class Ball:
 
     def get_bb(self):
         global cx,cy
-        return cx - 10, cy - 10, cx + 10, cy + 10
+        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
 
 
     def draw(self):
@@ -24,7 +24,6 @@ class Ball:
         cx = self.x - boy.window_left
         cy = self.y - boy.window_bottom
         self.image.draw(cx, cy)
-        draw_rectangle(*self.get_bb())
 
     def update(self):
         pass
