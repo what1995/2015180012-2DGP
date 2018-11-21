@@ -17,6 +17,7 @@ name = "MainState"
 boy = None
 background = None
 balls = []
+ball_eat =0
 def collide(a, b):
     # fill here
     left_a, bottom_a, right_a, top_a = a.get_bb()
@@ -71,13 +72,15 @@ def handle_events():
 
 
 def update():
+    global ball_eat
     for game_object in game_world.all_objects():
         game_object.update()
     for ball in balls:
         if collide(boy, ball):
             balls.remove(ball)
             # fill here
-            #boy.eat(ball)
+            boy.eat(ball)
+            ball_eat +=1
             game_world.remove_object(ball)
 
 

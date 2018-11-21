@@ -1,6 +1,6 @@
 import game_framework
 from pico2d import *
-
+import main_state
 import game_world
 
 # Boy Run Speed
@@ -130,6 +130,11 @@ class Boy:
         self.bgm.set_volume(64)
         self.bgm.repeat_play()
 
+        self.eat_sound = load_wav('pickup.wav')
+        self.eat_sound.set_volume(32)
+    def eat(self, ball):
+        # fill here
+        self.eat_sound.play()
     def get_bb(self):
         return self.x - 50, self.y - 50, self.x + 50, self.y + 50
 
@@ -153,6 +158,7 @@ class Boy:
     def draw(self):
         self.cur_state.draw(self)
         self.font.draw(cx-50, cy+50, '(%5d, %5d)' % (self.x, self.y), (255, 255, 0))
+        self.font.draw(cx - 20, cy + 70, '(%1d)' % (main_state.ball_eat), (255, 0, 0))
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
