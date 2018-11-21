@@ -7,6 +7,7 @@ import game_framework
 import game_world
 
 from boy import Boy
+from background import FixedBackground as Background
 # fill here
 
 
@@ -26,6 +27,8 @@ def enter():
     game_world.add_object(background, 0)
 
     # fill here
+    background.set_center_object(boy)
+    boy.set_background(background)
 
 
 
