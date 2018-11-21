@@ -8,6 +8,7 @@ import game_world
 
 from boy import Boy
 from background import FixedBackground as Background
+from ball import Ball
 # fill here
 
 
@@ -15,7 +16,7 @@ name = "MainState"
 
 boy = None
 background = None
-
+balls = []
 
 def enter():
     global boy
@@ -25,6 +26,10 @@ def enter():
     global background
     background = Background()
     game_world.add_object(background, 0)
+
+    global balls,ball
+    balls = [Ball() for i in range(100)]
+    game_world.add_objects(balls, 1)
 
     # fill here
     background.set_center_object(boy)

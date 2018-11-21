@@ -34,7 +34,8 @@ key_event_table = {
 
 
 # Boy States
-
+window_left =0
+window_bottom=0
 class WalkingState:
 
     @staticmethod
@@ -66,6 +67,9 @@ class WalkingState:
 
     @staticmethod
     def do(boy):
+        global window_left,window_bottom
+        window_left = boy.bg.window_left
+        window_bottom = boy.bg.window_bottom
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
         boy.x += boy.x_velocity * game_framework.frame_time
         boy.y += boy.y_velocity * game_framework.frame_time
@@ -79,7 +83,7 @@ class WalkingState:
     def draw(boy):
         global cx,cy
         # fill here
-        cx, cy = boy.x -boy.bg.window_left, boy.y - boy.bg.window_bottom
+        cx, cy = boy.x - boy.bg.window_left, boy.y - boy.bg.window_bottom
         if boy.x_velocity > 0:
             boy.image.clip_draw(int(boy.frame) * 100, 100, 100, 100, cx, cy)
             boy.dir = 1
