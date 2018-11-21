@@ -15,7 +15,6 @@ class Ball:
         self.x, self.y, self.fall_speed = random.randint(0,1840), random.randint(0, 1110), 0
 
     def get_bb(self):
-        global cx,cy
         return self.x - 10, self.y - 10, self.x + 10, self.y + 10
 
 
@@ -24,6 +23,7 @@ class Ball:
         cx = self.x - boy.window_left
         cy = self.y - boy.window_bottom
         self.image.draw(cx, cy)
+        draw_rectangle(cx-10,cy-10,cx+10,cy+10)
 
     def update(self):
         pass

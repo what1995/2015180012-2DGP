@@ -131,7 +131,7 @@ class Boy:
         self.bgm.repeat_play()
 
         self.eat_sound = load_wav('pickup.wav')
-        self.eat_sound.set_volume(32)
+        self.eat_sound.set_volume(64)
     def eat(self, ball):
         # fill here
         self.eat_sound.play()
