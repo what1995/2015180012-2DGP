@@ -11,6 +11,7 @@ import main_state
 
 from boy import Boy
 from zombie import Zombie
+from ranking import Ranking
 
 
 boy = None
@@ -50,6 +51,13 @@ def create_new_world():
     for data in zombie_data_list:
         zombie= Zombie(data['name'],data['x'],data['y'],data['size'])
         game_world.add_object(zombie, 1)
+
+    with open('ranking_data.json','r') as r:
+        ranking_data_list = json.load(r)
+    for data in ranking_data_list:
+        ranking =Ranking(data['number'],data['score'],data['y'])
+        game_world.add_object(ranking,1)
+
 
 
 

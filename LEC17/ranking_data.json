@@ -1,14 +1,14 @@
 [
-  {"name": "1", "score":0},
-  {"name": "2"  , "score":0},
-  {"name": "3"  ,"score":0},
-  {"name": "4"  , "score":0},
-  {"name": "5"   ,"score":0},
-  {"name": "6"   ,"score":0},
-  {"name": "7"   ,"score":0},
-  {"name": "8"   ,"score":0},
-  {"name": "9"   ,"score":0},
-  {"name": "10"   ,"score":0}
+  {"number": "1", "score":0,"y":600},
+  {"number": "2"  , "score":0,"y":570},
+  {"number": "3"  ,"score":0,"y":540},
+  {"number": "4"  , "score":0,"y":510},
+  {"number": "5"   ,"score":0,"y":480},
+  {"number": "6"   ,"score":0,"y":450},
+  {"number": "7"   ,"score":0,"y":420},
+  {"number": "8"   ,"score":0,"y":390},
+  {"number": "9"   ,"score":0,"y":360},
+  {"number": "10"   ,"score":0,"y":330}
 
 ]
 
