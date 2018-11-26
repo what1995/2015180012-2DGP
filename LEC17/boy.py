@@ -113,6 +113,7 @@ boy_left = 0
 boy_right=0
 boy_bottom=0
 boy_top=0
+score=0
 class Boy:
     image = None
     font = None
@@ -158,7 +159,7 @@ class Boy:
         self.event_que.insert(0, event)
 
     def update(self):
-        global boy_bottom,boy_left,boy_right,boy_top
+        global boy_bottom,boy_left,boy_right,boy_top,score
         boy_left = self.x - 30
         boy_right = self.x + 30
         boy_bottom = self.y - 40
@@ -169,6 +170,7 @@ class Boy:
             self.cur_state.exit(self, event)
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
+
 
     def draw(self):
         self.cur_state.draw(self)

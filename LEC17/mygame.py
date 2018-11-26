@@ -11,7 +11,7 @@ def create_new_ranking():
     with open('ranking_data.json', 'r')as f:
         ranking_data_list = json.load(f)
     for data in ranking_data_list:
-        ranking = Ranking(data['number'], data['score'], data['y'])
+        ranking = Ranking(data['score'],data['y'])
         game_world.ranking_list(ranking, 1)
 
 pico2d.open_canvas(int(40 * PIXEL_PER_METER), int(30 * PIXEL_PER_METER))

@@ -8,17 +8,19 @@ import game_framework
 import game_world
 import End
 import world_build_state
+import ranking
 name = "MainState"
 
 boy_die =True
 
 
-
+score=0
 def enter():
     # game world is prepared already in world_build_state
-    global boy,boy_die
+    global boy,boy_die,score
     boy_die=True
     boy = world_build_state.get_boy()
+
     pass
 
 def exit():
@@ -44,12 +46,16 @@ def handle_events():
         else:
             boy.handle_event(event)
         if boy_die==False:
+            with open('ranking_data.json', 'w')as f:
+                json.dump(score,f)
             game_framework.change_state(End)
 
 
 def update():
+    global score
     for game_object in game_world.all_objects():
         game_object.update()
+    score = (get_time() - boy.start_time)
 
 
 
