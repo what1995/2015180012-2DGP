@@ -143,13 +143,12 @@ class Boy:
         pass
 
     def get_bb(self):
-        # fill here
-        return self.x - 50, self.y - 50, self.x + 50, self.y + 50
+        #e fill her
+        return self.x - 30, self.y - 40, self.x + 30, self.y + 40
 
 
     def fire_ball(self):
-        ball = Ball(self.x, self.y, self.dir * RUN_SPEED_PPS * 10)
-        game_world.add_object(ball, 1)
+        pass
 
 
     def add_event(self, event):
@@ -165,6 +164,7 @@ class Boy:
 
     def draw(self):
         self.cur_state.draw(self)
+        draw_rectangle(*self.get_bb())
         self.font.draw(self.x - 60, self.y + 50, '(Time: %3.2f)' % (get_time() - self.start_time), (0, 0, 0))
 
     def handle_event(self, event):
