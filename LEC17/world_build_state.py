@@ -51,14 +51,11 @@ def create_new_world():
     for data in zombie_data_list:
         zombie= Zombie(data['name'],data['x'],data['y'],data['size'])
         game_world.add_object(zombie, 1)
-
-    with open('ranking_data.json','r') as r:
-        ranking_data_list = json.load(r)
+    with open('ranking_data.json', 'r')as f:
+        ranking_data_list = json.load(f)
     for data in ranking_data_list:
-        ranking =Ranking(data['number'],data['score'],data['y'])
-        game_world.add_object(ranking,1)
-
-
+        ranking = Ranking(data['number'], data['score'], data['y'])
+        game_world.add_object(ranking, 1)
 
 
 def load_saved_world():

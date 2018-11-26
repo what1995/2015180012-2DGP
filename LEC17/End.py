@@ -6,30 +6,43 @@ import os
 from pico2d import *
 import game_framework
 import game_world
-import End
-import world_build_state
-name = "MainState"
+import world_build_state as start_state
+import main_state
 
-boy_die =True
+
+#from ranking import Ranking
+
+
+boy = None
+
+
+name = "End"
+
 
 
 
 def enter():
-    # game world is prepared already in world_build_state
-    global boy,boy_die
-    boy_die=True
-    boy = world_build_state.get_boy()
+    pass
     pass
 
+
+
 def exit():
-    game_world.clear()
+    pass
 
 def pause():
     pass
 
-
 def resume():
     pass
+
+def create_new_world():
+    pass
+
+
+def load_saved_world():
+    pass
+    # fill here
 
 
 def handle_events():
@@ -38,21 +51,12 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            game_framework.change_state(world_build_state)
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_s:
-            game_world.save()
-        else:
-            boy.handle_event(event)
-        if boy_die==False:
-            game_framework.change_state(End)
+            game_framework.change_state(start_state)
 
 
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
-
-
-
 
 def draw():
     clear_canvas()

@@ -23,7 +23,7 @@ class Ranking:
 
 
     def __getstate__(self):
-        state = {'score':self.score, 'number':self.number,'y':self.y}
+        state = {'number':self.number,'score':self.score, 'y':self.y}
         return state
         # fill here
         pass
@@ -43,8 +43,9 @@ class Ranking:
 
 
     def draw(self):
+
         Ranking.font.draw(400,self.y, self.number, (255, 255, 0))
-        Ranking.font.draw(430, self.y, self.score, (255, 255, 0))
+        Ranking.font.draw(430, self.y,'(%4d)' %  self.score, (255, 255, 0))
 
     def handle_event(self, event):
         pass
