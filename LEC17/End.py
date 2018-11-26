@@ -9,24 +9,18 @@ import game_world
 import world_build_state as start_state
 import main_state
 
-
-#from ranking import Ranking
-
-
 boy = None
 
 
 name = "End"
 
-
+menu = None
 
 
 def enter():
+    global menu
+    menu = load_image('BGbamboo.png')
     pass
-    pass
-
-
-
 def exit():
     pass
 
@@ -35,15 +29,6 @@ def pause():
 
 def resume():
     pass
-
-def create_new_world():
-    pass
-
-
-def load_saved_world():
-    pass
-    # fill here
-
 
 def handle_events():
     events = get_events()
@@ -55,13 +40,12 @@ def handle_events():
 
 
 def update():
-    for game_object in game_world.all_objects():
-        game_object.update()
+    pass
 
 def draw():
     clear_canvas()
-    for game_object in game_world.all_objects():
-        game_object.draw()
+    for a in game_world.all_ranking():
+        a.draw()
     update_canvas()
 
 

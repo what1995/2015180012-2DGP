@@ -1,6 +1,6 @@
 [
-  {"number": "1", "score":0,"y":600},
-  {"number": "2"  , "score":0,"y":570},
+  {"number": "1", "score":1,"y":600},
+  {"number": "2"  , "score":2,"y":570},
   {"number": "3"  ,"score":0,"y":540},
   {"number": "4"  , "score":0,"y":510},
   {"number": "5"   ,"score":0,"y":480},

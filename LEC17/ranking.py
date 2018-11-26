@@ -45,7 +45,7 @@ class Ranking:
     def draw(self):
 
         Ranking.font.draw(400,self.y, self.number, (255, 255, 0))
-        Ranking.font.draw(430, self.y,'(%4d)' %  self.score, (255, 255, 0))
+        Ranking.font.draw(440, self.y,'(%4d)' %  self.score, (255, 255, 0))
 
     def handle_event(self, event):
         pass
