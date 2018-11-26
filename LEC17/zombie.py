@@ -1,9 +1,11 @@
 import random
 import math
+import boy
 import game_framework
 from BehaviorTree import BehaviorTree, SelectorNode, SequenceNode, LeafNode
 from pico2d import *
 import world_build_state
+import main_state
 
 # zombie Run Speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
@@ -17,10 +19,22 @@ TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 10
 
+def collide():
+    # fill here
+    left_a, bottom_a, right_a, top_a = boy.boy_left,boy.boy_bottom,boy.boy_right,boy.boy_top
+    left_b, bottom_b, right_b, top_b = zombie_left,zombie_bottom,zombie_right,zombie_top
 
+    if left_a > right_b: return False
+    if right_a < left_b: return False
+    if top_a < bottom_b: return False
+    if bottom_a > top_b: return False
+
+    return True
 animation_names = ['Attack', 'Dead', 'Idle', 'Walk']
-
-
+zombie_left=0
+zombie_bottom=0
+zombie_right=0
+zombie_top=0
 class Zombie:
     images = None
     font = None
@@ -94,21 +108,32 @@ class Zombie:
 
 
     def get_bb(self):
-        return self.x - 50, self.y - 50, self.x + 50, self.y + 50
+        return self.x - (40*self.size), self.y - (50*self.size), self.x + (40*self.size), self.y + (50*self.size)
 
     def update(self):
+        global zombie_left,zombie_bottom,zombie_right,zombie_top
         self.bt.run()
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
         self.x += self.speed * math.cos(self.dir)* game_framework.frame_time
         self.y += self.speed * math.sin(self.dir)* game_framework.frame_time
         self.x = clamp(50, self.x, get_canvas_width() - 50)
         self.y = clamp(50, self.y, get_canvas_height() - 50)
+        zombie_left = self.x - (40*self.size)
+        zombie_bottom = self.y - (50*self.size)
+        zombie_right = self.x + (40*self.size)
+        zombie_top =  self.y + (50*self.size)
+
+        if collide()==True:
+            main_state.boy_die=False
+
+
 
     def draw(self):
         tw, th = int(100*self.size), int(100*self.size)
         if math.cos(self.dir) < 0:
             if self.speed == 0:
                 Zombie.images['Idle'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, tw, th)
+
             else:
                 Zombie.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, tw, th)
         else:
@@ -118,6 +143,7 @@ class Zombie:
                 Zombie.images['Walk'][int(self.frame)].draw(self.x, self.y, tw, th)
 
         Zombie.font.draw(self.x - 30, self.y + 50, self.name, (255, 255, 0))
+        draw_rectangle(*self.get_bb())
 
     def handle_event(self, event):
         pass

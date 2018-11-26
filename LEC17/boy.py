@@ -109,7 +109,10 @@ next_state_table = {
                 SPACE: WalkingState}
 }
 
-
+boy_left = 0
+boy_right=0
+boy_bottom=0
+boy_top=0
 class Boy:
     image = None
     font = None
@@ -155,6 +158,11 @@ class Boy:
         self.event_que.insert(0, event)
 
     def update(self):
+        global boy_bottom,boy_left,boy_right,boy_top
+        boy_left = self.x - 30
+        boy_right = self.x + 30
+        boy_bottom = self.y - 40
+        boy_top = self.y + 40
         self.cur_state.do(self)
         if len(self.event_que) > 0:
             event = self.event_que.pop()

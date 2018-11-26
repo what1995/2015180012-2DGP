@@ -11,6 +11,7 @@ import world_build_state
 
 name = "MainState"
 
+boy_die =True
 
 def collide(a, b):
     # fill here
@@ -28,7 +29,8 @@ boy = None
 
 def enter():
     # game world is prepared already in world_build_state
-    global boy
+    global boy,boy_die
+    boy_die=True
     boy = world_build_state.get_boy()
     pass
 
@@ -54,11 +56,15 @@ def handle_events():
             game_world.save()
         else:
             boy.handle_event(event)
+        if boy_die==False:
+            game_framework.change_state(world_build_state)
 
 
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
+
+
 
 
 def draw():
