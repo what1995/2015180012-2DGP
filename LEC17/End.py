@@ -43,10 +43,14 @@ def update():
     pass
 
 def draw():
-    global font
+    global font,i
+    i = 200
     clear_canvas()
     for a in game_world.rank_list:
-        font.draw(10,500-(30*a),'(%3.2f)'%(game_world.rank_list[a]), (255, 0, 0))
+        b=float(a)
+        i+=50
+        font.draw(10,i,'(%3.2f)'%b, (255, 0, 0))
+
     update_canvas()
 
 

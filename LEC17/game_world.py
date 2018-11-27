@@ -10,8 +10,9 @@ def ranking_list():
         rank_list = json.load(f)
 def ranking_save():
     pass
-    #with open('ranking_data.json', 'w')as f:
-    #    rank_list = json.dumf(score,f)
+    with open('ranking_data.json', 'w')as f:
+        
+
 
 
 
