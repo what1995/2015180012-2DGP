@@ -45,11 +45,15 @@ def update():
 def draw():
     global font,i
     i = 200
+    j=200
     clear_canvas()
     for a in game_world.rank_list:
         b=float(a)
         i+=50
-        font.draw(10,i,'(%3.2f)'%b, (255, 0, 0))
+        font.draw(150,i,'(%3.2f)'%b, (255, 0, 0))
+    for a in range(1,11):
+        j+=50
+        font.draw(20,j,'(%1d)'%a, (255, 0, 0))
 
     update_canvas()
 

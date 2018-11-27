@@ -47,6 +47,8 @@ def handle_events():
         if boy_die==False:
             game_world.rank_list.append(score)
             game_world.rank_list.sort()
+            if (len(game_world.rank_list))>10:
+               game_world.rank_list.pop(0)
             game_framework.change_state(End)
 
 
