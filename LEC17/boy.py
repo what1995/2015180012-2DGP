@@ -113,7 +113,6 @@ boy_left = 0
 boy_right=0
 boy_bottom=0
 boy_top=0
-score=0
 class Boy:
     image = None
     font = None
@@ -126,6 +125,7 @@ class Boy:
         if Boy.font is None:
             Boy.font = load_font('ENCR10B.TTF', 20)
         self.dir = 1
+        self.score=0
         self.x_velocity, self.y_velocity = 0, 0
         self.frame = 0
         self.event_que = []
@@ -159,11 +159,12 @@ class Boy:
         self.event_que.insert(0, event)
 
     def update(self):
-        global boy_bottom,boy_left,boy_right,boy_top,score
+        global boy_bottom,boy_left,boy_right,boy_top
         boy_left = self.x - 30
         boy_right = self.x + 30
         boy_bottom = self.y - 40
         boy_top = self.y + 40
+        self.score =str(get_time() - self.start_time)
         self.cur_state.do(self)
         if len(self.event_que) > 0:
             event = self.event_que.pop()
