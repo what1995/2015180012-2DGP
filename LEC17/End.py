@@ -7,7 +7,6 @@ from pico2d import *
 import game_framework
 import game_world
 import world_build_state as start_state
-import main_state
 
 boy = None
 
@@ -15,11 +14,12 @@ boy = None
 name = "End"
 
 menu = None
-
+font=None
 
 def enter():
-    global menu
+    global menu,font
     menu = load_image('BGbamboo.png')
+    font = load_font('ENCR10B.TTF', 20)
     pass
 def exit():
     pass
@@ -43,9 +43,10 @@ def update():
     pass
 
 def draw():
+    global font
     clear_canvas()
-    for a in game_world.all_ranking():
-        a.draw()
+    for a in game_world.rank_list:
+        font.draw(10,500-(30*a),'(%3.2f)'%(game_world.rank_list[a]), (255, 0, 0))
     update_canvas()
 
 

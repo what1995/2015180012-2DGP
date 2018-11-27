@@ -1,15 +1,18 @@
 import pickle
-
+import json
 # layer 0: Background Objects
 # layer 1: Foreground Objects
 objects = [[],[]]
-rankings_list=[[],[]]
-def ranking_list(r, layer):
-    rankings_list[layer].append(r)
-def all_ranking():
-    for i in range(len(rankings_list)):
-        for o in rankings_list[i]:
-            yield o
+rank_list=[]
+def ranking_list():
+    global rank_list
+    with open('ranking_data.json', 'r')as f:
+        rank_list = json.load(f)
+def ranking_save():
+    pass
+    #with open('ranking_data.json', 'w')as f:
+    #    rank_list = json.dumf(score,f)
+
 
 
 def add_object(o, layer):

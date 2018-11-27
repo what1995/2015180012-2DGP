@@ -2,13 +2,12 @@ import random
 import json
 import pickle
 import os
-
 from pico2d import *
 import game_framework
 import game_world
 import End
 import world_build_state
-import ranking
+
 name = "MainState"
 
 boy_die =True
@@ -46,8 +45,8 @@ def handle_events():
         else:
             boy.handle_event(event)
         if boy_die==False:
-            with open('ranking_data.json', 'w')as f:
-                json.dump(score,f)
+            game_world.rank_list.append(score)
+            game_world.rank_list.sort()
             game_framework.change_state(End)
 
 
@@ -55,7 +54,7 @@ def update():
     global score
     for game_object in game_world.all_objects():
         game_object.update()
-    score = (get_time() - boy.start_time)
+    score = str((get_time() - boy.start_time))
 
 
 
