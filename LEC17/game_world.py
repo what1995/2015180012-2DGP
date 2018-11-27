@@ -11,7 +11,9 @@ def ranking_list():
 def ranking_save():
     pass
     with open('ranking_data.json', 'w')as f:
-        
+        json.dump(rank_list,f)
+
+
 
 
 

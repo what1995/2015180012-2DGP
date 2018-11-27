@@ -73,7 +73,8 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-                game_framework.quit()
+            game_world.ranking_save()
+            game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_n:
             create_new_world()
             game_framework.change_state(main_state)
